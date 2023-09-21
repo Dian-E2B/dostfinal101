@@ -48,3 +48,9 @@ Route::post('/create', [\App\Http\Controllers\EmailSaveController::class, 'creat
 //Route::get('/show', [EmailSaveController::class, 'show']);
 
 require __DIR__.'/auth.php';
+
+require __DIR__.'/studentauth.php';
+
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
+})->middleware(['auth:student', 'verified'])->name('student.dashboard');
