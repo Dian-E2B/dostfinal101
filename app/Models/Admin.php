@@ -8,20 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    protected $guard = 'admin';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
+        'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -43,31 +42,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    // Define the relationship with the Admin model
-
-
-
-//    protected static function boot()
-//    {
-//        parent::boot();
-//
-//        static::created(function ($user) {
-//            // dd($user->email);
-//            if ($user->role === 1) {
-//                $admin = new Admin();
-//                // Fill the admin table attributes based on the user data.
-//                $admin->user_id = $user->id;
-//                // Add other attributes as needed.
-//                $admin->save();
-//            }
-//        });
-//    }
-//
-//    public function admin()
-//    {
-//        return $this->hasOne(Admin::class);
-//    }
-
-
 }

@@ -1,4 +1,102 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DOST XI</title>
+    {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <main class="d-flex w-100 h-100">
+        <div class="container d-flex flex-column">
+            <div class="row vh-100">
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+                    <div class="d-table-cell align-middle">
+
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Welcome back!</h1>
+                            <p class="lead">
+                                Sign in to your account to continue
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-3">
+
+
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input id="email"
+                                                class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                                name="email" type="email" value="{{ old('email') }}"
+                                                placeholder="Enter your email" required autocomplete="email"
+                                                autofocus />
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Password</label>
+                                            <input class="form-control form-control-lg" type="password" name="password"
+                                                placeholder="Enter your password" />
+
+                                            @if (Route::has('password.request'))
+                                                <small>
+                                                    <a href="{{ route('password.request') }}">Forgot password?</a>
+                                                </small>
+                                            @endif
+                                        </div>
+                                        <div>
+
+                                            <div class="form-check align-items-center">
+                                                <input id="customControlInline" type="checkbox" class="form-check-input"
+                                                    value="remember-me" name="remember-me" checked>
+                                                <label class="form-check-label text-small"
+                                                    for="customControlInline">Remember me</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid gap-2 mt-3">
+                                            <button type="submit" class='btn btn-lg btn-primary' href='/'>Sign
+                                                in</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (Route::has('register'))
+                            <div class="text-center mb-3">
+                                Don't have an account? <a href='{{ route('register') }}'>Sign up</a>
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script></script>
+</body>
+
+</html>
+
+
+
+
+
+
+{{-- <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,4 +142,4 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</x-guest-layout> --}}
