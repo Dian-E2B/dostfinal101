@@ -61,17 +61,12 @@ class SendMailController extends Controller
                         // Send the email
                         Mail::to($email)->send(new Mailnotifyawards($mailData));
 
-                        // Log the successful notification
-
+                        //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO AD IT
                         Replyslips::firstOrCreate(
                             ['scholar_id' => $id],
                             ['replyslip_status_id' => 1] // 1 means pending
                         );
 
-                        Replyslips::create([
-                            'scholar_id' => $id,
-                            'replyslip_status_id' => 1,// 1 means pending
-                        ]);
                         //ADD or UPDATE TO Student TABLE
                         Student::updateOrCreate(
                             ['scholar_id' => $id],

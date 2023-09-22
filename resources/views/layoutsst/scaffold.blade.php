@@ -10,14 +10,12 @@
     <div class="wrapper">
 
         {{-- SIDEBAR START --}}
-        @include('layouts.sidebar')
+        @include('layoutsst.header')
         {{-- SIDEBAR END --}}
 
 
 
         <div class="main">
-            @include('layouts.header')
-
             <main class="content">
                 <div class="container-fluid p-0">
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmailViewController;
 use App\Http\Controllers\SeiViewController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentViewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,6 +51,10 @@ require __DIR__.'/auth.php';
 
 require __DIR__.'/studentauth.php';
 
-Route::get('/student/dashboard', function () {
-    return view('student.dashboard');
-})->middleware(['auth:student', 'verified'])->name('student.dashboard');
+//Route::get('/student/dashboard', function () {
+//    return view('student.dashboard');
+//})->middleware(['auth:student', 'verified'])->name('student.dashboard');
+
+Route::get('/student/dashboard', [StudentViewController::class, 'replyslipview'])
+    ->middleware(['auth:student', 'verified'])
+    ->name('student.dashboard');
