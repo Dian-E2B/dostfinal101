@@ -46,8 +46,9 @@ class SendMailController extends Controller
             $scholarid = Scholars::where('email', $email)->first();
             $id = $scholarid->id;
             $birthday = $scholarid->bday;
+            $username = $scholarid->fname;
             $WithoutHyphensbirthday = str_replace('-', '', $birthday);
-
+            $password101 = bcrypt($WithoutHyphensbirthday);
 
 //            if ($birthday) {
 //
@@ -73,9 +74,10 @@ class SendMailController extends Controller
                         ]);
                         //ADD or UPDATE TO Student TABLE
                         Student::updateOrCreate(
-                            ['email' => $email],
-                            ['password' => $WithoutHyphensbirthday]
+                            ['scholar_id' => $id],
+                            ['email' => $email, 'password' => $password101, 'username' => $username]
                         );
+
 
                     } catch (Exception $e) {
                         dd($e->getMessage());
