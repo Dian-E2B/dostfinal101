@@ -1,28 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
-use App\Models\Municipalities;
-use App\Models\Sei;
-use App\Imports\SeiImport;
-use App\Models\Scholars;
 use App\Http\Controllers\Log;
+use App\Imports\SeiImport;
+use App\Models\Sei;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Storage;
 
-use function Laravel\Prompts\alert;
-
-class SeiQualifierviewController extends Controller
+class SeiViewController extends Controller
 {
     //
-    public function index()
+    public function seiqualifierview()
     {
         // $seis = Sei::with('scholars')->get();
         $seis = Sei::with('scholars')
-        ->where('lacking', '')
-        ->get();
+            ->where('lacking', '')
+            ->get();
         return view('seilist', compact('seis'));
     }
 
@@ -30,8 +23,6 @@ class SeiQualifierviewController extends Controller
     {
         return view(view: 'seilist');
     }
-
-
 
 
     public function store(Request $request)
@@ -48,5 +39,13 @@ class SeiQualifierviewController extends Controller
             // flash()->addError('There is a problem during upload ');
             echo 'An error occurred: ' . $errorMessage;
         }
+    }
+
+    public function seipotientalqualifierview()
+    {
+        $seis = Sei::with('scholars')
+            ->where('lacking', '!=', '')
+            ->get();
+        return view('seilist2', compact('seis'));
     }
 }
