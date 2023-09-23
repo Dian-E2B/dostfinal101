@@ -12,6 +12,14 @@ use Illuminate\Http\Request;
 class StudentViewController extends Controller
 {
     //
+    public function index(){
+        $userId = auth()->id();
+        $studentuser = Student::where('id', $userId)->first();
+        $scholarId = $studentuser->scholar_id;
+        $replyslips = Replyslips::where('scholar_id', $scholarId)->get();
+        return view('student.dashboard', compact('scholarId','replyslips'));
+    }
+
     public function replyslipview()
     {
         // Your logic to retrieve data for the dashboard goes here
@@ -28,11 +36,11 @@ class StudentViewController extends Controller
 
            // dd($scholarId,$programname);
             $replyslips = Replyslips::where('scholar_id', $scholarId)->get(); // Filter by scholar_id
-                return view('student.dashboard', compact('studentuser', 'replyslips','programname'));
+                return view('student.replyslipview', compact('studentuser', 'replyslips','programname'));
 
         } else {
             // Handle the case where the authenticated user's ID doesn't have a matching scholar_id
-            return view('student.dashboard');
+            return view('student.replyslipview');
         }
 
 

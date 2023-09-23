@@ -55,6 +55,9 @@ require __DIR__.'/studentauth.php';
 //    return view('student.dashboard');
 //})->middleware(['auth:student', 'verified'])->name('student.dashboard');
 
-Route::get('/student/dashboard', [StudentViewController::class, 'replyslipview'])
+Route::get('/student/dashboard', [StudentViewController::class, 'index'])
     ->middleware(['auth:student', 'verified'])
     ->name('student.dashboard');
+Route::get('/student/replyslipview', [StudentViewController::class, 'replyslipview'])
+    ->middleware(['auth:student', 'verified'])
+    ->name('student.replyslipview');
