@@ -28,7 +28,16 @@ class EmailViewController extends Controller
 
     public function emailstatusview()
     {
-        $replyslips = replyslips::all();
-        return view('emails', compact('replyslips'));
+        $replyslipsandscholarjoinpending = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            ->select('replyslips.*', 'scholars.*')
+            ->where('replyslips.replyslip_status_id',1)
+            ->get();
+
+        $replyslipsandscholarjoinaccepted = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            ->select('replyslips.*', 'scholars.*')
+            ->where('replyslips.replyslip_status_id',2)
+            ->get();
+
+        return view('emails', compact('replyslipsandscholarjoinpending','replyslipsandscholarjoinaccepted'));
     }
 }
