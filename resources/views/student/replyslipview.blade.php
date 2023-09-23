@@ -10,10 +10,6 @@
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
 <div class="wrapper">
 
-
-
-
-
     <div class="main">
         {{-- HEADER START --}}
         @include('layoutsst.header')
@@ -30,45 +26,110 @@
                             </div>
                             <div class="card-body">
 
-                                <form id="replyslipform">
-                                    @foreach ($replyslips as $replyslip)
+                                @if($replyslipstatusid!=1)
+                                  @foreach ($replyslips as $replyslip)
+                                  <p>As one of those who qualified for the {{ now()->year }} DOST-SEI S&T Undergraduate Scholarships under {{ $programname }}, I wish to inform you that: (Please check)</p>
+                                  @if($replyslipstatusid==2)
+                                        <div>
+                											<strong>	I am AVAILING my scholarship award.</strong>
+                                        </div>
+                                     <div style="margin-top: 10px">
+                                        <div>
+                                        Qualifier's Signature:
+                                        </div>
+                                        <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipsignature) }}" alt="none ">
+                                     </div>
+                                        <div style="margin-top: 10px">
+                                           <div>
+                                              Parents/Guardian's Signature:
+                                           </div>
 
-                                        <p>As one of those who qualified for the {{ now()->year }} DOST-SEI S&T Undergraduate Scholarships under {{ $programname }}, I wish to inform you that: (Please check)</p>
-                                        <label class="form-check">
-                                            <input id="checkbox1" class="form-check-input option-checkbox" type="checkbox" value="">
-                                            <span  class="form-check-label">
+                                        <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipparentsignature) }}" alt="none ">
+                                     </div>
+                                  @endif
+                                     @if($replyslipstatusid==3)
+
+                                        <div>
+                												I am NOT AVAILING the scholarship due to…  (Please indicate reason on the field below.)
+                                        <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                        </div>
+                                        <div style="margin-top: 10px">
+                                           <div>
+                                              Qualifier's Signature:
+                                           </div>
+                                           <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipsignature) }}" alt="none ">
+                                        </div>
+                                        <div style="margin-top: 10px">
+                                           <div>
+                                              Parents/Guardian's Signature:
+                                           </div>
+                                           <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipparentsignature) }}" alt="none ">
+                                        </div>
+                                     @endif
+
+                                     @if($replyslipstatusid==4)
+                                    <div>
+                                        I am DEFERRING my scholarship award due to … (Please indicate reason on the field below.)
+                                        <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                    </div>
+                                     @endif
+
+
+
+
+
+                                            <label>
+                                                <input name="scholarid" style="display: none;" value="{{ $replyslip->scholar_id }}" >
+                                            </label>
+
+
+                                        @endforeach
+                                @else
+                                    <form id="replyslipform" action="{{ route('replyslipsubmit') }}" method="POST" enctype="multipart/form-data">
+
+                                        @csrf <!-- Include CSRF token for form security -->
+                                        @foreach ($replyslips as $replyslip)
+                                            <p>As one of those who qualified for the {{ now()->year }} DOST-SEI S&T Undergraduate Scholarships under {{ $programname }}, I wish to inform you that: (Please check)</p>
+                                            <label class="form-check">
+                                                <input id="checkbox1" name="acceptcheckbox" class="form-check-input option-checkbox" type="checkbox" value="">
+                                                <span  class="form-check-label">
                 												I am AVAILING my scholarship award.
                                                         </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input class="form-check-input option-checkbox" type="checkbox" value="">
-                                            <span class="form-check-label">
+                                            </label>
+                                            <label class="form-check">
+                                                <input name="defferedcheckbox" class="form-check-input option-checkbox" type="checkbox" value="">
+                                                <span class="form-check-label">
                 												I am DEFERRING my scholarship award due to … (Please indicate reason on the field below.)
                                                         </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input class="form-check-input option-checkbox" type="checkbox" value="">
-                                            <span class="form-check-label">
+                                            </label>
+                                            <label class="form-check">
+                                                <input name="rejectcheckbox" class="form-check-input option-checkbox" type="checkbox" value="">
+                                                <span class="form-check-label">
                 												I am NOT AVAILING the scholarship due to…  (Please indicate reason on the field below.)
                                             </span>
-                                        </label>
-                                        <label>
-                                            <input style="display: none;" value="{{ $replyslip->scholar_id }}" >
-                                        </label>
+                                            </label>
+                                            <label>
+                                                <input name="scholarid" style="display: none;" value="{{ $replyslip->scholar_id }}" >
+                                            </label>
 
 
-                                        <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                            <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
 
 
-                                        <strong><label>Qualifier Printed Name with Signature:</label></strong>
-                                        <input style="margin-top: 10px;" required type="file" name="signature" id="signature" accept="image/*">
+                                            <strong><label>Qualifier Printed Name with Signature:</label></strong>
+                                            <input style="margin-top: 10px;" required type="file" name="signaturestudent" id="signature" accept="image/png, image/jpeg">
 
-                                        <strong><label style="">Parent/Legal Guardian Name with Signature:</label></strong>
-                                        <input style="margin-top: 15px;" class="form-group" required type="file" name="signature" id="signature" accept="image/*">
+                                            <strong><label style="">Parent/Legal Guardian Name with Signature:</label></strong>
+                                            <input style="margin-top: 15px;" class="form-group" required type="file" name="signatureparent" id="signatures" accept="image/*">
 
-                                        <button onclick="return confirm('Confirm? Please note that submission is final and non-editable.')" style="margin-top: 15px;" type="submit" class="btn btn-success"><i data-feather="check"></i> Save</button>
-                                    @endforeach
-                                </form>
+                                            <button onclick="return confirm('Confirm? Please note that submission is final and non-editable.')" style="margin-top: 15px;" type="submit" class="btn btn-success"><i data-feather="check"></i> Save</button>
+                                        @endforeach
+                                    </form>
+
+                                @endif
+
+
+
 
                             </div>
                         </div>

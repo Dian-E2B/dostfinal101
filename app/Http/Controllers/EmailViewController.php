@@ -28,11 +28,7 @@ class EmailViewController extends Controller
 
     public function emailstatusview()
     {
-        $replyslips = replyslips::with('scholars')
-            ->select('scholar_id', DB::raw('MAX(id) as max_id'))
-            ->where('replyslip_status_id', 1)
-            ->groupBy('scholar_id')
-            ->get();
+        $replyslips = replyslips::all();
         return view('emails', compact('replyslips'));
     }
 }

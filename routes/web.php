@@ -61,3 +61,8 @@ Route::get('/student/dashboard', [StudentViewController::class, 'index'])
 Route::get('/student/replyslipview', [StudentViewController::class, 'replyslipview'])
     ->middleware(['auth:student', 'verified'])
     ->name('student.replyslipview');
+
+
+Route::post('replyslipsubmit', [\App\Http\Controllers\StudentActionsController::class, 'replyslipsave'])
+    ->middleware(['auth:student', 'verified'])
+    ->name('replyslipsubmit');

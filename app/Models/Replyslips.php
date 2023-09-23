@@ -13,7 +13,10 @@ class replyslips extends Model
 
     protected $fillable = [
         'scholar_id',
+        'signature',
+        'signatureparents',
         'replyslip_status_id',
+        'updated_at',
         // Add other fillable attributes here if needed
     ];
 

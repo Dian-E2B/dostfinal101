@@ -22,7 +22,7 @@ class StudentViewController extends Controller
 
     public function replyslipview()
     {
-        // Your logic to retrieve data for the dashboard goes here
+
         $userId = auth()->id();
         $studentuser = Student::where('id', $userId)->first();
 
@@ -36,13 +36,19 @@ class StudentViewController extends Controller
 
            // dd($scholarId,$programname);
             $replyslips = Replyslips::where('scholar_id', $scholarId)->get(); // Filter by scholar_id
-                return view('student.replyslipview', compact('studentuser', 'replyslips','programname'));
+
+            $replyslipstatusid = Replyslips::where('scholar_id', $scholarId)->value('replyslip_status_id'); // Filter by scholar_id
+            $replyslipsignature = Replyslips::where('scholar_id', $scholarId)->value('signature');
+            $replyslipparentsignature = Replyslips::where('scholar_id', $scholarId)->value('signatureparents');
+//echo $replyslipstatusid;
+
+                return view('student.replyslipview',
+                    compact('studentuser', 'replyslips','programname','replyslipstatusid','replyslipsignature','replyslipparentsignature'));
 
         } else {
             // Handle the case where the authenticated user's ID doesn't have a matching scholar_id
             return view('student.replyslipview');
         }
-
 
 }
 }
