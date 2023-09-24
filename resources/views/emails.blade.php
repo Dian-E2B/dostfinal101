@@ -97,7 +97,7 @@
 																		<td class="table-action">
 																			 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
 																							 data-bs-target="#sizedModalLg">
-																					Large
+																					View
 																			 </button>
 																			 <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
 																						aria-hidden="true">
@@ -176,7 +176,7 @@
                                          <td class="table-action">
                                              <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                      data-bs-target="#sizedModalLg">
-                                                 Large
+                                                 View
                                              </button>
                                              <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
                                                   aria-hidden="true">
@@ -254,7 +254,7 @@
 																		<td class="table-action">
 																			 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
 																							 data-bs-target="#sizedModalLg">
-																					Large
+																					View
 																			 </button>
 																			 <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
 																						aria-hidden="true">

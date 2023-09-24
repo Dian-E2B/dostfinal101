@@ -46,7 +46,7 @@
                                 </div>
 
 
-                                <button type="button" style="max-width: 200px;  margin-bottom: 1rem;" id="submit"
+                                <button type="button" style="max-width: 200px ;  margin-bottom: 0.5rem; margin-top: 1rem;" id="submit"
                                         class="btn btn-primary">Submit
                                 </button>
 

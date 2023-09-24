@@ -41,11 +41,13 @@ Route::get('/emails', [EmailViewController::class, 'emailstatusview'])->name('em
 Route::get('sendmail', [SendMailController::class, 'index'])->name('sendmail');
 Route::get('/emaileditor', [EmailViewController::class, 'emaileditorview'])->name('emaileditor');
 Route::get('/partials.emailcontent', [EmailViewController::class, 'emailcontentview'])->name('partials.emailcontent');
-//Email Save
 
+//Email Save
 Route::post('ckeditor/upload', [\App\Http\Controllers\EmailSaveController::class, 'upload'])->name('ckeditor.upload');
 Route::post('/create', [\App\Http\Controllers\EmailSaveController::class, 'create'])->name('create');;
 
+//ACCESSCONTROL
+Route::get('/accesscontrol', [\App\Http\Controllers\AccessControlViewController::class, 'index'])->name('accesscontrol');;
 
 require __DIR__.'/auth.php';
 

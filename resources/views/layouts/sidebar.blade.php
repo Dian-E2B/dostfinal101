@@ -70,6 +70,12 @@
                 </a>
             </li>
 
+            <li id="" class="{{ request()->is('accesscontrol') ? 'sidebar-item active' : 'sidebar-item' }}">
+                <a class='sidebar-link' href='{{ route('accesscontrol') }}'>
+                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Access Control</span>
+                </a>
+            </li>
+
             {{-- <li id="" class="sidebar-item">
                 <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Pages</span>
