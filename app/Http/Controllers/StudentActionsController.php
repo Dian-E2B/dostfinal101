@@ -16,12 +16,15 @@ class StudentActionsController extends Controller
         $fname = Scholars::where('id', $scholarid)->value('fname');
         $lname = Scholars::where('id', $scholarid)->value('lname');
 
-
-        if ($request->has('acceptcheckbox')) {
-            $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
-            $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
+        $checkreplyslipstatus = replyslips::where('scholar_id', $scholarid)->value('replyslip_status_id');
+        $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
+        $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
+        if ($checkreplyslipstatus!=1){
             $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
             $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
+        }
+
+        if ($request->has('acceptcheckbox')) {
 
            // echo 'acceptcheckbox is checked';
             Replyslips::where('scholar_id', $scholarid)->update([
@@ -33,32 +36,23 @@ class StudentActionsController extends Controller
 
             return redirect('/student/dashboard');
         } else if($request->has('defferedcheckbox')) {
-            $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
-            $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
-            $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
-            $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
 
-            //echo 'defferedcheckbox is checked';
             Replyslips::where('scholar_id', $scholarid)->update([
                 'signature' => 'storage/signatures/'.$customstudentsignaturefilename,
                 'signatureparents' => 'storage/signatures/'.$customparentsignaturefilename,
                 'updated_at' => now(),
                 'replyslip_status_id' => 4
             ]);
+            return redirect('/student/dashboard');
         }
         else if($request->has('rejectcheckbox')) {
-            $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
-            $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
-            $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
-            $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
-
-            // echo 'rejectcheckbox is checked';
             Replyslips::where('scholar_id', $scholarid)->update([
                 'signature' => 'storage/signatures/'.$customstudentsignaturefilename,
                 'signatureparents' => 'storage/signatures/'.$customparentsignaturefilename,
                 'updated_at' => now(),
                 'replyslip_status_id' => 3
             ]);
+            return redirect('/student/dashboard');
         }
 
 

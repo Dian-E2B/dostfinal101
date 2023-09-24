@@ -17,7 +17,8 @@ class StudentViewController extends Controller
         $studentuser = Student::where('id', $userId)->first();
         $scholarId = $studentuser->scholar_id;
         $replyslips = Replyslips::where('scholar_id', $scholarId)->get();
-        return view('student.dashboard', compact('scholarId','replyslips'));
+        $replyslipstatus = Replyslips::where('scholar_id', $scholarId)->value('replyslip_status_id');
+        return view('student.dashboard', compact('scholarId','replyslips','replyslipstatus')); //DASHBOARD VIEW
     }
 
     public function replyslipview()

@@ -28,18 +28,22 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">We are thrilled to offer you the <strong>DOST-SEI S&T Undergraduate Scholarship</strong> for the academic year <strong>{{ now()->year }}</strong>. As a scholarship recipient, we kindly request your prompt response by signing and returning this reply slip to confirm your acceptance of the award.</p>
-                                <a href="{{ route('student.replyslipview') }}"  class="btn btn-primary">View <i class="align-middle me-2" data-feather="eye"></i></a>
+                                @if($replyslipstatus!=1)
+                                    <a href="{{ route('student.replyslipview') }}"  class="btn btn-primary">View <i class="align-middle me-2" data-feather="eye"></i></a>
+                                @else
+                                    <a href="{{ route('student.replyslipview') }}"  class="btn btn-success">View <i class="align-middle me-2" data-feather="edit-3"></i></a>
+                                @endif
                             </div>
                         </div>
                     </div>
+
+                @else
+                 @endif
+
+
             </div>
-        @endif
-
-
-
 
     </div>
-    </main>
 </div>
 
 </body>

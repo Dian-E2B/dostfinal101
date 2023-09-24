@@ -38,6 +38,16 @@ class EmailViewController extends Controller
             ->where('replyslips.replyslip_status_id',2)
             ->get();
 
-        return view('emails', compact('replyslipsandscholarjoinpending','replyslipsandscholarjoinaccepted'));
+        $replyslipsandscholarjoinrejected = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            ->select('replyslips.*', 'scholars.*')
+            ->where('replyslips.replyslip_status_id',3)
+            ->get();
+
+        $replyslipsandscholarjoindeferred = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            ->select('replyslips.*', 'scholars.*')
+            ->where('replyslips.replyslip_status_id',4)
+            ->get();
+        return view('emails',
+            compact('replyslipsandscholarjoinpending','replyslipsandscholarjoinaccepted','replyslipsandscholarjoinrejected','replyslipsandscholarjoindeferred'));
     }
 }
