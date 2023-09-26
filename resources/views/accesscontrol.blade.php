@@ -46,35 +46,148 @@
 										 </div>
 
 									</div>
-
-
-
 									<table id="AllTable" style="margin-bottom: 1rem !important;" class="table table-striped table-sm">
 										 <thead>
 										 <tr>
 												<th>ID</th>
 												<th>Fullname</th>
 												<th class="d-none d-md-table-cell">Email</th>
+												<th class="d-none d-md-table-cell">Status</th>
 												<th>Action</th>
 										 </tr>
 										 </thead>
 										 <tbody>
 
+									@if(request()->is('accesscontrol'))
+
+
+												<tr>
+													 @foreach($replyslipsjoinscholar as $replyslipsjoinscholar1)
+															<td>{{ $replyslipsjoinscholar1->id }}</td>
+															<td>{{ $replyslipsjoinscholar1->lname }}, {{ $replyslipsjoinscholar1->fname }} {{ $replyslipsjoinscholar1->mname }} </td>
+															<td class="">{{ $replyslipsjoinscholar1->email }}</td>
+
+															@if ($replyslipsjoinscholar1->scholar_status_id == 1) {{--Pending--}}
+																<td style="color:blue"> <strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+															@elseif ($replyslipsjoinscholar1->scholar_status_id == 2) {{--Ongoing--}}
+																 <td style="color:deepskyblue"><strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+															@elseif ($replyslipsjoinscholar1->scholar_status_id == 3) {{--Enrolled--}}
+																 <td style="color:green"><strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+															@elseif ($replyslipsjoinscholar1->scholar_status_id == 4) {{--Deferred--}}
+																 <td style="color:orange"><strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+															@elseif ($replyslipsjoinscholar1->scholar_status_id == 5) {{--LOA--}}
+																 <td style="color:red"><strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+															@elseif ($replyslipsjoinscholar1->scholar_status_id == 6) {{--Terminate--}}
+																 <td style="color:black"><strong>{{ $replyslipsjoinscholar1->status_name }}</strong></td>
+
+															@endif
+
+															<td class="table-action">
+																 <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+																 <a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+															</td>
+
+													 @endforeach
+												</tr>
+									@elseif(request()->is('accesscontrolpending'))
+
 										 <tr>
-												@foreach($replyslipsjoinscholar as $replyslipsjoinscholar1)
-													 <td>{{ $replyslipsjoinscholar1->id }}</td>
-													 <td>{{ $replyslipsjoinscholar1->lname }}, {{ $replyslipsjoinscholar1->fname }} {{ $replyslipsjoinscholar1->mname }} </td>
-													 <td class="">{{ $replyslipsjoinscholar1->email }}</td>
+												@foreach($replyslipsjoinscholarpending as $replyslipsjoinscholarpending1)
+													 <td>{{ $replyslipsjoinscholarpending1->id }}</td>
+													 <td>{{ $replyslipsjoinscholarpending1->lname }}, {{ $replyslipsjoinscholarpending1->fname }} {{ $replyslipsjoinscholarpending1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholarpending1->email }}</td>
+													 <td style="color:blue"><strong>{{ $replyslipsjoinscholarpending1->status_name }}</strong></td>
 													 <td class="table-action">
 															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
 															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
 													 </td>
-
 												@endforeach
 										 </tr>
 
+									@elseif(request()->is('accesscontrolongoing'))
+
+										 <tr>
+												@foreach($replyslipsjoinscholarongoing as $replyslipsjoinscholarongoing1)
+													 <td>{{ $replyslipsjoinscholarongoing1->id }}</td>
+													 <td>{{ $replyslipsjoinscholarongoing1->lname }}, {{ $replyslipsjoinscholarongoing1->fname }} {{ $replyslipsjoinscholarongoing1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholarongoing1->email }}</td>
+													 <td style="color:deepskyblue"><strong>{{ $replyslipsjoinscholarongoing1->status_name }}</strong></td>
+													 <td class="table-action">
+															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+													 </td>
+												@endforeach
+										 </tr>
+
+									@elseif(request()->is('accesscontrolenrolled'))
+
+										 <tr>
+												@foreach($replyslipsjoinscholarenrolled as $replyslipsjoinscholarenrolled1)
+													 <td>{{ $replyslipsjoinscholarenrolled1->id }}</td>
+													 <td>{{ $replyslipsjoinscholarenrolled1->lname }}, {{ $replyslipsjoinscholarongoing1->fname }} {{ $replyslipsjoinscholarenrolled1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholarenrolled1->email }}</td>
+													 <td style="color:green"><strong>{{ $replyslipsjoinscholarenrolled1->status_name }}</strong></td>
+													 <td class="table-action">
+															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+													 </td>
+												@endforeach
+										 </tr>
+
+									@elseif(request()->is('replyslipsjoinscholardeferred'))
+
+										 <tr>
+												@foreach($replyslipsjoinscholardeferred as $replyslipsjoinscholardeferred1)
+													 <td>{{ $replyslipsjoinscholardeferred1->id }}</td>
+													 <td>{{ $replyslipsjoinscholardeferred1->lname }}, {{ $replyslipsjoinscholardeferred1->fname }} {{ $replyslipsjoinscholardeferred1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholardeferred1->email }}</td>
+													 <td style="color:green"><strong>{{ $replyslipsjoinscholardeferred1->status_name }}</strong></td>
+													 <td class="table-action">
+															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+													 </td>
+												@endforeach
+										 </tr>
+
+									@elseif(request()->is('replyslipsjoinscholarLOA'))
+
+										 <tr>
+												@foreach($replyslipsjoinscholarLOA as $replyslipsjoinscholarLOA1)
+													 <td>{{ $replyslipsjoinscholarLOA1->id }}</td>
+													 <td>{{ $replyslipsjoinscholarLOA1->lname }}, {{ $replyslipsjoinscholarLOA1->fname }} {{ $replyslipsjoinscholarLOA1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholarLOA1->email }}</td>
+													 <td style="color:green"><strong>{{ $replyslipsjoinscholarLOA1->status_name }}</strong></td>
+													 <td class="table-action">
+															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+													 </td>
+												@endforeach
+										 </tr>
+
+									@elseif(request()->is('replyslipsjoinscholarterminated'))
+
+										 <tr>
+												@foreach($replyslipsjoinscholarterminated as $replyslipsjoinscholarterminated1)
+													 <td>{{ $replyslipsjoinscholarterminated1->id }}</td>
+													 <td>{{ $replyslipsjoinscholarterminated1->lname }}, {{ $replyslipsjoinscholarterminated1->fname }} {{ $replyslipsjoinscholarterminated1->mname }} </td>
+													 <td class="">{{ $replyslipsjoinscholarterminated1->email }}</td>
+													 <td style="color:green"><strong>{{ $replyslipsjoinscholarterminated1->status_name }}</strong></td>
+													 <td class="table-action">
+															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
+															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+													 </td>
+												@endforeach
+										 </tr>
+
+
+
+									@else
+
+									@endif
+
 										 </tbody>
 									</table>
+
 
 							 </div>
 						</div>

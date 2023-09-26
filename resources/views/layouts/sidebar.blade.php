@@ -48,11 +48,11 @@
                 </a>
             </li> --}}
 
-             <li id="seilist1" class="{{ request()->is('seilist') || request()->is('seilist2') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a data-bs-target="#charts" data-bs-toggle="collapse"  class="sidebar-link collapsed">
+             <li class="{{ request()->is('seilist') || request()->is('seilist2') ? 'sidebar-item active' : 'sidebar-item' }}">
+                <a data-bs-target="#seilist1" data-bs-toggle="collapse"  class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">SEI</span>
                 </a>
-                <ul id="charts" class="sidebar-dropdown list-unstyled collapse {{ request()->is('seilist') || request()->is('seilist2')  ? 'show' : ' ' }}" data-bs-parent="#sidebar">
+                <ul id="seilist1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('seilist') || request()->is('seilist2')  ? 'show' : ' ' }}" data-bs-parent="#sidebar">
                     <li class="sidebar-item {{ request()->is('seilist') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('seilist')}}'>Qualifiers</a></li>
                     <li class="sidebar-item {{ request()->is('seilist2') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{ route('seilist2')}}'>Potential Qualifiers </a></li>
                 </ul>
@@ -70,10 +70,33 @@
                 </a>
             </li>
 
-            <li id="" class="{{ request()->is('accesscontrol') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('accesscontrol') }}'>
-                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Access Control</span>
+{{--            <li id="" class="{{ request()->is('accesscontrol') ? 'sidebar-item active' : 'sidebar-item' }}">--}}
+{{--                <a class='sidebar-link' href='{{ route('accesscontrol') }}'>--}}
+{{--                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Access Control</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
+
+            <li class="{{ request()->is('accesscontrol') ? 'sidebar-item active' : 'sidebar-item' }}">
+                <a data-bs-target="#accesscont1" data-bs-toggle="collapse"  class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="lock"></i><span class="align-middle">Access Control</span>
                 </a>
+                <ul id="accesscont1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('accesscontrol')
+                    || request()->is('accesscontrolongoing')
+                    || request()->is('accesscontrolpending')
+                    || request()->is('accesscontrolenrolled')
+                    || request()->is('accesscontroldeferred')
+                    || request()->is('accesscontrolLOA')
+                    || request()->is('accesscontrolterminated')? 'show' : ' ' }}" data-bs-parent="#sidebar">
+
+                    <li class="sidebar-item {{ request()->is('accesscontrol') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrol')}}'>Show All</a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontrolpending') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolpending')}}'>Pending </a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontrolongoing') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolongoing')}}'>Ongoing </a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontrolenrolled') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolenrolled')}}'>Enrolled </a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontroldeferred') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontroldeferred')}}'>Deferred </a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontrolLOA') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolLOA')}}'>LOA </a></li>
+                    <li class="sidebar-item {{ request()->is('accesscontrolterminated') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolterminated')}}'>Terminated </a></li>
+                </ul>
             </li>
 
             {{-- <li id="" class="sidebar-item">
