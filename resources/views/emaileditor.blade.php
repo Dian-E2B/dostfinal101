@@ -104,7 +104,7 @@
                         success: function (response) {
                             // Handle the server's response (if needed)
                             console.log('Data saved to the database:', response);
-                            toastr.info('PISTE')
+                            toastr.info('SAVED')
                         },
                         error: function (error) {
                             console.error('Error:', error);

@@ -58,11 +58,12 @@
 										 </thead>
 										 <tbody>
 
+
 									@if(request()->is('accesscontrol'))
-
-
+												<tbody>
+												@foreach($replyslipsjoinscholar as $replyslipsjoinscholar1)
 												<tr>
-													 @foreach($replyslipsjoinscholar as $replyslipsjoinscholar1)
+
 															<td>{{ $replyslipsjoinscholar1->id }}</td>
 															<td>{{ $replyslipsjoinscholar1->lname }}, {{ $replyslipsjoinscholar1->fname }} {{ $replyslipsjoinscholar1->mname }} </td>
 															<td class="">{{ $replyslipsjoinscholar1->email }}</td>
@@ -89,10 +90,14 @@
 
 													 @endforeach
 												</tr>
-									@elseif(request()->is('accesscontrolpending'))
+												</tbody>
 
-										 <tr>
+									@elseif(request()->is('accesscontrolpending'))
+												<tbody>
+
 												@foreach($replyslipsjoinscholarpending as $replyslipsjoinscholarpending1)
+													 <tr>
+
 													 <td>{{ $replyslipsjoinscholarpending1->id }}</td>
 													 <td>{{ $replyslipsjoinscholarpending1->lname }}, {{ $replyslipsjoinscholarpending1->fname }} {{ $replyslipsjoinscholarpending1->mname }} </td>
 													 <td class="">{{ $replyslipsjoinscholarpending1->email }}</td>
@@ -101,11 +106,13 @@
 															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
 															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
 													 </td>
-												@endforeach
+
 										 </tr>
 
+												@endforeach
+												</tbody>
 									@elseif(request()->is('accesscontrolongoing'))
-
+												<tbody>
 										 <tr>
 												@foreach($replyslipsjoinscholarongoing as $replyslipsjoinscholarongoing1)
 													 <td>{{ $replyslipsjoinscholarongoing1->id }}</td>
@@ -118,9 +125,9 @@
 													 </td>
 												@endforeach
 										 </tr>
-
+												</tbody>
 									@elseif(request()->is('accesscontrolenrolled'))
-
+												<tbody>
 										 <tr>
 												@foreach($replyslipsjoinscholarenrolled as $replyslipsjoinscholarenrolled1)
 													 <td>{{ $replyslipsjoinscholarenrolled1->id }}</td>
@@ -133,11 +140,12 @@
 													 </td>
 												@endforeach
 										 </tr>
-
+												</tbody>
 									@elseif(request()->is('replyslipsjoinscholardeferred'))
 
-										 <tr>
+
 												@foreach($replyslipsjoinscholardeferred as $replyslipsjoinscholardeferred1)
+													 <tr>
 													 <td>{{ $replyslipsjoinscholardeferred1->id }}</td>
 													 <td>{{ $replyslipsjoinscholardeferred1->lname }}, {{ $replyslipsjoinscholardeferred1->fname }} {{ $replyslipsjoinscholardeferred1->mname }} </td>
 													 <td class="">{{ $replyslipsjoinscholardeferred1->email }}</td>
@@ -146,13 +154,15 @@
 															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
 															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
 													 </td>
+													 </tr>
 												@endforeach
-										 </tr>
 
+												</tbody>
 									@elseif(request()->is('replyslipsjoinscholarLOA'))
+															<tbody>
 
-										 <tr>
 												@foreach($replyslipsjoinscholarLOA as $replyslipsjoinscholarLOA1)
+													 <tr>
 													 <td>{{ $replyslipsjoinscholarLOA1->id }}</td>
 													 <td>{{ $replyslipsjoinscholarLOA1->lname }}, {{ $replyslipsjoinscholarLOA1->fname }} {{ $replyslipsjoinscholarLOA1->mname }} </td>
 													 <td class="">{{ $replyslipsjoinscholarLOA1->email }}</td>
@@ -161,11 +171,12 @@
 															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
 															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
 													 </td>
+													 </tr>
 												@endforeach
-										 </tr>
 
+															</tbody>
 									@elseif(request()->is('replyslipsjoinscholarterminated'))
-
+															<tbody>
 										 <tr>
 												@foreach($replyslipsjoinscholarterminated as $replyslipsjoinscholarterminated1)
 													 <td>{{ $replyslipsjoinscholarterminated1->id }}</td>
@@ -176,17 +187,18 @@
 															<a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
 															<a style="color: red; margin-left: 8px;"  href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
 													 </td>
-												@endforeach
 										 </tr>
+												@endforeach
 
 
+												</tbody>
 
 									@else
 
 									@endif
 
-										 </tbody>
-									</table>
+
+
 
 
 							 </div>

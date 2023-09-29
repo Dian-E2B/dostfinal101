@@ -96,10 +96,10 @@
 																		<td class="d-none d-md-table-cell">{{$replyslipsandscholarjoinaccepted1->bday}}</td>
 																		<td class="table-action">
 																			 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-																							 data-bs-target="#sizedModalLg">
+																							 data-bs-target="#acceptedmodal">
 																					View
 																			 </button>
-																			 <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
+																			 <div class="modal fade" id="acceptedmodal" tabindex="-1" role="dialog"
 																						aria-hidden="true">
 																					<div class="modal-dialog modal-lg" role="document">
 																						 <div class="modal-content">
@@ -175,10 +175,10 @@
                                          <td class="d-none d-md-table-cell">{{$replyslipsandscholarjoinrejected1->bday}}</td>
                                          <td class="table-action">
                                              <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                     data-bs-target="#sizedModalLg">
+                                                     data-bs-target="#rejectedmodal">
                                                  View
                                              </button>
-                                             <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
+                                             <div class="modal fade" id="rejectedmodal" tabindex="-1" role="dialog"
                                                   aria-hidden="true">
                                                  <div class="modal-dialog modal-lg" role="document">
                                                      <div class="modal-content">
@@ -188,8 +188,9 @@
                                                                      aria-label="Close"></button>
                                                          </div>
                                                          <div class="modal-body m-1">
-                                                             <strong><p class="mb-0">I am AVAILING my scholarship award.</p>
-                                                             </strong>
+                                                             <strong>class="mb-0">I am NOT AVAILING the scholarship due to… </strong>
+																																<p class="mb-0">{{ $replyslipsandscholarjoinrejected1->reason }}</p>
+
 
                                                              <div class="row">
                                                                  <div class="col-md-6" style="margin-top: 15px;">
@@ -253,10 +254,10 @@
 																		<td class="d-none d-md-table-cell">{{$replyslipsandscholarjoindeferred1->bday}}</td>
 																		<td class="table-action">
 																			 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-																							 data-bs-target="#sizedModalLg">
+																							 data-bs-target="#defferedmodal">
 																					View
 																			 </button>
-																			 <div class="modal fade" id="sizedModalLg" tabindex="-1" role="dialog"
+																			 <div class="modal fade" id="defferedmodal" tabindex="-1" role="dialog"
 																						aria-hidden="true">
 																					<div class="modal-dialog modal-lg" role="document">
 																						 <div class="modal-content">
@@ -266,8 +267,9 @@
 																													 aria-label="Close"></button>
 																								</div>
 																								<div class="modal-body m-1">
-																									 <strong><p class="mb-0">I am AVAILING my scholarship award.</p>
-																									 </strong>
+																									 <strong>I am DEFERRING my scholarship award due to …  </strong>
+																											<p class="mb-0">{{ $replyslipsandscholarjoindeferred1->reason }}</p>
+
 
 																									 <div class="row">
 																											<div class="col-md-6" style="margin-top: 15px;">

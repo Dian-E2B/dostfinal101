@@ -51,7 +51,7 @@
 
                                         <div>
                 												I am NOT AVAILING the scholarship due to…  (Please indicate reason on the field below.)
-                                        <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                           <p>{{ $reason1 }}</p>
                                         </div>
                                         <div style="margin-top: 10px">
                                            <div>
@@ -70,8 +70,20 @@
                                      @if($replyslipstatusid==4)
                                     <div>
                                         I am DEFERRING my scholarship award due to … (Please indicate reason on the field below.)
-                                        <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                       <p>{{ $reason1 }}</p>
                                     </div>
+                                        <div style="margin-top: 10px">
+                                           <div>
+                                              Qualifier's Signature:
+                                           </div>
+                                           <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipsignature) }}" alt="none ">
+                                        </div>
+                                        <div style="margin-top: 10px">
+                                           <div>
+                                              Parents/Guardian's Signature:
+                                           </div>
+                                           <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipparentsignature) }}" alt="none ">
+                                        </div>
                                      @endif
 
 
@@ -113,7 +125,7 @@
                                             </label>
 
 
-                                            <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" required></textarea>
+                                            <textarea style="width: 100% !important;" id="textarea1" class="form-control" rows="2" placeholder="Reasons:" name="reason" required></textarea>
 
 
                                             <strong><label>Qualifier Printed Name with Signature:</label></strong>

@@ -51,7 +51,7 @@ return view('accesscontrol', compact('replyslipsjoinscholar'));
         $replyslipsjoinscholarenrolled = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
-            ->where('scholar_status_id', '=', 2) // Add your where condition here
+            ->where('scholar_status_id', '=', 3) // Add your where condition here
             ->get();
 
 
@@ -63,7 +63,7 @@ return view('accesscontrol', compact('replyslipsjoinscholar'));
         $replyslipsjoinscholardeferred = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
-            ->where('scholar_status_id', '=', 2) // Add your where condition here
+            ->where('scholar_status_id', '=', 4) // Add your where condition here
             ->get();
 
 
@@ -75,7 +75,7 @@ return view('accesscontrol', compact('replyslipsjoinscholar'));
         $replyslipsjoinscholarLOA = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
-            ->where('scholar_status_id', '=', 2) // Add your where condition here
+            ->where('scholar_status_id', '=', 5) // Add your where condition here
             ->get();
 
 
@@ -87,7 +87,7 @@ return view('accesscontrol', compact('replyslipsjoinscholar'));
         $replyslipsjoinscholarterminated = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
-            ->where('scholar_status_id', '=', 2) // Add your where condition here
+            ->where('scholar_status_id', '=', 6) // Add your where condition here
             ->get();
 
 
