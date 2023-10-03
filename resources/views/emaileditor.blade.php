@@ -5,7 +5,7 @@
     <title>DOST XI</title>
     <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}"  >
 
-    <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/decoupled-document/ckeditor.js"></script>

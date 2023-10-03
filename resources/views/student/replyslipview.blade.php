@@ -4,7 +4,7 @@
 <head>
     <title>DOST XI</title>
     <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}"  >
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">

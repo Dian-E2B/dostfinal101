@@ -4,10 +4,10 @@
 <head>
     <title>DOST XI</title>
     {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <main class="d-flex w-100 h-100">
         <div class="container d-flex flex-column">
             <div class="row vh-100">
@@ -43,8 +43,8 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label">Password</label>
-                                            <input class="form-control form-control-lg" type="password" name="password"
+                                            <label for="password"  class="form-label">Password</label>
+                                            <input id="password" class="form-control form-control-lg" type="password" name="password"
                                                 placeholder="Enter your password" />
 
                                             @if (Route::has('password.request'))

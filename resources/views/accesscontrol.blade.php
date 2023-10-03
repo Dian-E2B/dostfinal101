@@ -4,7 +4,7 @@
 <head>
 	 <title>DOST XI</title>
 	 <link href="{{ asset('css/all.css') }}">
-	 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+	 @vite(['resources/css/app.css', 'resources/js/app.js'])
 <style>
 
 </style>
