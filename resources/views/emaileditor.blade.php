@@ -3,16 +3,16 @@
 
 <head>
     <title>DOST XI</title>
-
+    <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}"  >
 
     <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
-    <link href="<?php echo e(asset('css/toastr.min.css')); ?>" rel="stylesheet">
+
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/decoupled-document/ckeditor.js"></script>
 
 </head>
 
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
 <div class="wrapper">
 
 
@@ -34,7 +34,7 @@
 
                             </div>
                             <div class="card-body">
-
+                                <div style="margin-bottom: 10px; margin-top: -35px;">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">[PROGRAM]</strong>.</div>
                                 <input type="hidden" name="action" id="action" value="create">
                                 <div id="toolbar-container"></div>
 
@@ -67,8 +67,8 @@
 </div>
 </body>
 
+<script src="<?php echo e(asset('js/notyf.min.js')); ?>"></script>
 
-<script type="module" src="<?php echo e(asset('js/toastr.min.js')); ?>"></script>
 <script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 <script>
     //let editor;
@@ -104,7 +104,14 @@
                         success: function (response) {
                             // Handle the server's response (if needed)
                             console.log('Data saved to the database:', response);
-                            toastr.info('SAVED')
+                            notyf.success({
+                                message: 'Email has been saved.',
+                                duration: 3000,
+                                position: {
+                                    x: 'right',
+                                    y: 'top',
+                                },
+                            })
                         },
                         error: function (error) {
                             console.error('Error:', error);

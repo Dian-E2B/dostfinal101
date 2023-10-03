@@ -22,7 +22,6 @@ return view('accesscontrol', compact('replyslipsjoinscholar'));
     }
 
 
-
     public function accesscontrolpendingview(){
 
         $replyslipsjoinscholarpending = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')

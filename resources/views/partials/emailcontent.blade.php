@@ -5,9 +5,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-{{$mailData['title']}}
-{!!$mailData['message']!!}
 
+{!!$mailData['title']!!}
+{!!$mailData['message']!!}
 {{--<div id="editor">--}}
 {{--{!! $content->content !!}--}}
 {{--    <!-- Your Quill editor content here -->--}}

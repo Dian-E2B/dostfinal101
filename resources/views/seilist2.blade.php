@@ -16,7 +16,7 @@
     </style>
 </head>
 
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <div class="wrapper">
 
         {{-- SIDEBAR START --}}
@@ -32,10 +32,10 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-            <main class="content" style="padding: 1rem 1rem 1.5rem; !important;">
-                <div class="container-fluid">
-                    <div class="">
-                        <div class="">
+            <main class="content" style="padding: 0.5rem 0.5rem 0.5rem; !important;">
+                <div class="container-fluid p-0">
+
+
                             <div class="card" style="white-space:nowrap; !important;">
                                 <div class="card-body">
                                     <table id="thisdatatable" class="table-sm table-striped"
@@ -90,8 +90,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+
 
                 <button style="display: none" id="getEmailsButton">Get Selected Emails</button>
             </main>

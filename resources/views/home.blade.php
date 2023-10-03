@@ -529,22 +529,11 @@
 {{--                        </div>--}}
 {{--                    </div>--}}
 
-{{--                </div>--}}
+                </div>
             </main>
         </div>
     </div>
 </body>
-{{-- SIDEBAR TOGGLING --}}
-<script>
-    // Check if the page is considered "active" (you can define your own logic)
-    var isHomePage = window.location.pathname === '/home'; // Change this condition as needed
-
-    if (isHomePage) {
-
-        document.getElementById('dashboard1').classList.add('active');
-        document.getElementById('dashboard2').classList.add('active');
-    }
-</script>
 
 </html>
 

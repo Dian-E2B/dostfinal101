@@ -1,17 +1,15 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class='sidebar-brand' href='/'>
-            <span class="sidebar-brand-text align-middle">
-                [LOGO]
-
+        <a class='sidebar-brand'>
+            <div class="row">
+               <span  class="sidebar-brand-text align-items-center col-4">
+                  <img style="max-width: 70px; max-height: 70px;" src="{{ asset('icons/dost_seal.png') }}" alt="Image Description">
             </span>
-            <svg class="sidebar-brand-icon align-middle" width="32px" height="32px" viewBox="0 0 24 24" fill="none"
-                stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" color="#FFFFFF"
-                style="margin-left: -3px">
-                <path d="M12 4L20 8.00004L12 12L4 8.00004L12 4Z"></path>
-                <path d="M20 12L12 16L4 12"></path>
-                <path d="M20 16L12 20L4 16"></path>
-            </svg>
+                <div style="margin-top: 5px" class="col-6">DOST REGION XI</div>
+
+
+            </div>
+
         </a>
 
 
@@ -58,12 +56,16 @@
                 </ul>
             </li>
 
+
             <li id="" class="{{ request()->is('emails') ? 'sidebar-item active' : 'sidebar-item' }}">
                 <a class='sidebar-link' href='{{ route('emails') }}'>
                     <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Email Status</span>
                 </a>
             </li>
 
+            <li class="sidebar-header">
+                Actions
+            </li>
             <li id="" class="{{ request()->is('emaileditor') ? 'sidebar-item active' : 'sidebar-item' }}">
                 <a class='sidebar-link' href='{{ route('emaileditor') }}'>
                     <i class="align-middle" data-feather="edit"></i> <span class="align-middle">Email Edit</span>
@@ -77,7 +79,15 @@
 {{--            </li>--}}
 
 
-            <li class="{{ request()->is('accesscontrol') ? 'sidebar-item active' : 'sidebar-item' }}">
+{{--                ACCESS CONTROL TAB--}}
+
+            <li class="{{ request()->is('accesscontrol')
+                    || request()->is('accesscontrolongoing')
+                    || request()->is('accesscontrolpending')
+                    || request()->is('accesscontrolenrolled')
+                    || request()->is('accesscontroldeferred')
+                    || request()->is('accesscontrolLOA')
+                    || request()->is('accesscontrolterminated') ? 'sidebar-item active' : 'sidebar-item' }}">
                 <a data-bs-target="#accesscont1" data-bs-toggle="collapse"  class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="lock"></i><span class="align-middle">Access Control</span>
                 </a>
@@ -87,7 +97,7 @@
                     || request()->is('accesscontrolenrolled')
                     || request()->is('accesscontroldeferred')
                     || request()->is('accesscontrolLOA')
-                    || request()->is('accesscontrolterminated')? 'show' : ' ' }}" data-bs-parent="#sidebar">
+                    || request()->is('accesscontrolterminated') ? 'show' : ' ' }}" data-bs-parent="#sidebar">
 
                     <li class="sidebar-item {{ request()->is('accesscontrol') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrol')}}'>Show All</a></li>
                     <li class="sidebar-item {{ request()->is('accesscontrolpending') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolpending')}}'>Pending </a></li>

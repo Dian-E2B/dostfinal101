@@ -21,25 +21,22 @@ class SendMailController extends Controller
     public function index()
     {
 
-//        $emails = Scholars::where('scholar_status_id', '!=', 0) // Add a where condition
-//            ->select('email')
-//            ->distinct()
-//            ->pluck('email')
-//            ->toArray();
 
-        $emailsmerit = Scholars::where('scholar_status_id', '!=', 0)
-            ->where('program', 101) // Add the additional where condition
-            ->select('email')
+        $emailsmerit = Scholars::join('seis', 'seis.spasno', '=', 'scholars.spasno')
+            ->select('scholars.email')
+            ->where('seis.program_id', 201)
+            ->where('scholars.scholar_status_id', '!=', 0)
             ->distinct()
             ->pluck('email')
             ->toArray();
 
-        $emailsra7687 = Scholars::where('scholar_status_id', '!=', 0)
-            ->where('program', 102) // Add the additional where condition
-            ->select('email')
-            ->distinct()
-            ->pluck('email')
-            ->toArray();
+       $emailsra7687 = Scholars::join('seis', 'scholars.spasno', '=', 'scholars.spasno')
+           ->select('scholars.email')
+           ->where('seis.program_id', 102)
+           ->where('scholars.scholar_status_id', '!=', 0) // Add your where condition here
+           ->distinct()
+           ->pluck('scholars.email')
+           ->toArray();
        ; // You can adjust the query as needed
 
         // Pass the content to a view and display it
@@ -50,12 +47,14 @@ class SendMailController extends Controller
 //            ->toArray();
         $content = EmailContent::first();
 
-        $mailData = [
-                'title'=>' ',
-                'message' => $content->content,
-        ];
+
 
         foreach ($emailsra7687 as $email2) {
+            $mailData = [
+                'title'=>'<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">RA 7687</strong>.</span></h2> ',
+                'message' => $content->content,
+            ];
+
             $scholarid = Scholars::where('email', $email2)->first();
             $id = $scholarid->id;
             $birthday = $scholarid->bday;
@@ -76,7 +75,7 @@ class SendMailController extends Controller
                         //ADD or UPDATE TO Student TABLE
                         Student::updateOrCreate(
                             ['scholar_id' => $id],
-                            ['email' => $email, 'password' => $password101, 'username' => $username]
+                            ['email' => $email2, 'password' => $password101, 'username' => $username]
                         );
 
 
@@ -88,6 +87,12 @@ class SendMailController extends Controller
             }
 
         foreach ($emailsmerit as $email) {
+
+            $mailData = [
+                'title'=>'<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">MERIT</strong>.</span></h2> ',
+                'message' => $content->content,
+            ];
+
             $scholarid = Scholars::where('email', $email)->first();
             $id = $scholarid->id;
             $birthday = $scholarid->bday;

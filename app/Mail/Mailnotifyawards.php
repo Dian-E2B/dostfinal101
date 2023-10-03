@@ -25,6 +25,7 @@ class Mailnotifyawards extends Mailable
         $this->mailData=$mailData;
     }
 
+
     /**
      * Get the message envelope.
      */

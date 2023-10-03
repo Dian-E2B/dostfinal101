@@ -77,7 +77,7 @@ class EmailSaveController extends Controller
                 ]);
             }
 
-            flash()->addSuccess('email content saved successfully');
+//            flash()->addSuccess('email content saved successfully');
             return redirect()->back();
 
         } catch (\Exception $e) {
