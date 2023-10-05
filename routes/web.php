@@ -55,6 +55,13 @@ Route::get('/accesscontroldeferred', [\App\Http\Controllers\AccessControlViewCon
 Route::get('/accesscontrolLOA', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolLOAview'])->name('accesscontrolLOA');
 Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolterminatedview'])->name('accesscontrolterminated');
 
+
+//RSMS
+Route::get('/rsms', [\App\Http\Controllers\AccessControlViewController::class, 'index'])->name('rsms');
+
+
+
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/studentauth.php';

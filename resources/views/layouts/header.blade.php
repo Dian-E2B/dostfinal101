@@ -37,7 +37,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                     <div class="position-relative">
-                        <i class="align-middle" data-feather="bell"></i>
+                        <i style="--fa-primary-color: #1f2223; --fa-secondary-color: #121212; --fa-secondary-opacity: 0.6;" class="align-middle fad fa-bell"></i>
+
 {{--                        <span class="indicator">10</span>--}}
                     </div>
                 </a>
@@ -103,7 +104,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
                     <div class="position-relative">
-                        <i class="align-middle" data-feather="message-square"></i>
+                        <i class="align-middle fas fa-comment" style="color: #717171;"></i>
+
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">

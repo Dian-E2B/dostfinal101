@@ -4,7 +4,7 @@
 <head>
     <title>DOST XI</title>
     <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}"  >
-
+    <link href="{{ asset('css/all.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
@@ -22,7 +22,7 @@
     <div class="main">
         @include('layouts.header')
 
-        <main class="content">
+        <main class="content" style="padding:1.5rem 1.5rem 1.5rem; !important;">
             <div class="container-fluid p-0">
 
 
@@ -66,7 +66,7 @@
 
 </div>
 </body>
-
+<script src="{{ asset('js/all.js') }}"></script>
 <script src="<?php echo e(asset('js/notyf.min.js')); ?>"></script>
 
 <script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>

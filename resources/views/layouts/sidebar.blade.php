@@ -63,6 +63,13 @@
                 </a>
             </li>
 
+            <li id=""  class="sidebar-item">
+                <a class='sidebar-link' href='/tables-bootstrap'>
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Ongoing Scholars</span>
+                </a>
+            </li>
+
+
             <li class="sidebar-header">
                 Actions
             </li>
@@ -108,6 +115,7 @@
                     <li class="sidebar-item {{ request()->is('accesscontrolterminated') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('accesscontrolterminated')}}'>Terminated </a></li>
                 </ul>
             </li>
+
 
             {{-- <li id="" class="sidebar-item">
                 <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
@@ -220,11 +228,7 @@
                                 class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
-            <li class="sidebar-item">
-                <a class='sidebar-link' href='/tables-bootstrap'>
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tables</span>
-                </a>
-            </li>
+
 
             <li class="sidebar-header">
                 Plugins & Addons
