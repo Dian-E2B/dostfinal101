@@ -26,27 +26,23 @@ class SendMailController extends Controller
             ->select('scholars.email')
             ->where('seis.program_id', 201)
             ->where('scholars.scholar_status_id', '!=', 0)
-            ->distinct()
-            ->pluck('email')
-            ->toArray();
+            ->where('scholars.email', 'IS NOT', null)
+            ->groupBy('email')
+            ->pluck('email') // Pluck the email addresses
+            ->toArray(); // Convert the result to an array
 
-       $emailsra7687 = Scholars::join('seis', 'scholars.spasno', '=', 'scholars.spasno')
-           ->select('scholars.email')
-           ->where('seis.program_id', 102)
-           ->where('scholars.scholar_status_id', '!=', 0) // Add your where condition here
-           ->distinct()
-           ->pluck('scholars.email')
-           ->toArray();
-       ; // You can adjust the query as needed
+        $emailsra7687 = Scholars::join('seis', 'scholars.spasno', '=', 'seis.spasno')
+            ->select('scholars.email')
+            ->where('seis.program_id', 101)
+            ->where('scholars.scholar_status_id', '!=', 0)
+            ->where('scholars.email', 'IS NOT', null)
+            ->groupBy('email')
+            ->pluck('email') // Pluck the email addresses
+            ->toArray(); // Convert the result to an array
 
-        // Pass the content to a view and display it
+       // dd($emailsmerit,$emailsra7687);
 
-//        $emails = Scholars::select('email')
-//            ->distinct()
-//            ->pluck('email')
-//            ->toArray();
         $content = EmailContent::first();
-
 
 
         foreach ($emailsra7687 as $email2) {
