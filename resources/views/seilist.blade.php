@@ -8,8 +8,14 @@
     <style>
         td {
             user-select: none;
+            padding: 1px !important;
         }
-
+        tfoot {
+           display: table-header-group;
+        }
+        th{
+            padding: 1px !important;
+        }
         #thisdatatable.dataTable tbody td {
             white-space: nowrap;
         }
@@ -53,6 +59,20 @@
                                                
                                             </tr>
                                         </thead>
+                                       <tfoot >
+                                       <tr>
+
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+
+
+                                       </tr>
+                                       </tfoot>
                                         <tbody style="white-space: nowrap !important;">
                                             @foreach ($seis as $sei)
                                                 <tr>
@@ -72,20 +92,7 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <div style="color: dimgrey">
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    
-                                                </div>
-                                            </tr>
-                                        </tfoot>
+
                                     </table>
                                 </div>
                             </div>
@@ -96,79 +103,40 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+{{--    <script>--}}
+{{--        // $('#datatables-column-search-select-inputs').dataTable({--}}
+{{--        //     "scrollX": true--}}
+{{--        // });--}}
+{{--        document.addEventListener("DOMContentLoaded", function() {--}}
+{{--            var table = $("#thisdatatable").DataTable({--}}
 
-    <script>
-        // $('#datatables-column-search-select-inputs').dataTable({
-        //     "scrollX": true
-        // });
-        document.addEventListener("DOMContentLoaded", function() {
-            var datatablesMulti = $("#thisdatatable").DataTable({
-                responsive: true,
+{{--                responsive: true,--}}
 
-                initComplete: function() {
-                    this.api().columns([1, 6]).every(function() {
-                        var column = this;
-                        var select = $(
-                                "<select class=\"form-control\"><option value=\"\"></option></select>"
-                            )
-                            .appendTo($(column.footer()).empty())
-                            .on("change", function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-                                column
-                                    .search(val ? "^" + val + "$" : "", true, false)
-                                    .draw();
-                            });
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append("<option value=\"" + d + "\">" + d +
-                                "</option>")
-                        });
-                    });
-                }
-            });
+{{--                initComplete: function() {--}}
+{{--                    this.api().columns([1, 6]).every(function() {--}}
+{{--                        var column = this;--}}
+{{--                        var select = $(--}}
+{{--                                "<select style=\"padding: 1px !important;\" class=\"form-control\"><option value=\"\"></option></select>"--}}
+{{--                            )--}}
+{{--                            .appendTo($(column.footer()).empty())--}}
+{{--                            .on("change", function() {--}}
+{{--                                var val = $.fn.dataTable.util.escapeRegex(--}}
+{{--                                    $(this).val()--}}
+{{--                                );--}}
+{{--                                column--}}
+{{--                                    .search(val ? "^" + val + "$" : "", true, false)--}}
+{{--                                    .draw();--}}
+{{--                            });--}}
+{{--                        column.data().unique().sort().each(function(d, j) {--}}
+{{--                            select.append("<option value=\"" + d + "\">" + d +--}}
+{{--                                "</option>")--}}
+{{--                        });--}}
+{{--                    });--}}
+{{--                }--}}
+{{--            });--}}
 
-            // function getSelectedEmails() {
-            //     var selectedRows = datatablesMulti.rows({
-            //         selected: true
-            //     });
-            //     var selectedEmails = [];
-            //
-            //     selectedRows.every(function() {
-            //         var data = this.data();
-            //         var email = data[5]; // Assuming the email is in the second column (index 1)
-            //         selectedEmails.push(email);
-            //     });
-            //
-            //     return selectedEmails;
-            // }
-            //
-            // $(document).on("keydown", function(e) {
-            //     // Check if the "Escape" key (key code 27) is pressed
-            //     if (e.key === "Escape" || e.key === "Esc" || e.keyCode === 27) {
-            //         // Deselect all selected rows in the DataTable
-            //         datatablesMulti.rows({
-            //             selected: true
-            //         }).deselect();
-            //     }
-            // });
-            //
-            //
-            //
-            // // Example: Call the function and log the selected emails
-            // $("#getEmailsButton").on("click", function() {
-            //     // Call the function to retrieve selected email values
-            //     var selectedEmails = getSelectedEmails();
-            //     // console.log(selectedEmails);
-            //
-            //     // Do something with the selected email values (e.g., display them)
-            //     // alert("Selected Emails:\n" + selectedEmails.join("\n"));
-            // });
-
-
-
-        })
-    </script>
+{{--        })--}}
+{{--    </script>--}}
     <script></script>
 </body>
 

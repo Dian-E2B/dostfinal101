@@ -4,15 +4,23 @@
 <head>
     <title>DOST XI</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src={{ asset('js/dataTables.fixedHeader.min.js') }}></script>
     <style>
         td {
             user-select: none;
+           padding: 1px 10px !important;
+        }
+        thead th{
+           padding-right: 5px !important;
+           padding-left: 5px !important;
+
         }
 
         #thisdatatable.dataTable tbody td {
             white-space: nowrap;
         }
+
     </style>
 </head>
 
@@ -38,21 +46,22 @@
 
                             <div class="card" style="white-space:nowrap; !important;">
                                 <div class="card-body">
-                                    <table id="thisdatatable" class="table-sm table-striped"
+                                    <table id="thisdatatable" class="table-sm table-striped table-bordered"
                                         style="width:100%; white-space:nowrap; !important;">
 
                                         <thead>
                                             <tr>
                                                 <th>SPAS NO.</th>
-                                                <th>Strand</th>
+                                                <th ><span style="display: none">Strand</span></th>
                                                 <th>Program</th>
                                                 <th>Firstname</th>
                                                 <th>Surname</th>
                                                 <th>Email</th>
-                                                <th>Municipality</th>
+                                                <th><span style="display: none">Municipality</span></th>
                                                 <th>Lacking</th>
                                             </tr>
                                         </thead>
+
                                         <tbody style="white-space: nowrap !important;">
                                             @foreach ($seis as $sei)
                                                 <tr>
@@ -72,20 +81,7 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
 
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -93,12 +89,12 @@
 
 
 
-                <button style="display: none" id="getEmailsButton">Get Selected Emails</button>
+
             </main>
 
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 
     <script>
         // $('#datatables-column-search-select-inputs').dataTable({
@@ -106,15 +102,22 @@
         // });
         document.addEventListener("DOMContentLoaded", function() {
             var datatablesMulti = $("#thisdatatable").DataTable({
-                responsive: true,
+                //responsive: true,
+               scrollX: true,
 
+                fixedColumns: {
+                    leftColumns: 3, // Number of columns to freeze on the left
+                    rightColumns: 0, // Number of columns to freeze on the right
+                },
                 initComplete: function() {
-                    this.api().columns([1, 6]).every(function() {
+                    this.api().columns([1, 6]).every(function(d) {
                         var column = this;
+                       var theadname = $("#thisdatatable th").eq([d]).text(); //used this specify table name and head
                         var select = $(
-                                "<select class=\"form-control\"><option value=\"\"></option></select>"
+                              "<select style=\"padding: 1px !important; border-width: thin; border-color:#999999; max-width: 300px\" class=\"form-control\"><option value=\"\"> " +
+                       theadname + " </option></select>"
                             )
-                            .appendTo($(column.footer()).empty())
+                            .appendTo($(column.header()))
                             .on("change", function() {
                                 var val = $.fn.dataTable.util.escapeRegex(
                                     $(this).val()
@@ -131,46 +134,9 @@
                 }
             });
 
-            // function getSelectedEmails() {
-            //     var selectedRows = datatablesMulti.rows({
-            //         selected: true
-            //     });
-            //     var selectedEmails = [];
-            //
-            //     selectedRows.every(function() {
-            //         var data = this.data();
-            //         var email = data[5]; // Assuming the email is in the second column (index 1)
-            //         selectedEmails.push(email);
-            //     });
-            //
-            //     return selectedEmails;
-            // }
-            //
-            // $(document).on("keydown", function(e) {
-            //     // Check if the "Escape" key (key code 27) is pressed
-            //     if (e.key === "Escape" || e.key === "Esc" || e.keyCode === 27) {
-            //         // Deselect all selected rows in the DataTable
-            //         datatablesMulti.rows({
-            //             selected: true
-            //         }).deselect();
-            //     }
-            // });
-            //
-            //
-            //
-            // // Example: Call the function and log the selected emails
-            // $("#getEmailsButton").on("click", function() {
-            //     // Call the function to retrieve selected email values
-            //     var selectedEmails = getSelectedEmails();
-            //     // console.log(selectedEmails);
-            //
-            //     // Do something with the selected email values (e.g., display them)
-            //     // alert("Selected Emails:\n" + selectedEmails.join("\n"));
-            // });
-
-
-
         })
+
+
     </script>
     <script></script>
 </body>
