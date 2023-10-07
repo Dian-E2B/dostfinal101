@@ -1,4 +1,2 @@
 
-
-import '../assets/kit.js';
-
+import '../assets/kit.js'; //MAIN
