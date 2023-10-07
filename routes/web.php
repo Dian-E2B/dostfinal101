@@ -57,7 +57,7 @@ Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewC
 
 
 //RSMS
-Route::get('/rsms', [\App\Http\Controllers\AccessControlViewController::class, 'index'])->name('rsms');
+Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
 
 
 

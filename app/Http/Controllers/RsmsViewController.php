@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class RsmsViewController extends Controller
 {
     //
-    public function rsms(){
+    public function rsmsview(){
 
     }
 }

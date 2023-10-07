@@ -74,7 +74,7 @@ class SendMailController extends Controller
                             ['email' => $email2, 'password' => $password101, 'username' => $username]
                         );
 
-
+                        flash()->addSuccess('Your notice for All RA 7687 has been sent!');
                     } catch (Exception $e) {
                         dd($e->getMessage());
                          //do nothing
@@ -112,7 +112,7 @@ class SendMailController extends Controller
                     ['email' => $email, 'password' => $password101, 'username' => $username]
                 );
 
-
+                flash()->addSuccess('Your notice for All Merit has been sent!');
             } catch (Exception $e) {
                 dd($e->getMessage());
                 //do nothing
@@ -120,7 +120,7 @@ class SendMailController extends Controller
 
         }
 
-        flash()->addSuccess('Your notice has been sent!');
+
         return back();
 
 

@@ -22,7 +22,7 @@
     <div class="main">
         @include('layouts.header')
 
-        <main class="content" style="padding:1.5rem 1.5rem 1.5rem; !important;">
+        <main class="content" style="padding:1.0rem 1.0rem 1.0rem; !important;">
             <div class="container-fluid p-0">
 
 

@@ -23,7 +23,7 @@
 			@include('layouts.header')
 
 			<main class="main">
-				 <div class="container-fluid p-1">
+				 <div class="container-fluid p-3">
 
 
 						<div class="col-12">
