@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\EmailViewController;
 use App\Http\Controllers\SeiViewController;
-use App\Http\Controllers\StudentController;
+
 use App\Http\Controllers\StudentViewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\SeiQualifierviewController;
-
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\ProfileController;
 
@@ -70,16 +70,17 @@ require __DIR__.'/studentauth.php';
 //    return view('student.dashboard');
 //})->middleware(['auth:student', 'verified'])->name('student.dashboard');
 
-Route::get('/student/dashboard', [StudentViewController::class, 'index'])
-    ->middleware(['auth:student', 'verified'])
-    ->name('student.dashboard');
+Route::get('student/dashboard', [StudentViewController::class, 'index'])
+    ->middleware(['auth:student', 'verified'])->name('student.dashboard');
 
-Route::get('/student/replyslipview', [StudentViewController::class, 'replyslipview'])
-    ->middleware(['auth:student', 'verified'])
-    ->name('student.replyslipview');
+Route::get('student/replyslipview', [StudentViewController::class, 'replyslipview'])
+    ->middleware(['auth:student', 'verified'])->name('student.replyslipview');
+
+Route::get('student/requestclearanceview', [StudentViewController::class, 'requestclearanceview'])
+    ->middleware(['auth:student', 'verified'])->name('student.requestclearance');
 
 
 Route::post('replyslipsubmit', [\App\Http\Controllers\StudentActionsController::class, 'replyslipsave'])
-    ->middleware(['auth:student', 'verified'])
-    ->name('replyslipsubmit');
+    ->middleware(['auth:student', 'verified'])->name('replyslipsubmit');
 
+Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class,'index']);

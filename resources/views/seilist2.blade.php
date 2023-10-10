@@ -23,7 +23,7 @@
            padding-left: 8px;
            padding-right:8px;
            border-bottom-width: thin;
-
+           border-right-width: thin;
        }
 	 </style>
 </head>
@@ -74,7 +74,7 @@
 													 <td style="color: black;">
 															{{ $sei->spasno }}</td>
 													 @foreach ($sei->scholars as $scholar)
-															<td style="color: black">{{ $scholar->lname }}
+															<td  style="color: black;">{{ $scholar->lname }}
 																 , {{ $scholar->fname }} {{ $scholar->mname }} </td>
 															<td style="color: black">{{ $scholar->email }}</td>
 													 @endforeach

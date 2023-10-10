@@ -12,7 +12,7 @@
 
     <div class="main">
         {{-- HEADER START --}}
-        @include('layoutsst.header')
+        @include('student.layoutsst.header')
         {{-- HEADER END --}}
 
         <main class="content">

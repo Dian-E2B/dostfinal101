@@ -22,7 +22,7 @@
           padding-left: 8px;
           padding-right:8px;
           border-bottom-width: thin;
-
+          border-right-width: thin;
        }
     </style>
 </head>

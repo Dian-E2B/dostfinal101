@@ -1,33 +1,23 @@
 <nav class="navbar navbar-expand navbar-light navbar-bg">
    
 
-    <div style="padding-right: 30px"></div>
-
-    <div style="{{ request()->is('seilist') ? 'display:block' : 'display:none' }}" class="btn-group">
-        <button style="background-color: darkgreen; color:snow;" id="uploadlist" type="button" class="btn dropdown-toggle"
-            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Update SEI
-        </button>
-
-        <form method="POST" enctype="multipart/form-data" action="{{ route('sei.store') }}">
-            <ul style="width: 300px; " class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li style="padding: 0px 10px 0px 10px ;min-width: 50% !important;">
-                    @csrf
-                    <input class="form-control" type="file" name="excel_file" accept=".xls, .xlsx">
-                </li>
-                <div style="padding: 1%"></div>
-                <li style="padding-left: 10px;"><button class="btn btn-primary" type="submit">Import</button></li>
-            </ul>
-        </form>
-
-    </div>
-
-    <div style="padding-right: 20px"></div>
-
-    <div  class="btn">
-
-        <a style="{{ request()->is('seilist') ||  request()->is('emaileditor') ? 'display:block' : 'display:none' }}" href="{{ route('sendmail') }}" class="btn btn-primary"> Email Notice to All</a>
-    </div>
+{{--REQUEST  DROPDOWN BUTTON--}}
+    <ul class="navbar-nav d-none d-lg-flex">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">
+                Request
+            </a>
+            <div class="dropdown-menu" aria-labelledby="requestDropdown">
+                <a class="dropdown-item" href="{{ route('student.requestclearance') }}"><i class="align-middle me-1" data-feather="home"></i>
+                    Scholarship Clearance</a>
+                <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
+                    Documentation</a>
+                <a class="dropdown-item" href="https://adminkit.io/docs/getting-started/changelog/" target="_blank"><i class="align-middle me-1"
+                                                                                                                       data-feather="edit"></i> Changelog</a>
+            </div>
+        </li>
+    </ul>
 
 
     <div class="navbar-collapse collapse">
@@ -98,6 +88,7 @@
                     </div>
                 </div>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
                     <div class="position-relative">
@@ -141,8 +132,8 @@
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
-                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"
-                                        alt="Christina Mason">
+{{--                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"--}}
+{{--                                        alt="Christina Mason">--}}
                                 </div>
                                 <div class="col-10 ps-2">
                                     <div class="text-dark">Christina Mason</div>
@@ -186,7 +177,9 @@
                             data-feather="user"></i> Profile</a>
                     <a class="dropdown-item" href="#"><i class="align-middle me-1"
                             data-feather="pie-chart"></i> Analytics</a>
-                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider">
+
+                    </div>
                     <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
                             data-feather="settings"></i> Settings & Privacy</a>
                     <a class="dropdown-item" href="#"><i class="align-middle me-1"

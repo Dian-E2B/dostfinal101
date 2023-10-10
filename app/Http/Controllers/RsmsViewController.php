@@ -8,6 +8,6 @@ class RsmsViewController extends Controller
 {
     //
     public function rsmsview(){
-
+        return view('rsms');
     }
 }
