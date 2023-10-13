@@ -61,4 +61,9 @@ class StudentViewController extends Controller
         return view('student.requestclearance');
     }
 
+
+    public function gradeinputview()
+    {
+        return view('student.gradeinput');
+    }
 }

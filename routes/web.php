@@ -84,4 +84,7 @@ Route::get('student/requestclearanceview', [StudentViewController::class, 'reque
 Route::post('replyslipsubmit', [\App\Http\Controllers\StudentActionsController::class, 'replyslipsave'])
     ->middleware(['auth:student', 'verified'])->name('replyslipsubmit');
 
+Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::class, 'gradeinputview'])
+    ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
+
 Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class,'index']);
