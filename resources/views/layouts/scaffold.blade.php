@@ -18,7 +18,7 @@
         <div class="main">
             @include('layouts.header')
 
-            <main class="content">
+            <main style="padding: 0.5rem 0.5rem 0.5rem 0.5rem" class="content">
                 <div class="container-fluid p-0">
 
 
