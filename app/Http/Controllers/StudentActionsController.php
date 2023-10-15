@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Cogdetails;
 use App\Models\replyslips;
 use App\Models\Scholars;
 use Illuminate\Http\Request;
@@ -60,6 +62,25 @@ class StudentActionsController extends Controller
             return redirect('/student/dashboard');
         }
 
+        return redirect('/student/dashboard');
+    }
 
+    public function cogsave(Request $request) {
+        $data = $request->all();
+
+        foreach ($data['subjectgradeData'] as $product) {
+            $name = $product['name'];
+            $price = $product['grade'];
+            Cogdetails::create([
+                'subjectname' => $name,
+                'grade' => $price,
+            ]);
+        }
+
+
+
+
+
+        return response()->json(['message' => 'Products inserted successfully'], 201);
     }
 }
