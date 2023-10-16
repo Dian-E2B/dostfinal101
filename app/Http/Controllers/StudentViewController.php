@@ -63,7 +63,9 @@ class StudentViewController extends Controller
 
 
     public function gradeinputview()
-    {
-        return view('student.gradeinput');
+    {   $userId = auth()->id();
+        $studentuser = Student::where('id', $userId)->first();
+        $scholarId = $studentuser->scholar_id;
+        return view('student.gradeinput', compact('scholarId'));
     }
 }

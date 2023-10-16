@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Cog;
 use App\Models\Cogdetails;
 use App\Models\replyslips;
 use App\Models\Scholars;
@@ -68,6 +69,16 @@ class StudentActionsController extends Controller
     public function cogsave(Request $request) {
         $data = $request->all();
 
+        Cog::create([
+            'scholar_id' => $name,
+            'semester' => $price,
+            'failnum' => $price,
+            'cog_status' => $price,
+            'acadyear' => $price,
+            'date_uploaded' => $price,
+        ]);
+
+
         foreach ($data['subjectgradeData'] as $product) {
             $name = $product['name'];
             $price = $product['grade'];
@@ -75,6 +86,7 @@ class StudentActionsController extends Controller
                 'subjectname' => $name,
                 'grade' => $price,
             ]);
+
         }
 
 
