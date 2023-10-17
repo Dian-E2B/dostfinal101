@@ -43,9 +43,7 @@
 	 <div class="main">
 			{{-- HEADER START --}}
 
-			<label>
-				 <input name="scholarid" style="display: none;" value="{{ $scholarId }}">
-			</label>
+
 
 			@include('student.layoutsst.header')
 			{{-- HEADER END --}}
@@ -71,7 +69,7 @@
 																		<img class="py-md-3" id="image-preview" src="" alt="Image Preview"
 																				 style="max-width: 500px; display: none; ">
 																		<label class="form-label">COG image/file:</label>
-																		<input name="image" id="image" class="form-control"
+																		<input value="" name="imagegrade" id="imagegradeid" class="form-control"
 																					 type="file">
 																 </div>
 
@@ -84,62 +82,68 @@
 													 <div class="py-0 py-md-0 border">
 															<div class="card-body">
 																 <form id="input-form">
-
+																		<label>
+																			 <input id="scholaridinput" name="scholarid" style="display: none;" value="{{ $scholarId }}">
+																		</label>
 																		<div class="row">
 
 																			 <div class="col-md-3">
 																					<label>
-																						 <select class="form-control">
+																						 <select id="semesterSelect" name="semester" class="form-control">
 																								<option selected="">Choose Semester:
 																								</option>{{-- 0-Summer | 1-First Sem | 2-Second Sem | 3-Third Sem--}}
-																								<option>1st Semester</option>
-																								<option>2nd Semester</option>
-																								<option>Summer</option>
+																								<option value="1" >1st Semester</option>
+																								<option value="2">2nd Semester</option>
+																								<option value="0">Summer</option>
 																						 </select>
 																					</label>
 																			 </div>
 
-																			 <div style="z-index: 0" class="col-md-6">
-																					{{--																					<div  class="input-group mb-3">--}}
-																					{{--																						 <span  class="input-group-text"--}}
-																					{{--																									 id="inputGroup-sizing-default">School Year:</span>--}}
-																					{{--																						 <input placeholder="yyyy-yyyy" type="text" class="form-control"--}}
-																					{{--																										name="schoolyear" aria-label="Sizing example input"--}}
-																					{{--																										aria-describedby="inputGroup-sizing-default"--}}
-																					{{--																										style="max-width: 250px;">--}}
-																					{{--																					</div>--}}
-																					<label for="test">Enroll with us:</label>
-																					<span style="display: table-cell;
-            width: 1px;
-            white-space: nowrap;"><input name="test" id="test"
-																											 type="text"
-																											 placeholder="Enter your input"/></span>
-																			 </div>
-																		</div>
-
-
-																		<div id="subjectgrade_row1" class="row">
 																			 <div class="col-md-6">
-																					<label>Subject Name:</label>
-																					<input id="name1" type="text" class="form-control">
+																					<div class="row align-items-end">
+																						 <div style="padding-right: 0" class="col-md-auto">
+																								<label for="inputSchoolyear" class="col-form-label">School Year:</label>
+																						 </div>
+																						 <div class="col-6">
+																								<input type="text"  name="schoolyear" placeholder="yyyy-yyyy" id="inputSchoolyear" class="form-control" aria-describedby="passwordHelpInline">
+																						 </div>
+																					</div>
 																			 </div>
-																			 <div class="col-md-2">
-																					<label>Grade:</label>
-																					<input id="grade1" type="number" class="form-control">
-																			 </div>
-																			 <div class="col-md-2">
-																					<label>Units:</label>
-																					<input id="unit1" type="number" class="form-control">
-																			 </div>
-																			 <div class="col-md-1">
-																					<br>
-																					<button style="display: none" onclick="delete_row('1')" type="button"
-																									class="btn btn-danger">Delete
-																					</button>
-																			 </div>
+
+
 																		</div>
 
 
+{{--																		<div id="subjectgrade_row1" class="row">--}}
+{{--																			 <div class="col-md-6">--}}
+{{--																					<label>Subject Name:</label>--}}
+{{--																					<input name="name${counter}"  type="text" class="form-control">--}}
+{{--																			 </div>--}}
+{{--																			 <div class="col-md-2">--}}
+{{--																					<label>Grade:</label>--}}
+{{--																					<input id="grade1" type="number" name="grade${counter}" class="form-control">--}}
+{{--																			 </div>--}}
+{{--																			 <div class="col-md-2">--}}
+{{--																					<label>Units:</label>--}}
+{{--																					<input id="unit1" name="unit${counter}" type="number" class="form-control">--}}
+{{--																			 </div>--}}
+{{--																			 <div class="col-md-1">--}}
+{{--																					<br>--}}
+{{--																					<button style="display: none" onclick="delete_row('1')" type="button"--}}
+{{--																									class="btn btn-danger">Delete--}}
+{{--																					</button>--}}
+{{--																			 </div>--}}
+{{--																		</div>--}}
+
+																		<!-- Your dynamic form fields generated using a for loop -->
+																		<div id="dynamicFieldsContainer">
+																			 @for ($i = 1; $i <= $counter; $i++)
+																					<input type="text" name="name{{ $i }}" id="name{{ $i }}" class="form-control">
+																					<input type="number" name="grade{{ $i }}" id="grade{{ $i }}" class="form-control">
+																					<input type="number" name="unit{{ $i }}" id="unit{{ $i }}" class="form-control">
+																					<!-- Add more dynamic fields as needed -->
+																			 @endfor
+																		</div>
 																 </form>
 
 																 <div class="text-md-end py-md-3">
@@ -199,6 +203,11 @@
     }
 
     function submit_form() {
+        var semesterSelect = document.getElementById('semesterSelect').value;
+        var schoolYear = document.getElementById('inputSchoolyear').value;
+        var imageSelect = document.getElementById('imagegradeid').value;
+        var scholaridSelect = document.getElementById('scholaridinput').value;
+
         var subjectgradeData = []
         for (var i = 1; i <= counter; i++) {
             var product_row = document.getElementById('subjectgrade' + i)
@@ -215,18 +224,45 @@
             }
         }
 
-        axios.post('submitgrades', {
-            subjectgradeData: subjectgradeData
-        }).then(resp => {
-            window.location.reload()
-        })
+        var postData = {
+            schoolyear: schoolYear,
+            semester: semesterSelect,
+            subjectgradeData: subjectgradeData,
+            scholarid: scholaridSelect,
+            imagegrade: imageSelect
+        };
 
+        axios.post('submitgrades',postData).then(response => {
+            // Handle the response from the server
+            console.log(response.data);
+
+        })
+            .catch(error => {
+                // Handle errors if the request fails
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    console.error('Status Code:', error.response.status);
+
+                    if (error.response.data) {
+                        // Access specific error details sent by the server
+                        console.error('Server Error:', error.response.data);
+                        // You can also access specific error messages or fields in the response data
+                        alert(error.response.data.error_message);
+                    }
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.error('No response received');
+                } else {
+                    // Something happened in setting up the request that triggered an error
+                    console.error('Request setup error:', error.message);
+                }
+            });
 
     }
 
 
     // Add an event listener to the file input
-    document.getElementById('image').addEventListener('change', function () {
+    document.getElementById('imagegradeid').addEventListener('change', function () {
         var imagePreview = document.getElementById('image-preview');
         var fileInput = this;
 

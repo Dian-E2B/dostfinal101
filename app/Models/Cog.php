@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cog extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $fillable = [
         'scholar_id',
         'semester',
@@ -18,4 +18,10 @@ class Cog extends Model
         'acadyear',
         'date_uploaded'
     ];
+
+    public function cogdetails()
+    {
+        return $this->hasMany(Cogdetails::class);
+    }
+
 }

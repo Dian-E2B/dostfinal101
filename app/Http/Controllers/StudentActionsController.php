@@ -9,6 +9,7 @@ use App\Models\replyslips;
 use App\Models\Scholars;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Carbon\Carbon;
 
 class StudentActionsController extends Controller
 {
@@ -67,32 +68,41 @@ class StudentActionsController extends Controller
     }
 
     public function cogsave(Request $request) {
-        $data = $request->all();
+        //$data = $request->all();
+        $scholarid = $request->input('scholarid');
+        $semesterinput = $request->input('semester');
+        $schoolyearinput = $request->input('schoolyear');
+        $subjectgradeData = $request->input('subjectgradeData');
+        if ($request->hasFile('imagegrade')) {
+            $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
+            $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
+        }
 
-        Cog::create([
-            'scholar_id' => $name,
-            'semester' => $price,
-            'failnum' => $price,
-            'cog_status' => $price,
-            'acadyear' => $price,
-            'date_uploaded' => $price,
+        $cog = Cog::create([
+            'scholar_id' => $scholarid,
+            'semester' => $semesterinput,
+            'failnum' => 0,
+            'cog_status' => 0,
+            'acadyear' => $schoolyearinput,
+            'date_uploaded' => now(),
         ]);
 
 
-        foreach ($data['subjectgradeData'] as $product) {
-            $name = $product['name'];
-            $price = $product['grade'];
-            Cogdetails::create([
-                'subjectname' => $name,
-                'grade' => $price,
+        foreach ($subjectgradeData as $data) {
+            $subjectname = $data['subjectname'];
+            $grade = $data['grade'];
+            $units = $data['unit'];
+            dd($subjectname);
+            $cog->cogdetails()->create([
+                'subjectname' => $subjectname,
+                'grade' => $grade,
+                'unit' => $units
             ]);
-
         }
 
 
 
 
-
-        return response()->json(['message' => 'Products inserted successfully'], 201);
+        return response()->json(['message' => 'Submitted successfully'], 201);
     }
 }

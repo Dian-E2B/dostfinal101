@@ -84,7 +84,7 @@ Route::get('student/requestclearanceview', [StudentViewController::class, 'reque
 Route::post('replyslipsubmit', [\App\Http\Controllers\StudentActionsController::class, 'replyslipsave'])
     ->middleware(['auth:student', 'verified'])->name('replyslipsubmit');
 
-Route::post('submitgrades', [\App\Http\Controllers\StudentActionsController::class, 'cogsave'])
+Route::post('student/submitgrades', [\App\Http\Controllers\StudentActionsController::class, 'cogsave'])
     ->middleware(['auth:student', 'verified'])->name('submitgrades');
 
 Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::class, 'gradeinputview'])
