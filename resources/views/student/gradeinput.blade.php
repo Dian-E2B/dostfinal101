@@ -58,41 +58,50 @@
 									</div>
 									<div class="card-body">
 										 {{--BODY--}}
+										 <form id="input-form" method="POST" action="{{ route('submitgrades') }}"
+													 enctype="multipart/form-data">
+												@csrf
+												{{--IMAGE SECTION--}}
+												<div class="row">
+													 <div class="col-md-6 text-left">
+															<div class="py-0 py-md-0 border">
 
-										 {{--IMAGE SECTION--}}
-										 <div class="row">
-												<div class="col-md-6 text-left">
-													 <div class="py-0 py-md-0 border">
-															<div class="card-body">
 
-																 <div class="magnifier">
-																		<img class="py-md-3" id="image-preview" src="" alt="Image Preview"
-																				 style="max-width: 500px; display: none; ">
-																		<label class="form-label">COG image/file:</label>
-																		<input value="" name="imagegrade" id="imagegradeid" class="form-control"
-																					 type="file">
+																 <div class="card-body">
+
+																		<div class="magnifier">
+
+																			 <img class="py-md-3" id="image-preview" src="" alt="Image Preview"
+																						style="max-width: 500px; display: none; ">
+																			 <label class="form-label">COG image/file:</label>
+
+																			 <input required type="file" name="imagegrade" id="imagegradeid"
+																							class="form-control"
+																							accept="image/*">
+																		</div>
+
 																 </div>
-
 															</div>
 													 </div>
-												</div>
 
-												{{--GRADING SECTION--}}
-												<div class="col-md-6 text-left">
-													 <div class="py-0 py-md-0 border">
-															<div class="card-body">
-																 <form id="input-form">
+													 {{--GRADING SECTION--}}
+													 <div class="col-md-6 text-left">
+															<div class="py-0 py-md-0 border">
+																 <div class="card-body">
+
+
 																		<label>
-																			 <input id="scholaridinput" name="scholarid" style="display: none;" value="{{ $scholarId }}">
+																			 <input id="scholaridinput" name="scholarid" style="display: none;"
+																							value="{{ $scholarId }}">
 																		</label>
 																		<div class="row">
 
 																			 <div class="col-md-3">
 																					<label>
-																						 <select id="semesterSelect" name="semester" class="form-control">
-																								<option selected="">Choose Semester:
+																						 <select id="semesterSelect" name="semester" class="form-control" required>
+																								<option value="">Choose Semester:
 																								</option>{{-- 0-Summer | 1-First Sem | 2-Second Sem | 3-Third Sem--}}
-																								<option value="1" >1st Semester</option>
+																								<option value="1">1st Semester</option>
 																								<option value="2">2nd Semester</option>
 																								<option value="0">Summer</option>
 																						 </select>
@@ -105,7 +114,9 @@
 																								<label for="inputSchoolyear" class="col-form-label">School Year:</label>
 																						 </div>
 																						 <div class="col-6">
-																								<input type="text"  name="schoolyear" placeholder="yyyy-yyyy" id="inputSchoolyear" class="form-control" aria-describedby="passwordHelpInline">
+																								<input required type="text" name="schoolyear" placeholder="yyyy-yyyy"
+																											 id="inputSchoolyear" class="form-control"
+																											 aria-describedby="passwordHelpInline">
 																						 </div>
 																					</div>
 																			 </div>
@@ -114,55 +125,46 @@
 																		</div>
 
 
-{{--																		<div id="subjectgrade_row1" class="row">--}}
-{{--																			 <div class="col-md-6">--}}
-{{--																					<label>Subject Name:</label>--}}
-{{--																					<input name="name${counter}"  type="text" class="form-control">--}}
-{{--																			 </div>--}}
-{{--																			 <div class="col-md-2">--}}
-{{--																					<label>Grade:</label>--}}
-{{--																					<input id="grade1" type="number" name="grade${counter}" class="form-control">--}}
-{{--																			 </div>--}}
-{{--																			 <div class="col-md-2">--}}
-{{--																					<label>Units:</label>--}}
-{{--																					<input id="unit1" name="unit${counter}" type="number" class="form-control">--}}
-{{--																			 </div>--}}
-{{--																			 <div class="col-md-1">--}}
-{{--																					<br>--}}
-{{--																					<button style="display: none" onclick="delete_row('1')" type="button"--}}
-{{--																									class="btn btn-danger">Delete--}}
-{{--																					</button>--}}
-{{--																			 </div>--}}
-{{--																		</div>--}}
-
-																		<!-- Your dynamic form fields generated using a for loop -->
-																		<div id="dynamicFieldsContainer">
-																			 @for ($i = 1; $i <= $counter; $i++)
-																					<input type="text" name="name{{ $i }}" id="name{{ $i }}" class="form-control">
-																					<input type="number" name="grade{{ $i }}" id="grade{{ $i }}" class="form-control">
-																					<input type="number" name="unit{{ $i }}" id="unit{{ $i }}" class="form-control">
-																					<!-- Add more dynamic fields as needed -->
-																			 @endfor
+																		<div style="margin-top: 2.5%" class="row">
+																			 <div class="col-md-5">
+																					<label>Subject Name:</label>
+																					<input name="subjectnames[0][name]" type="text" class="form-control">
+																			 </div>
+																			 <div class="col-md-2">
+																					<label>Grade:</label>
+																					<input id="grade1" type="number" name="grades[0][grade]"
+																								 class="form-control">
+																			 </div>
+																			 <div class="col-md-2">
+																					<label>Units:</label>
+																					<input id="unit1" name="units[0][unit]" type="number" class="form-control">
+																			 </div>
+																			 <div class="col-md-3">
+																					<br>
+																					<button name="add" id="add" type="button" class="btn btn-success">Add Row
+																					</button>
+																			 </div>
 																		</div>
-																 </form>
+																		<div id="table">
 
-																 <div class="text-md-end py-md-3">
-																		<button onclick="add_more()" class="btn btn-pill btn-primary">Add More</button>
+																		</div>
+
+																		{{--																		<!-- Your dynamic form fields generated using a for loop -->--}}
+
 
 																 </div>
-
-
 															</div>
 													 </div>
 												</div>
-										 </div>
 
-										 <div style="text-align: center; margin-top: 20px;">
-												<button onclick="submit_form()" class="btn btn-pill btn-success">Submit All</button>
-										 </div>
-
+												<div style="text-align: center; margin-top: 20px;">
+													 <button type="submit" class="btn btn-pill btn-primary">Submit All</button>
+												</div>
+										 </form>
 									</div>
+
 							 </div>
+
 						</div>
 
 				 </div>
@@ -170,96 +172,38 @@
 	 </div>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    var counter = 1;
+    var i = 0;
+    $('#add').click(function () {
+        ++i;
+        $('#table').append(
+            '<div style="margin-top: 1.5%" class="row" id="row' + i + '">' +
+            '<div class="col-md-5">' +
+            ' <label>Subject Name:</label>' +
+            '<input id="subjectname1" name="subjectnames[' + i + '][name]"  type="text" class="form-control">' +
+            ' </div>' +
+            '<div class="col-md-2">' +
+            ' <label>Grade:</label>' +
+            '<input id="grade1" type="number" name="grades[' + i + '][grade]"  class="form-control">' +
+            '</div>' +
+            '<div class="col-md-2">' +
+            '<label>Units:</label>' +
+            '<input id="unit1" name="units[' + i + '][unit]"type="number" class="form-control">' +
+            '</div>' +
+            '<div class="col-md-3">' +
+            '<br>' +
+            ' <button name="add" id="add" type="button" class="btn btn-danger remove-table-row">Delete</button>' +
+            ' </div>' +
+            '</div>'
+        );
+    });
 
-    function add_more() {
-        counter++
-        var newDiv = `<div id="subjectgrade${counter}" class="row">
-                    <div class="col-md-6">
-                        <label>Subject Name:</label>
-                        <input id="name${counter}" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-2">
-                        <label>Grade:</label>
-                        <input id="grade${counter}" type="number" class="form-control">
-                    </div>
-                     <div class="col-md-2">
-												<label>Units:</label>
-												<input id="unit${counter}" type="number" class="form-control">
-										</div>
-                    <div class="col-md-1">
-                        <br>
-                        <button style="display: ${counter > 1 ? 'block' : 'none'}" onclick="delete_row('${counter}')" type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </div>`
-        var form = document.getElementById('input-form')
-        form.insertAdjacentHTML('beforeend', newDiv);
-    }
-
-    function delete_row(id) {
-        document.getElementById('subjectgrade' + id).remove()
-    }
-
-    function submit_form() {
-        var semesterSelect = document.getElementById('semesterSelect').value;
-        var schoolYear = document.getElementById('inputSchoolyear').value;
-        var imageSelect = document.getElementById('imagegradeid').value;
-        var scholaridSelect = document.getElementById('scholaridinput').value;
-
-        var subjectgradeData = []
-        for (var i = 1; i <= counter; i++) {
-            var product_row = document.getElementById('subjectgrade' + i)
-            if (product_row) {
-                var subject_name = document.getElementById('name' + i).value
-                var grade = document.getElementById('grade' + i).value
-                var unit = document.getElementById('unit' + i).value
-                var data = {
-                    name: subject_name,
-                    grade: grade,
-                    unit: unit
-                }
-                subjectgradeData.push(data)
-            }
-        }
-
-        var postData = {
-            schoolyear: schoolYear,
-            semester: semesterSelect,
-            subjectgradeData: subjectgradeData,
-            scholarid: scholaridSelect,
-            imagegrade: imageSelect
-        };
-
-        axios.post('submitgrades',postData).then(response => {
-            // Handle the response from the server
-            console.log(response.data);
-
-        })
-            .catch(error => {
-                // Handle errors if the request fails
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    console.error('Status Code:', error.response.status);
-
-                    if (error.response.data) {
-                        // Access specific error details sent by the server
-                        console.error('Server Error:', error.response.data);
-                        // You can also access specific error messages or fields in the response data
-                        alert(error.response.data.error_message);
-                    }
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    console.error('No response received');
-                } else {
-                    // Something happened in setting up the request that triggered an error
-                    console.error('Request setup error:', error.message);
-                }
-            });
-
-    }
-
+    $(document).on('click', '.remove-table-row', function () {
+        var rowId = $(this).closest('.row').attr('id');
+        $('#' + rowId).remove();
+    });
 
     // Add an event listener to the file input
     document.getElementById('imagegradeid').addEventListener('change', function () {

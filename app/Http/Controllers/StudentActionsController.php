@@ -68,15 +68,22 @@ class StudentActionsController extends Controller
     }
 
     public function cogsave(Request $request) {
-        //$data = $request->all();
+        $data = $request->validate([
+            'subjectnames.*.name' => 'required',
+            'grades.*.grade' => 'required',
+            'units.*.unit' => 'required',
+        ]);
+
+       /* dd($data);*/
         $scholarid = $request->input('scholarid');
         $semesterinput = $request->input('semester');
         $schoolyearinput = $request->input('schoolyear');
-        $subjectgradeData = $request->input('subjectgradeData');
-        if ($request->hasFile('imagegrade')) {
-            $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
-            $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
-        }
+
+        $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
+        $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
+//         dd($customstudentprospectusfilename);
+
+
 
         $cog = Cog::create([
             'scholar_id' => $scholarid,
@@ -87,22 +94,14 @@ class StudentActionsController extends Controller
             'date_uploaded' => now(),
         ]);
 
-
-        foreach ($subjectgradeData as $data) {
-            $subjectname = $data['subjectname'];
-            $grade = $data['grade'];
-            $units = $data['unit'];
-            dd($subjectname);
+        foreach ($data['subjectnames'] as $index => $subject) {
             $cog->cogdetails()->create([
-                'subjectname' => $subjectname,
-                'grade' => $grade,
-                'unit' => $units
+                'subjectname' => $subject['name'],
+                'grade' => $data['grades'][$index]['grade'],
+                'unit' => $data['units'][$index]['unit'],
             ]);
         }
 
-
-
-
-        return response()->json(['message' => 'Submitted successfully'], 201);
+        return back();
     }
 }

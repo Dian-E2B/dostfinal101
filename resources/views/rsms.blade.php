@@ -38,7 +38,7 @@
                                     <th style="  ">COURSE</th>
                                     <th style=" ">GRADES [2ND] SEM [2021-2022]</th>
                                     <th style=" ">SUMMER REG</th>
-                                    <th style="">REG  FORMS  1ST SEM 2022-2023</th>
+                                    <th style="">REG FORMS 1ST SEM 2022-2023</th>
                                     <th style=" ">REMARKS</th>
                                     <th style="  ">STATUS-ENDORSEMENT</th>
                                     <th style=" ">STATUS-ENDORSEMENT2</th>
@@ -46,41 +46,37 @@
                                     <th style="  ">NOTATIONS</th>
                                     <th style=" ">SUMMER</th>
                                     <th style=" ">FA RELEASED</th>
+                                    <th style=" ">FA RELEASED+TUITION+BOOK+STIPEND</th>
                                     <th style="">LVDC Account</th>
-                                    <th style=" ">HVC Notes</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-{{--                                @foreach ($seis as $sei)--}}
+                                @foreach ($rsms1 as $rsms2)
                                     <tr>
 
-                                        <td style="color: black;"></td>
-                               {{--     @foreach ($sei->scholars as $scholar)--}}
-                                        <td style="color: black">{{--{{ $scholar->lname }}, {{ $scholar->fname }} {{ $scholar->mname }}--}} </td>
-                                        <td style="color: black">{{--{{ $scholar->email }}--}}</td>
-                                       {{-- @endforeach--}}
-                                        <td style="color: black">{{--{{ $sei->strand }}--}}</td>
-                                        <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                        <td style="color: black">{{-- {{ $sei->municipality }}--}}</td>
-                                        <td style="color: black;"></td>
-                                        {{--     @foreach ($sei->scholars as $scholar)--}}
-                                        <td style="color: black">{{--{{ $scholar->lname }}, {{ $scholar->fname }} {{ $scholar->mname }}--}} </td>
-                                        <td style="color: black">{{--{{ $scholar->email }}--}}</td>
-                                        {{-- @endforeach--}}
-                                        <td style="color: black">{{--{{ $sei->strand }}--}}</td>
-                                        <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                        <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                       <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
-                                        <td style="color: black">{{--{{ $sei->program->progname }}--}}</td>
+                                        <td style="color: black;">{{ $rsms2->BATCH }} </td>
+                                        <td style="color: black">{{ $rsms2->NO }}</td>
+                                        <td style="color: black">{{ $rsms2->NAME }}</td>
+                                        <td style="color: black">{{ $rsms2->MF }}</td>
+                                        <td style="color: black">{{ $rsms2->SCHOLARSHIPPROGRAM}}</td>
+                                        <td style="color: black">{{ $rsms2->SCHOOL}}</td>
+                                        <td style="color: black;">{{ $rsms2->COURSE}}</td>
+                                        <td style="color: black">{{ $rsms2->GRADES2NDSEM20212022}}</td>
+                                        <td style="color: black">{{ $rsms2->SummerREG}}</td>
+                                        <td style="color: black">{{ $rsms2->REGFORMS1STSEM20222023}}</td>
+                                        <td style="color: black">{{ $rsms2->REMARKS}}</td>
+                                        <td style="color: black">{{ $rsms2->STATUSENDORSEMENT}}</td>
+                                       <td style="color: black">{{ $rsms2->STATUSENDORSEMENT2}}</td>
+                                       <td style="color: black">{{ $rsms2->STATUS}}</td>
+                                       <td style="color: black">{{ $rsms2->NOTATIONS}}</td>
+                                       <td style="color: black">{{ $rsms2->SUMMER}}</td>
+                                       <td style="color: black">{{ $rsms2->FARELEASEDTUITION}}</td>
+                                       <td style="color: black">{{ $rsms2->FARELEASEDTUITIONBOOKSTIPEND}}</td>
+                                        <td style="color: black">{{ $rsms2->LVDCAccount}}</td>
 
 
                                     </tr>
-{{--                                @endforeach--}}
+                                @endforeach
                                 </tbody>
 
                             </table>
@@ -110,7 +106,7 @@
                 {targets: [3, 5], orderable: false} // Disable sorting for the first and third columns (columns are zero-based)
             ],
             fixedColumns: {
-                leftColumns: 2, // Specify the number of left columns to freeze
+                leftColumns: 3, // Specify the number of left columns to freeze
                 //  rightColumns: 1 // Specify the number of right columns to freeze
             },
             initComplete: function () {
@@ -137,8 +133,6 @@
             }
 
         });
-
-
     });
 </script>
 
