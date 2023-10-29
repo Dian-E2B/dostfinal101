@@ -58,7 +58,7 @@ Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewC
 
 //RSMS
 Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
-
+Route::get('/rsmslistra7687', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
 
 

@@ -25,11 +25,10 @@
             padding-right: 8px;
             border-bottom-width: thin;
             border-right-width: thin;
+            color: black;
         }
 
-        body {
-            padding-right: 0 !important
-        }
+
 
     </style>
 </head>
@@ -62,7 +61,11 @@
                                 <th style=" ">
                                     <span style="display: none;">M/F</span>
                                 </th>
-                                <th>SCHOLARSHIP PROGRAM</th>
+                                <th>
+                                    <span
+                                        style="display: none;">PROGRAM
+                                        </span>
+                                </th>
                                 <th style=" ">
                                         <span
                                             style="display: none;">SCHOOL
@@ -92,7 +95,7 @@
                                     <td style="color: black">{{ $rsms2->NO }}</td>
                                     <td style="color: black">{{ $rsms2->NAME }}</td>
                                     <td style="color: black;padding: 0 15px">{{ $rsms2->MF }}</td>
-                                    <td style="color: black">{{ $rsms2->SCHOLARSHIPPROGRAM}}</td>
+                                    <td style="color: black; padding: 0 20px">{{ $rsms2->SCHOLARSHIPPROGRAM}}</td>
                                     <td style="color: black ; padding: 0 15px">{{ $rsms2->SCHOOL}}</td>
                                     <td style="color: black;">{{ $rsms2->COURSE}}</td>
                                     <td style="color: black">{{ $rsms2->GRADES2NDSEM20212022}}</td>
@@ -176,14 +179,14 @@
             paging: true,
             scrollY: scrollY + 'px',
             columnDefs: [
-                {targets: [3, 5, 19], orderable: false, type: "string"} // Disable sorting for the first and third columns (columns are zero-based)
+                {targets: [3, 5, 19,4], orderable: false, type: "string"} // Disable sorting for the first and third columns (columns are zero-based)
             ],
             fixedColumns: {
                 leftColumns: 3, // Specify the number of left columns to freeze
                 //  rightColumns: 1 // Specify the number of right columns to freeze
             },
             initComplete: function () {
-                this.api().columns([3, 5]).every(function (d) {
+                this.api().columns([3, 5,4]).every(function (d) {
                     var column = this;
                     var theadname = $("#thisdatatable th").eq([d]).text(); //used this specify table name and head
                     var select = $(
