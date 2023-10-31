@@ -59,14 +59,17 @@ Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewC
 //RSMS
 Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
 Route::get('/rsmslistra7687', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
+Route::get('/rsmslistra10612', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra10612view'])->name('rsmslistra10612');
+Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
+Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
 
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-require __DIR__.'/studentauth.php';
+require __DIR__ . '/studentauth.php';
 
 //Route::get('/student/dashboard', function () {
 //    return view('student.dashboard');
@@ -91,4 +94,4 @@ Route::post('student/submitgrades', [\App\Http\Controllers\StudentActionsControl
 Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::class, 'gradeinputview'])
     ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
 
-Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class,'index']);
+Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class, 'index']);

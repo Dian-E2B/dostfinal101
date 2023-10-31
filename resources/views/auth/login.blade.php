@@ -5,33 +5,71 @@
     <title>DOST XI</title>
     {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .opacitytext {
+            opacity: 9 !important;
+        }
+
+        .logo {
+            overflow: hidden;
+            shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+            transform: translatey(0px);
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            margin: -100px -300px;
+        }
+
+        @keyframes float {
+            0% {
+                shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+
+            }
+
+            50% {
+                shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+                transform: translatey(-20px);
+
+            }
+
+            100% {
+                shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+                transform: translatey(0px);
+            }
+        }
+    </style>
 </head>
 
 <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <main class="d-flex w-100 h-100">
-        <div class="container d-flex flex-column">
+        <div s class="container d-flex flex-column">
             <div class="row vh-100">
                 <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
                     <div class="d-table-cell align-middle">
 
-                        <div class="text-center mt-4">
-                            <h1 class="h2">Welcome back!</h1>
-                            <p class="lead">
-                                Sign in to your account to continue
-                            </p>
+                        <div class="text-center mt-0">
+
+                            <img class="logo lead" src="{{ asset('icons/DOSTLOGOsmall.png') }}" alt="Girl in a jacket"
+                                width="600" height="600">
                         </div>
 
                         <div class="card">
+                            <span class="justify-content-center"
+                                style="margin: auto; padding-top: 10px; font-weight: bold; font-size: 20px">Welcome!
+                            </span>
                             <div class="card-body">
+
                                 <div class="m-sm-3">
 
 
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="email" class="form-label">Email</label>
+                                            <label for="email" class="form-label opacitytext">Email</label>
                                             <input id="email"
-                                                class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                                class="opacitytext form-control form-control-lg @error('email') is-invalid @enderror"
                                                 name="email" type="email" value="{{ old('email') }}"
                                                 placeholder="Enter your email" required autocomplete="email"
                                                 autofocus />
@@ -43,9 +81,9 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="password"  class="form-label">Password</label>
-                                            <input id="password" class="form-control form-control-lg" type="password" name="password"
-                                                placeholder="Enter your password" />
+                                            <label for="password" class="opacitytext form-label">Password</label>
+                                            <input id="password" class="opacitytext form-control form-control-lg"
+                                                type="password" name="password" placeholder="Enter your password" />
 
                                             @if (Route::has('password.request'))
                                                 <small>
@@ -73,7 +111,7 @@
                         </div>
 
                         @if (Route::has('register'))
-                            <div class="text-center mb-3">
+                            <div style="display:none;" class="text-center mb-3">
                                 Don't have an account? <a href='{{ route('register') }}'>Sign up</a>
                             </div>
                         @endif

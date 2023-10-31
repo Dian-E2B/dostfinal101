@@ -73,19 +73,23 @@
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">RSMS</span>
                 </a>
                 <ul id="rsms1"
-                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') ? 'show' : '' }}"
+                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
                     <li class="sidebar-item {{ request()->is('rsms') ? 'active' : '' }}"><a class='sidebar-link'
                             href='{{ route('rsms') }}'>On-Going</a>
                     </li>
+
                     <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a
                             class='sidebar-link' href='{{ route('rsmslistra7687') }}'>List RA7687 </a></li>
-                    <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a
-                            class='sidebar-link' href='{{ route('rsmslistra7687') }}'>List RA10612 </a></li>
-                    <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a
-                            class='sidebar-link' href='{{ route('rsmslistra7687') }}'>List Merit </a></li>
-                    <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a
-                            class='sidebar-link' href='{{ route('rsmslistra7687') }}'>Non Compliance </a></li>
+
+                    <li class="sidebar-item {{ request()->is('rsmslistra10612') ? 'active' : '' }}"><a
+                            class='sidebar-link' href='{{ route('rsmslistra10612') }}'>List RA10612 </a></li>
+
+                    <li class="sidebar-item {{ request()->is('rsmslistmerit') ? 'active' : '' }}"><a
+                            class='sidebar-link' href='{{ route('rsmsmerit') }}'>List Merit </a></li>
+
+                    <li class="sidebar-item {{ request()->is('rsmslistnoncompliance') ? 'active' : '' }}"><a
+                            class='sidebar-link' href='{{ route('rsmsnoncompliance') }}'>Non Compliance </a></li>
                 </ul>
             </li>
 
