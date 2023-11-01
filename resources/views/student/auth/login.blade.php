@@ -4,7 +4,43 @@
 <head>
     <title>DOST XI</title>
     {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js']))
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .introheader {
+            color: aliceblue;
+        }
+
+        img {
+            overflow: hidden;
+            shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+            transform: translatey(0px);
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            margin: -250px -350px;
+
+        }
+
+        @keyframes float {
+            0% {
+                shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+
+            }
+
+            50% {
+                shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+                transform: translatey(50px);
+
+            }
+
+            100% {
+                shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+                transform: translatey(0px);
+            }
+        }
+    </style>
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
@@ -12,23 +48,29 @@
         <div class="container d-flex flex-column">
             <div class="row vh-100">
                 <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+
                     <div class="d-table-cell align-middle">
 
-                        <div class="text-center mt-4">
-                            <h1 class="h2">Welcome back!</h1>
-                            <p class="lead">
-                                Sign in to your account to continue
-                            </p>
+                        <div style=" " class="introheader text-center mt-4">
+                            <img src="{{ asset('icons/DOSTLOGOstudent.png') }}" width="700" height="700">
+
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="margin-top: 40px">
                             <div class="card-body">
-                                <div class="m-sm-3">
+                                <div class="m-sm-100">
 
-
+                                    <section
+                                        style="color:black; background-color: white; padding: 0px 0px; border-radius: 15px; opacity: 0.99; text-align: center !important;">
+                                        <h1 style="" class="h2">Welcome, Scholar!
+                                        </h1>
+                                        <p class="lead">
+                                            Please enter your credentials.
+                                        </p>
+                                    </section>
                                     <form method="POST" action="{{ route('student.login') }}">
                                         @csrf
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label for="email" class="form-label">Email</label>
                                             <input id="email"
                                                 class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -42,7 +84,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3">
+                                        <div class="mb-1">
                                             <label class="form-label">Password</label>
                                             <input class="form-control form-control-lg" type="password" name="password"
                                                 placeholder="Enter your password" />
@@ -73,7 +115,7 @@
                         </div>
 
                         @if (Route::has('register'))
-                            <div class="text-center mb-3">
+                            <div style="display: none;" class="text-center mb-3">
                                 Don't have an account? <a href='{{ route('register') }}'>Sign up</a>
                             </div>
                         @endif

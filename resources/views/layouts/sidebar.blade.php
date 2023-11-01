@@ -134,9 +134,11 @@
                             class='sidebar-link' href='{{ route('accesscontrol') }}'>Show All</a></li>
                     <li class="sidebar-item {{ request()->is('accesscontrolpending') ? 'active' : ' ' }}"><a
                             class='sidebar-link' href='{{ route('accesscontrolpending') }}'>Pending </a></li>
-                    <li class="sidebar-item {{ request()->is('accesscontrolongoing') ? 'active' : ' ' }}"><a
+                    <li style="display: none;"
+                        class="sidebar-item {{ request()->is('accesscontrolongoing') ? 'active' : ' ' }}"><a
                             class='sidebar-link' href='{{ route('accesscontrolongoing') }}'>Ongoing </a></li>
-                    <li class="sidebar-item {{ request()->is('accesscontrolenrolled') ? 'active' : ' ' }}"><a
+                    <li style=""
+                        class="sidebar-item {{ request()->is('accesscontrolenrolled') ? 'active' : ' ' }}"><a
                             class='sidebar-link' href='{{ route('accesscontrolenrolled') }}'>Enrolled </a></li>
                     <li class="sidebar-item {{ request()->is('accesscontroldeferred') ? 'active' : ' ' }}"><a
                             class='sidebar-link' href='{{ route('accesscontroldeferred') }}'>Deferred </a></li>
