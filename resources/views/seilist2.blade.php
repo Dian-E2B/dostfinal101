@@ -9,6 +9,13 @@
         rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     <style>
+        .no-design-button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            /* Add a pointer cursor to make it look clickable */
+        }
+
         td {
             user-select: none;
         }
@@ -61,65 +68,49 @@
                                         <th>Email</th>
                                         <th style="padding-left: 0 !important; padding-right: 0 !important; "><span
                                                 style="display: none">- Strand -</span></th>
-
                                         <th>Program</th>
-
                                         <th style="  padding-left: 0 !important; padding-right: 0 !important;"><span
                                                 style="display: none; ">- Municipality -</span></th>
                                         <th>Lacking</th>
                                         <th>Action</th>
+                                        <th style="display: none;">ID</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     @foreach ($seis as $sei)
                                         <tr>
+                                            <form action="{{ route('editscholar') }}" method="POST">
+                                                @csrf
 
-                                            <td style="color: black;">
-                                                {{ $sei->spasno }}</td>
-                                            @foreach ($sei->scholars as $scholar)
-                                                <td style="color: black;">{{ $scholar->lname }}
-                                                    , {{ $scholar->fname }} {{ $scholar->mname }} </td>
-                                                <td style="color: black">{{ $scholar->email }}</td>
-                                            @endforeach
-                                            <td style="color: black">{{ $sei->strand }}</td>
-                                            <td style="color: black">{{ $sei->program->progname }}</td>
-
-                                            <td style="color: black"> {{ $sei->municipality }}</td>
-                                            <td style="color: black"> {{ $sei->lacking }}</td>
-                                            <td style="text-align: center "><a data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal"><i class="fas fa-money-check-edit"
-                                                        style="color: #000040;"></i>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Modal title</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    ...
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary">Save
-                                                                        changes</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                                <td style="color: black;">
+                                                    {{ $sei->spasno }}</td>
+                                                @foreach ($sei->scholars as $scholar)
+                                                    <td style="color: black;">{{ $scholar->lname }}
+                                                        , {{ $scholar->fname }} {{ $scholar->mname }} </td>
+                                                    <td style="color: black">{{ $scholar->email }}</td>
 
 
+                                                    <td style="color: black">{{ $sei->strand }}</td>
+                                                    <td style="color: black">{{ $sei->program->progname }}</td>
+
+                                                    <td style="color: black"> {{ $sei->municipality }}</td>
+                                                    <td style="color: black"> {{ $sei->lacking }}</td>
+                                                    <td style="text-align: center">
+                                                        <input type="text" name="email"
+                                                            value="{{ $scholar->email }}"
+                                                            placeholder="{{ $scholar->email }}" hidden>
+                                                        <button type="submit" class="no-design-button">
+                                                            <i class="fas fa-money-check-edit"
+                                                                style="color: #1e3050;"></i>
+                                                        </button>
+                                                    <td style="display: none;"><input type="text" name="SCHOLARID"
+                                                            value="{{ $sei->id }}"></td>
+                                            </form>
 
                                             </td>
                                         </tr>
+                                    @endforeach
                                     @endforeach
                                 </tbody>
 

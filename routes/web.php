@@ -35,6 +35,9 @@ Route::get('/seilist', [SeiViewController::class, 'seiqualifierview'])->name('se
 Route::get('/seilist2', [SeiViewController::class, 'seipotientalqualifierview'])->name('seilist2');
 Route::get('/sei/create', [SeiViewController::class, 'create'])->name('sei.create');
 Route::post('/sei', [SeiViewController::class, 'store'])->name('sei.store');
+// Route::post('/seilist2_edit', [SeiViewController::class, 'editinfo'])->name('seilist2.edit');
+Route::post('/seilist2_edit', [SeiViewController::class, 'edit'])->name('editscholar');
+Route::post('/seilist2_save', [SeiViewController::class, 'saveedit'])->name('sei.saveedit');
 
 //EMAILS
 Route::get('/emails', [EmailViewController::class, 'emailstatusview'])->name('emails');
