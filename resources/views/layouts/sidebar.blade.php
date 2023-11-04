@@ -70,7 +70,8 @@
 
             <li class="sidebar-item {{ request()->is('rsms') || request()->is('rsmslistra7687') ? 'active' : '' }}">
                 <a data-bs-target="#rsms1" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">RSMS</span>
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Academic
+                        Monitoring</span>
                 </a>
                 <ul id="rsms1"
                     class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') ? 'show' : '' }}"

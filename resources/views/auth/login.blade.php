@@ -22,6 +22,14 @@
             margin: -100px -300px;
         }
 
+        .dostbrand {
+            position: absolute;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 0.5rem;
+        }
+
         @keyframes float {
             0% {
                 shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
@@ -44,7 +52,13 @@
 
 <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <main class="d-flex w-100 h-100">
+
+        <span style="" class="dostbrand">DOST REGION XI
+            <br>SCHOLAR MONITORING SYSTEM</span>
+
         <div s class="container d-flex flex-column">
+
+
             <div class="row vh-100">
                 <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
                     <div class="d-table-cell align-middle">

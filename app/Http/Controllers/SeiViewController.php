@@ -106,6 +106,7 @@ class SeiViewController extends Controller
                 'region' => $request->input('sei_region'),
                 'hsname' => $request->input('sei_hsname'),
                 'remarks' => $request->input('sei_remarks'),
+                'lacking' => $request->input('sei_lacking'),
                 'district' => $request->input('sei_district'),
             ]);
 
@@ -113,7 +114,9 @@ class SeiViewController extends Controller
             $scholar->save();
 
             flash()->addSuccess('Your changes has been saved.');
-            return redirect('seilist2');
+            // return redirect('seilist2');
+            // return $this->seipotientalqualifierview();
+            return redirect()->route('seilist2');
         } catch (\Exception $e) {
             echo $e->getMessage();
         }

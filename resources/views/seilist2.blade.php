@@ -72,6 +72,7 @@
                                         <th style="  padding-left: 0 !important; padding-right: 0 !important;"><span
                                                 style="display: none; ">- Municipality -</span></th>
                                         <th>Lacking</th>
+                                        <th>Remarks</th>
                                         <th>Action</th>
                                         <th style="display: none;">ID</th>
                                     </tr>
@@ -96,6 +97,7 @@
 
                                                     <td style="color: black"> {{ $sei->municipality }}</td>
                                                     <td style="color: black"> {{ $sei->lacking }}</td>
+                                                    <td style="color: black"> {{ $sei->remarks }}</td>
                                                     <td style="text-align: center">
                                                         <input type="text" name="email"
                                                             value="{{ $scholar->email }}"
@@ -145,10 +147,7 @@
                         orderable: false
                     } // Disable sorting for the first and third columns (columns are zero-based)
                 ],
-                fixedColumns: {
-                    leftColumns: 2, // Specify the number of left columns to freeze
-                    //  rightColumns: 1 // Specify the number of right columns to freeze
-                },
+
                 initComplete: function() {
                     this.api().columns([3, 5]).every(function(d) {
                         var column = this;

@@ -30,6 +30,9 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//LOGOUT EXTRA PAUSE
+Route::get('/logged-out', [App\Http\Controllers\HomeController::class, 'index'])->name('logged-out');
+
 //SEI
 Route::get('/seilist', [SeiViewController::class, 'seiqualifierview'])->name('seilist');
 Route::get('/seilist2', [SeiViewController::class, 'seipotientalqualifierview'])->name('seilist2');

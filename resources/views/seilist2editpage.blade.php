@@ -50,79 +50,90 @@
                                         <tbody>
                                             <tr>
                                                 <th hidden>ID:</th>
-                                                <td hidden> <input class="form-control" type="text" name="sei_id" value="{{ $sei->id }}">
+                                                <td hidden> <input class="form-control" type="text" name="sei_id"
+                                                        value="{{ $sei->id }}">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Firstname:</th>
-                                                <td> <input class="form-control" type="text" name="schol_fname" value="{{ $scholar->fname }}">
+                                                <td> <input class="form-control" type="text" name="schol_fname"
+                                                        value="{{ $scholar->fname }}">
                                                 </td>
                                                 <th>MiddleName:</th>
-                                                <td><input class="form-control" type="text" name="schol_mname" value="{{ $scholar->mname }}"></td>
+                                                <td><input class="form-control" type="text" name="schol_mname"
+                                                        value="{{ $scholar->mname }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Lastname:</th>
-                                                <td><input class="form-control" type="text" name="schol_lname" value="{{ $scholar->lname }}">
+                                                <td><input class="form-control" type="text" name="schol_lname"
+                                                        value="{{ $scholar->lname }}">
                                                 </td>
                                                 <th>Suffix:</th>
                                                 <td>
-                                                    <input class="form-control" type="text" name="schol_suffix" value="{{ $scholar->suffix }}">
+                                                    <input class="form-control" type="text" name="schol_suffix"
+                                                        value="{{ $scholar->suffix }}">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>Email:</th>
-                                                <td><input class="form-control" type="text" name="schol_email" value="{{ $scholar->email }}"></td>
+                                                <td><input class="form-control" type="text" name="schol_email"
+                                                        value="{{ $scholar->email }}"></td>
                                                 <th>Mobile:</th>
-                                                <td><input class="form-control" type="text" name="schol_mobile" value="{{ $scholar->mobile }}"></td>
+                                                <td><input class="form-control" type="text" name="schol_mobile"
+                                                        value="{{ $scholar->mobile }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Birthdate:</th>
-                                                <td><input class="form-control" type="text" name="schol_bday" value="{{ $scholar->bday }}"></td>
+                                                <td><input class="form-control" type="text" name="schol_bday"
+                                                        value="{{ $scholar->bday }}"></td>
                                                 <th>Strand:</th>
-                                                <td><input class="form-control" type="text" name="sei_strand" value="{{ $sei->strand }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_strand"
+                                                        value="{{ $sei->strand }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Status: <span style="color: blue">
                                                         @if ($scholar->scholar_status_id == 0)
-                                                        Lacking
+                                                            Lacking
                                                         @elseif ($scholar->scholar_status_id == 1)
-                                                        Pending
+                                                            Pending
                                                         @elseif ($scholar->scholar_status_id == 2)
-                                                        Ongoing
+                                                            Ongoing
                                                         @elseif ($scholar->scholar_status_id == 3)
-                                                        Enrolled
+                                                            Enrolled
                                                         @elseif ($scholar->scholar_status_id == 4)
-                                                        Deferred
+                                                            Deferred
                                                         @elseif ($scholar->scholar_status_id == 5)
-                                                        LOA
+                                                            LOA
                                                         @else
-                                                        Terminated
+                                                            Terminated
                                                         @endif
                                                     </span>
                                                 </th>
                                                 <td style="vertical-align: middle;">
-                                                    <select name="scholar_status_id" style="max-width:100px;" class="form-control col-md-auto">
+                                                    <select name="scholar_status_id" style="max-width:100px;"
+                                                        class="form-control col-md-auto">
                                                         @foreach ($status as $status1)
-                                                        <option value="{{ $status1->id }}">
-                                                            {{ $status1->status_name }}
-                                                        </option>
+                                                            <option value="{{ $status1->id }}">
+                                                                {{ $status1->status_name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <th>Gender: <span style="color: blue">
                                                         @if ($scholar->gender_id == 1)
-                                                        F
+                                                            F
                                                         @else
-                                                        M
+                                                            M
                                                         @endif
                                                         <span>
                                                 </th>
                                                 <td style="vertical-align: middle;">
-                                                    <select name="sei_gender_id" style="max-width:100px;" class="form-control mb-0">
+                                                    <select name="sei_gender_id" style="max-width:100px;"
+                                                        class="form-control mb-0">
                                                         @foreach ($gender as $gender1)
-                                                        <option value="{{ $gender1->id }}">
-                                                            {{ $gender1->name }}
-                                                        </option>
+                                                            <option value="{{ $gender1->id }}">
+                                                                {{ $gender1->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -130,64 +141,78 @@
                                             <tr>
                                                 <th>Program: <span style="color: blue">
                                                         @if ($sei->program_id == 101)
-                                                        RA 7687
+                                                            RA 7687
                                                         @elseif ($sei->program_id == 201)
-                                                        MERIT
+                                                            MERIT
                                                         @elseif ($sei->program_id == 301)
-                                                        RA 10612
+                                                            RA 10612
                                                         @endif
                                                         <span></th>
 
                                                 <td style="vertical-align: middle;">
-                                                    <select name="sei_program_id" style="max-width:100px;" class="form-control mb-0">
+                                                    <select name="sei_program_id" style="max-width:100px;"
+                                                        class="form-control mb-0">
                                                         @foreach ($program as $program1)
-                                                        <option value="{{ $program1->id }}">
-                                                            {{ $program1->progname }}
-                                                        </option>
+                                                            <option value="{{ $program1->id }}">
+                                                                {{ $program1->progname }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <th>Municipality:</th>
-                                                <td><input class="form-control" type="text" name="sei_municipality" value="{{ $sei->municipality }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_municipality"
+                                                        value="{{ $sei->municipality }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Province:</th>
-                                                <td><input class="form-control" type="text" name="sei_province" value="{{ $sei->province }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_province"
+                                                        value="{{ $sei->province }}"></td>
                                                 <th>Zipcode</th>
-                                                <td><input class="form-control" type="text" name="sei_zipcode" value="{{ $sei->zipcode }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_zipcode"
+                                                        value="{{ $sei->zipcode }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Barangay:</th>
-                                                <td><input class="form-control" type="text" name="sei_barangay" value="{{ $sei->barangay }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_barangay"
+                                                        value="{{ $sei->barangay }}"></td>
                                                 <th>House No:</th>
-                                                <td><input class="form-control" type="text" name="sei_houseno" value="{{ $sei->houseno }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_houseno"
+                                                        value="{{ $sei->houseno }}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Street:</th>
-                                                <td><input class="form-control" type="text" name="sei_street" value="{{ $sei->street }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_street"
+                                                        value="{{ $sei->street }}"></td>
                                                 <th>Region:</th>
-                                                <td><input class="form-control" type="text" name="sei_region" value="{{ $sei->region }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_region"
+                                                        value="{{ $sei->region }}"></td>
 
                                             </tr>
                                             <tr>
                                                 <th>HS Name:</th>
-                                                <td colspan="4"><input style="max-width: 1000px !important;" class="form-control" type="text" name="sei_hsname" value="{{ $sei->hsname }} ">
+                                                <td colspan="4"><input style="max-width: 1000px !important;"
+                                                        class="form-control" type="text" name="sei_hsname"
+                                                        value="{{ $sei->hsname }} ">
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <th>Remarks:</th>
-                                                <td colspan="4"><input class="form-control" type="text" name="sei_remarks" value="{{ $sei->remarks }}"></td>
+                                                <td colspan="4">
+                                                    <textarea class="form-control" type="text" name="sei_remarks">{{ $sei->remarks }}</textarea>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Lacking:</th>
-                                                <td colspan="4"><input class="form-control" type="text" name="sei_lacking" value="{{ $sei->lacking }}"></td>
+                                                <td colspan="4"><input class="form-control" type="text"
+                                                        name="sei_lacking" value="{{ $sei->lacking }}"></td>
 
 
                                             </tr>
                                             <tr>
                                                 <th>District:</th>
-                                                <td><input class="form-control" type="text" name="sei_district" value="{{ $sei->district }}"></td>
+                                                <td><input class="form-control" type="text" name="sei_district"
+                                                        value="{{ $sei->district }}"></td>
 
                                             </tr>
 
