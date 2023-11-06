@@ -29,28 +29,54 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Line Chart</h5>
-                                        <h6 class="card-subtitle text-muted">A line chart is a way of plotting data
-                                            points on a line.</h6>
+                                        <h5 class="card-title">Scholar Applications by School</h5>
+                                        <h6 class="card-subtitle text-muted">
+                                            {{-- DESCRIPTIVE COMPARISON --}}
+                                            <strong>
+                                                The school with the highest number of scholar applications is
+                                                <span style="color: blue">{{ $mostcommonschool->school }}</span>, while
+                                                @if (count($leastCommonSchools) > 0)
+                                                    <span
+                                                        style="color: blue">{{ implode(', ', $leastCommonSchools->pluck('school')->toArray()) }}</span>
+                                                @else
+                                                @endif
+                                                has the fewest applications.
+                                            </strong>
+                                        </h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-contatiner">
-                                            <canvas id="myChart" width="200" height="500"></canvas>
+                                            <canvas id="myChart" width="" height="500"></canvas>
                                         </div>
-                                        okokkoo k
+
                                     </div>
 
                                 </div>
                             </div>
-
                         </div>
+
                         {{-- GENDER CHART SECTION --}}
                         <div class="col-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Pie Chart</h5>
-                                    <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the
-                                        relational proportions between data.</h6>
+                                    <h5 class="card-title">Gender Distribution of Scholar Applications</h5>
+
+                                    <h6 class="card-subtitle text-muted"> <strong>
+                                            {{-- DESCRIPTIVE COMPARISON --}}
+                                            The majority of scholar applications come from
+                                            @if ($mosthighestgender->MF == 'M')
+                                                <span style="color: blue">Male</span>
+                                            @else
+                                                <span style="color: pink">Female</span>
+                                            @endif
+                                            students, with @if ($mostlowestgender->MF == 'F')
+                                                <span style="color: pink">Female</span>
+                                            @else
+                                                <span style="color: blue">Male</span>
+                                            @endif
+                                            students making up the smaller portion.
+                                        </strong></h6>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="chart chart-sm">
@@ -141,11 +167,11 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Schools',
+                label: '',
                 data: data,
                 backgroundColor: backgroundColors, // Different colors for each bar
                 borderColor: borderColor,
-                borderWidth: 1
+                borderWidth: 2
             }]
         },
         options: {
