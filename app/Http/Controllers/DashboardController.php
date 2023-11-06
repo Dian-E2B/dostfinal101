@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rsms;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,7 +30,12 @@ class DashboardController extends Controller
             return trim($schoolName);
         });
 
+
+        $genderData = Rsms::select('MF', DB::raw('count(*) as count'))
+            ->groupBy('MF')
+            ->get();
+
         // Pass the aggregated data to the view
-        return view('dashboard', compact('schoolCounts'));
+        return view('dashboard', compact('schoolCounts', 'genderData'));
     }
 }

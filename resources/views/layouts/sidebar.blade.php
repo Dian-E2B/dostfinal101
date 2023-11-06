@@ -33,8 +33,8 @@
                 </ul>
             </li> --}}
 
-            <li class="{{ request()->is('home') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('home') }}'>
+            <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
+                <a class='sidebar-link' href='{{ route('dashboard') }}'>
                     <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>

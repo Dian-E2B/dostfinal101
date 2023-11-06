@@ -18,6 +18,12 @@ class RsmsViewController extends Controller
         return view('rsms', compact('rsms1'));
     }
 
+    public function rsmsviewfixed()
+    {
+        $rsms1 = Rsms::all();
+        return view('rsms', compact('rsms1'));
+    }
+
     public function rsmslistra7687view()
     {
         $rsmsra7687 = Rsms_ra7687s::all();
