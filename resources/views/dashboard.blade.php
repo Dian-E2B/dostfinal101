@@ -5,7 +5,7 @@
     <title>DOST XI</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 
 <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-lg-6">
+                        {{-- <div class="col-lg-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Doughnut Chart</h5>
@@ -99,11 +99,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
-                        <div class="col-12 col-lg-6">
+                        {{-- <div class="col-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Radar Chart</h5>
@@ -118,8 +118,9 @@
                                 </div>
                             </div>
                         </div>
+--}}
 
-                        <div class="col-12 col-lg-6">
+                        {{--    <div class="col-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Polar Area Chart</h5>
@@ -133,9 +134,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                </div>
+
+                    </div>
 
             </main>
         </div>
@@ -145,13 +147,14 @@
 
 
 <script>
-    // JavaScript code for creating the Chart.js chart
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // Extract the aggregated data from the PHP array
     var schoolCounts = @json($schoolCounts);
     var labels = Object.keys(schoolCounts);
     var data = Object.values(schoolCounts);
+
+    console.log(@json($schoolCounts));
 
     // Generate an array of random colors
     var backgroundColors = labels.map(function() {
@@ -161,9 +164,10 @@
 
     var borderColor = 'rgba(75, 192, 192, 1)'; // Set a common border color
 
+    var maxIndex = data.indexOf(Math.max(...data)); // Find the index of the largest value
+
     var myChart = new Chart(ctx, {
         type: 'bar',
-
         data: {
             labels: labels,
             datasets: [{
@@ -179,6 +183,18 @@
             scales: {
                 y: {
                     beginAtZero: true
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(context) {
+                        if (context.dataIndex === maxIndex) {
+                            // Customize the label for the largest data point
+                            return 'Largest Value: ' + context.parsed.y;
+                        } else {
+                            return context.dataset.label + ': ' + context.parsed.y;
+                        }
+                    },
                 }
             }
         }
