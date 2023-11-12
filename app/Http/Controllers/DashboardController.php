@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rsms;
+use App\Models\Ongoing;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -15,23 +15,23 @@ class DashboardController extends Controller
 
         /*START SCHOOL GRAPH AREA*/
         // Fetch data from the "school" column
-        $data = Rsms::select('school')->get();
+        $data = Ongoing::select('school')->get();
 
-        $mostcommonschool = DB::table('rsms')
+        $mostcommonschool = DB::table('ongoing')
             ->select('school')
             ->groupBy('school')
             ->orderByRaw('COUNT(*) DESC')
             ->first();
 
         // FIND THE MINIMUMS
-        $minimumCount = DB::table('rsms')
+        $minimumCount = DB::table('ongoing')
             ->select(DB::raw('COUNT(*) as min_count'))
             ->groupBy('school')
             ->orderBy('min_count', 'asc')
             ->value('min_count');
 
         // COUNT THE MINIMUMS
-        $leastCommonSchools = DB::table('rsms')
+        $leastCommonSchools = DB::table('ongoing')
             ->select('school')
             ->groupBy('school')
             ->havingRaw(
@@ -58,18 +58,18 @@ class DashboardController extends Controller
         /*END SCHOOL GRAPH AREA*/
 
         /*START GENDER CHART AREA*/
-        $genderData = Rsms::select('MF', DB::raw('count(*) as count'))
+        $genderData = Ongoing::select('MF', DB::raw('count(*) as count'))
             ->groupBy('MF')
             ->get();
         //gender highest
-        $mosthighestgender = DB::table('rsms')
+        $mosthighestgender = DB::table('ongoing')
             ->select('MF')
             ->groupBy('MF')
             ->orderByRaw('COUNT(*) DESC')
             ->first();
 
         //gender MINIMUMS
-        $mostlowestgender = DB::table('rsms')
+        $mostlowestgender = DB::table('ongoing')
             ->select('MF')
             ->groupBy('MF')
             ->orderByRaw('COUNT(*) ASC')

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rsms;
+use App\Models\Ongoing;
 use App\Models\Rsms_ra7687s;
 use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
@@ -14,13 +14,13 @@ class RsmsViewController extends Controller
     //
     public function rsmsview()
     {
-        $rsms1 = Rsms::all();
+        $rsms1 = Ongoing::all();
         return view('rsms', compact('rsms1'));
     }
 
     public function rsmsviewfixed()
     {
-        $rsms1 = Rsms::all();
+        $rsms1 = Ongoing::all();
         return view('rsms', compact('rsms1'));
     }
 

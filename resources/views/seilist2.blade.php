@@ -107,7 +107,7 @@
                                                                 style="color: #1e3050;"></i>
                                                         </button>
                                                     <td style="display: none;"><input type="text" name="SCHOLARID"
-                                                            value="{{ $sei->id }}"></td>
+                                                            value="{{ $sei->id }}" hidden></td>
                                             </form>
 
                                             </td>

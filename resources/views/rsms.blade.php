@@ -28,7 +28,12 @@
             color: black;
         }
 
-
+        /* body{
+            background-color: rgb(255, 255, 255);
+        } */
+.content{
+    background-color: white;
+}
 
     </style>
 </head>
@@ -49,8 +54,8 @@
             <div class="container-fluid p-0">
 
 
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <table id="thisdatatable" class="table-striped compact nowrap" style="width:100%;">
 
                             <thead>
@@ -164,20 +169,29 @@
 </body>
 {{-- SIDEBAR TOGGLING --}}
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+
 <script src="{{ asset('js/all.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.5.1/js/dataTables.dateTime.min.js"></script>
 <script
     src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
 <script>
 
+
     jQuery(document).ready(function ($) {
+
+
         var percentageOfViewport = 55;
         var scrollY = (percentageOfViewport / 100) * $(window).height();
         $('#thisdatatable').DataTable({
+            fixedHeader: true,
             "processing": true,
             "pageLength": 100, // Set the default number of entries
             scrollX: true,
             paging: true,
-            scrollY: scrollY + 'px',
+            // scrollY: scrollY + 'px',
             columnDefs: [
                 {targets: [3, 5, 19,4], orderable: false, type: "string"} // Disable sorting for the first and third columns (columns are zero-based)
             ],
@@ -209,7 +223,12 @@
             }
 
         });
+
+
     });
+
+    // Refilter the table
+
 </script>
 
 </html>

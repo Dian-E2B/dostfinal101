@@ -4,7 +4,10 @@
 <head>
     <title>DOST XI</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 
@@ -29,7 +32,7 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Scholar Applications by School</h5>
+                                        <h5 class="card-title">Schools</h5>
                                         <h6 class="card-subtitle text-muted">
                                             {{-- DESCRIPTIVE COMPARISON --}}
                                             <strong>
@@ -144,84 +147,106 @@
     </div>
 </body>
 {{-- CHART TOGGLING --}}
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Extract the aggregated data from the PHP array
-    var schoolCounts = @json($schoolCounts);
-    var labels = Object.keys(schoolCounts);
-    var data = Object.values(schoolCounts);
+// Register the required plugins
+Chart.register([ChartDataLabels]);
 
-    console.log(@json($schoolCounts));
+var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Generate an array of random colors
-    var backgroundColors = labels.map(function() {
-        return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math
-            .floor(Math.random() * 256) + ', 0.2)';
-    });
+// Extract the aggregated data from the PHP array
+var schoolCounts = @json($schoolCounts);
+var labels = Object.keys(schoolCounts);
+var data = Object.values(schoolCounts);
 
-    var borderColor = 'rgba(75, 192, 192, 1)'; // Set a common border color
+// Set a solid blue color for all bars
+var backgroundColor = 'rgba(54, 162, 235, 1)';
+var borderColor = 'rgba(54, 162, 235, 1)';
 
-    var maxIndex = data.indexOf(Math.max(...data)); // Find the index of the largest value
+var minValue = Math.min(...data);
+var minIndices = data.reduce((indices, value, index) => {
+    if (value === minValue) {
+        indices.push(index);
+    }
+    return indices;
+}, []);
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '',
-                data: data,
-                backgroundColor: backgroundColors, // Different colors for each bar
-                borderColor: borderColor,
-                borderWidth: 2
-            }]
+var maxValue = Math.max(...data);
+var maxIndex = data.indexOf(maxValue);
+
+// Set background color dynamically for each bar
+var dynamicBackgroundColors = data.map((value, index) => {
+    if (index === maxIndex) {
+        return 'green'; // Set color to green for the highest value
+    } else if (minIndices.includes(index)) {
+        return 'red'; // Set color to red for the lowest value
+    } else {
+        return backgroundColor; // Default color
+    }
+});
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: '',
+            data: data,
+            backgroundColor: dynamicBackgroundColors,
+            borderColor: borderColor,
+            borderWidth: 2
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
         },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+        plugins: {
+            legend: {
+                display: false
             },
-            tooltips: {
-                callbacks: {
-                    label: function(context) {
-                        if (context.dataIndex === maxIndex) {
-                            // Customize the label for the largest data point
-                            return 'Largest Value: ' + context.parsed.y;
-                        } else {
-                            return context.dataset.label + ': ' + context.parsed.y;
-                        }
-                    },
-                }
+            datalabels: {
+                anchor: 'end', // Set to 'center' to center the label horizontally
+                align: 'top',  // Set to 'center' to center the label vertically
+                color: 'black',   // Set the default color to black
+                textAlign: 'center',
+                font: {
+                    weight: 'bold',  // Set to 'bold' to make the label bold
+                },
+                formatter: (value, context) => {
+                    const dataIndex = context.dataIndex;
+                    const datapoints = context.dataset.data;
+                    const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
+                    const percentage = (value / total) * 100;
+
+                    let label = percentage.toFixed(1) + '%';
+
+                    if (dataIndex === maxIndex) {
+
+                        return 'Highest \n Value:\n' + label;
+                    } else if (minIndices.includes(dataIndex)) {
+
+                        return 'Lowest \n Value:\n' + label;
+                    } else {
+                        return label;
+                    }
+                },
             }
         }
-    });
-
-    var ctx = document.getElementById('genderPieChart').getContext('2d');
-
-    var genderData = @json($genderData);
+    }
+});
 
 
-    var chart = new Chart(ctx, {
-        type: 'pie',
 
-        data: {
 
-            datasets: [{
-                data: genderData.map(item => item.count),
-                backgroundColor: ['pink', 'blue'], // Define colors for each gender
-            }],
-            labels: [
-                'Female', 'Male'
-            ],
-        },
-        options: {
-            responsive: true,
-        },
-    });
+
+
+
 </script>
 
 </html>
