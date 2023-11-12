@@ -3,7 +3,10 @@
 
 <head>
     <title>DOST XI</title>
-    {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
+    <link href="{{ asset('css/all.css') }}">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <script src="{{ asset('js/all.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .opacitytext {
@@ -87,6 +90,7 @@
                                                 name="email" type="email" value="{{ old('email') }}"
                                                 placeholder="Enter your email" required autocomplete="email"
                                                 autofocus />
+
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -94,19 +98,32 @@
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label for="password" class="opacitytext form-label">Password</label>
+{{--
+                                        <div  class="input-group-btn">
                                             <input id="password" class="opacitytext form-control form-control-lg"
-                                                type="password" name="password" placeholder="Enter your password" />
+                                            type="password" name="password" placeholder="Enter your password" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default reveal" type="button"><i class="far fa-eye"></i></button>
+                                              </span>
+                                        </div> --}}
 
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <input id="password" type="password" class="form-control form-control-lg" placeholder="Enter your password"  name="password" aria-label="Username" aria-describedby="addon-wrapping">
+                                                <span class="input-group-text" id="addon-wrapping" style="cursor: pointer" onclick="togglePassword()">
+                                                    <i id="eye-icon" class="far fa-eye"></i>
+                                                </span>
+                                            </div>
                                             @if (Route::has('password.request'))
                                                 <small>
                                                     <a href="{{ route('password.request') }}">Forgot password?</a>
                                                 </small>
                                             @endif
                                         </div>
-                                        <div>
 
+
+
+                                        <div>
                                             <div class="form-check align-items-center">
                                                 <input id="customControlInline" type="checkbox" class="form-check-input"
                                                     value="remember-me" name="remember-me" checked>
@@ -138,7 +155,20 @@
 
 
 
-    <script></script>
+
+    <script>
+    function togglePassword() {
+    var passwordField = $('#password');
+    var eyeIcon = $('#eye-icon');
+
+    // Toggle password field visibility
+    var passwordFieldType = passwordField.attr('type');
+    passwordField.attr('type', passwordFieldType === 'password' ? 'text' : 'password');
+
+    // Toggle eye icon
+    eyeIcon.toggleClass('fa-eye fa-eye-slash');
+}
+        </script>
 </body>
 
 </html>
