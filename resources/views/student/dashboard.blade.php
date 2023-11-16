@@ -4,6 +4,7 @@
 <head>
 	 <title>DOST XI</title>
 	 @vite(['resources/css/app.css', 'resources/js/app.js'])
+     <link href="{{ asset('css/all.css') }}">
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
@@ -51,6 +52,7 @@
 
 </div>
 </body>
+<script src="{{ asset('js/all.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 {{--CHECKBOXES DISABLING--}}
 <script>

@@ -4,7 +4,7 @@
 <head>
     <title>DOST XI</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <link href="{{ asset('css/all.css') }}">
 
 
 
@@ -147,6 +147,7 @@
     </div>
 </body>
 {{-- CHART TOGGLING --}}
+<script src="{{ asset('js/all.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script>

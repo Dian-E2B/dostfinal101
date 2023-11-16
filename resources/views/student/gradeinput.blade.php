@@ -128,16 +128,16 @@
 																		<div style="margin-top: 2.5%" class="row">
 																			 <div class="col-md-5">
 																					<label>Subject Name:</label>
-																					<input name="subjectnames[0][name]" type="text" class="form-control">
+																					<input name="subjectnames[0][name]" type="text" class="form-control" required>
 																			 </div>
 																			 <div class="col-md-2">
 																					<label>Grade:</label>
 																					<input id="grade1" type="number" name="grades[0][grade]"
-																								 class="form-control">
+																								 class="form-control" required>
 																			 </div>
 																			 <div class="col-md-2">
 																					<label>Units:</label>
-																					<input id="unit1" name="units[0][unit]" type="number" class="form-control">
+																					<input id="unit1" name="units[0][unit]" type="number" class="form-control" required>
 																			 </div>
 																			 <div class="col-md-3">
 																					<br>
@@ -182,15 +182,15 @@
             '<div style="margin-top: 1.5%" class="row" id="row' + i + '">' +
             '<div class="col-md-5">' +
             ' <label>Subject Name:</label>' +
-            '<input id="subjectname1" name="subjectnames[' + i + '][name]"  type="text" class="form-control">' +
+            '<input id="subjectname1" name="subjectnames[' + i + '][name]"  type="text" class="form-control" required>' +
             ' </div>' +
             '<div class="col-md-2">' +
             ' <label>Grade:</label>' +
-            '<input id="grade1" type="number" name="grades[' + i + '][grade]"  class="form-control">' +
+            '<input id="grade1" type="number" name="grades[' + i + '][grade]"  class="form-control" required>' +
             '</div>' +
             '<div class="col-md-2">' +
             '<label>Units:</label>' +
-            '<input id="unit1" name="units[' + i + '][unit]"type="number" class="form-control">' +
+            '<input id="unit1" name="units[' + i + '][unit]"type="number" class="form-control" required>' +
             '</div>' +
             '<div class="col-md-3">' +
             '<br>' +

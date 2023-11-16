@@ -70,7 +70,9 @@ Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, '
 Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
 
-
+//ANONUNCEMENT
+Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
+Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
 
 
 require __DIR__ . '/auth.php';

@@ -101,7 +101,7 @@ class StudentActionsController extends Controller
                 'unit' => $data['units'][$index]['unit'],
             ]);
         }
-
+        flash()->addSuccess('Grades has been saved');
         return back();
     }
 }
