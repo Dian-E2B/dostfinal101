@@ -14,14 +14,16 @@ class RsmsViewController extends Controller
     //
     public function rsmsview()
     {
-        $rsms1 = Ongoing::all();
-        return view('rsms', compact('rsms1'));
+        $ongoing1 = Ongoing::all();
+        //dd($ongoing1);
+        return view('rsms', compact('ongoing1'));
+
     }
 
     public function rsmsviewfixed()
     {
-        $rsms1 = Ongoing::all();
-        return view('rsms', compact('rsms1'));
+        $ongoing = Ongoing::all();
+        return view('rsms', compact('ongoing1'));
     }
 
     public function rsmslistra7687view()
