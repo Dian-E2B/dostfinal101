@@ -8,6 +8,9 @@ use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
 use App\Models\Rsms_noncompliance;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Auth;
 
 class RsmsViewController extends Controller
 {
@@ -20,6 +23,16 @@ class RsmsViewController extends Controller
 
     }
 
+    public function getOngoingData()
+    {
+        // $ongoing = Ongoing::select('BATCH', 'NUMBER', 'NAME', 'MF', 'SCHOLARSHIPPROGRAM', 'SCHOOL',);
+        $ongoing = Ongoing::select('*');
+          // Log the data to Laravel Debugbar
+    // Debugbar::info($ongoing->get());
+        return DataTables::of($ongoing)->make(true);
+    }
+
+
     public function rsmsviewfixed()
     {
         $ongoing = Ongoing::all();
@@ -31,6 +44,7 @@ class RsmsViewController extends Controller
         $rsmsra7687 = Rsms_ra7687s::all();
         return view('rsmslistra7687', compact('rsmsra7687'));
     }
+
 
     public function rsmslistra10612view()
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmailViewController;
 use App\Http\Controllers\SeiViewController;
+use App\Http\Controllers\RsmsViewController;
 
 use App\Http\Controllers\StudentViewController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,7 @@ Route::get('/rsmslistra10612', [\App\Http\Controllers\RsmsViewController::class,
 Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
 Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
+Route::get('datatable/data', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingData'] )->name('datatable.data');
 
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
