@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailContent;
-use App\Models\replyslips;
+use App\Models\Replyslips;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,22 +28,22 @@ class EmailViewController extends Controller
 
     public function emailstatusview()
     {
-        $replyslipsandscholarjoinpending = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+        $replyslipsandscholarjoinpending = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->select('replyslips.*', 'scholars.*')
             ->where('replyslips.replyslip_status_id',1)
             ->get();
 
-        $replyslipsandscholarjoinaccepted = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+        $replyslipsandscholarjoinaccepted = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->select('replyslips.*', 'scholars.*')
             ->where('replyslips.replyslip_status_id',2)
             ->get();
 
-        $replyslipsandscholarjoinrejected = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+        $replyslipsandscholarjoinrejected = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->select('replyslips.*', 'scholars.*')
             ->where('replyslips.replyslip_status_id',3)
             ->get();
 
-        $replyslipsandscholarjoindeferred = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+        $replyslipsandscholarjoindeferred = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->select('replyslips.*', 'scholars.*')
             ->where('replyslips.replyslip_status_id',4)
             ->get();

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\replyslips;
+use App\Models\Replyslips;
 use Illuminate\Http\Request;
 
 class AccessControlViewController extends Controller
@@ -11,7 +11,7 @@ class AccessControlViewController extends Controller
     public function index()
     {
         try {
-            $replyslipsjoinscholar = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholar = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->get();
@@ -29,7 +29,7 @@ class AccessControlViewController extends Controller
     public function accesscontrolpendingview()
     {
         try {
-            $replyslipsjoinscholarpending = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholarpending = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 1) // Add your where condition here
@@ -44,7 +44,7 @@ class AccessControlViewController extends Controller
     public function accesscontrolongoingview()
     {
 
-        $replyslipsjoinscholarongoing = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+        $replyslipsjoinscholarongoing = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
             ->where('scholar_status_id', '=', 2) // Add your where condition here
@@ -58,7 +58,7 @@ class AccessControlViewController extends Controller
     {
 
         try {
-            $replyslipsjoinscholarenrolled = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholarenrolled = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 3) // Add your where condition here
@@ -74,7 +74,7 @@ class AccessControlViewController extends Controller
     {
 
         try {
-            $replyslipsjoinscholardeferred = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholardeferred = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 4) // Add your where condition here
@@ -90,7 +90,7 @@ class AccessControlViewController extends Controller
     {
 
         try {
-            $replyslipsjoinscholarLOA = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholarLOA = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 5) // Add your where condition here
@@ -106,7 +106,7 @@ class AccessControlViewController extends Controller
     {
 
         try {
-            $replyslipsjoinscholarterminated = replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            $replyslipsjoinscholarterminated = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 6) // Add your where condition here

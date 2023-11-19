@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cog;
 use App\Models\Cogdetails;
-use App\Models\replyslips;
+use App\Models\Replyslips;
 use App\Models\Scholars;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -21,7 +21,7 @@ class StudentActionsController extends Controller
         $fname = Scholars::where('id', $scholarid)->value('fname');
         $lname = Scholars::where('id', $scholarid)->value('lname');
 
-        $checkreplyslipstatus = replyslips::where('scholar_id', $scholarid)->value('replyslip_status_id');
+        $checkreplyslipstatus = Replyslips::where('scholar_id', $scholarid)->value('replyslip_status_id');
         $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
         $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
         if ($checkreplyslipstatus==1){
