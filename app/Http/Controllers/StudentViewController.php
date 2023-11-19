@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Programs;
-use App\Models\replyslips;
+use App\Models\Replyslips;
 use App\Models\Scholars;
 use App\Models\Sei;
 use App\Models\Student;

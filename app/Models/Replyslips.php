@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class replyslips extends Model
+class Replyslips extends Model
 {
     use HasFactory;
 

@@ -8,6 +8,7 @@
 
     <script src="{{ asset('js/all.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="{{ asset('css/all.css') }}">
     <style>
         .opacitytext {
             opacity: 9 !important;
@@ -63,7 +64,7 @@
 
 
             <div class="row vh-100">
-                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+                <div class="col-sm-5 col-md-12 col-lg-5 col-xl-5 mx-auto d-table ">
                     <div class="d-table-cell align-middle">
 
                         <div class="text-center mt-0">
