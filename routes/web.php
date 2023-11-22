@@ -65,12 +65,18 @@ Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewC
 
 //RSMS
 Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
+Route::get('/rsms2', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview2'])->name('rsms2');
 Route::get('/rsmslistra7687', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
 Route::get('/rsmslistra10612', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra10612view'])->name('rsmslistra10612');
 Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
 Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
 Route::get('datatable/data', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingData'] )->name('datatable.data');
+Route::get('/get-ongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingById']);
+Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
+// Route::get('/getongoingfiltered/{startyear}/{endyear}/{semester}', 'YourController@getongoingfiltered')->name('getongoingfiltered');
+Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'] )->name('getongoingfiltered');
+
 
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');

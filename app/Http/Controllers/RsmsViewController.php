@@ -9,35 +9,97 @@ use App\Models\Rsms_merits;
 use App\Models\Rsms_noncompliance;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Auth;
+use Carbon\Carbon;
 
 class RsmsViewController extends Controller
 {
     //
     public function rsmsview()
     {
-        $ongoing1 = Ongoing::all();
-        //dd($ongoing1);
-        return view('rsms', compact('ongoing1'));
+
+        $startyears = Ongoing::distinct()->pluck('startyear')->filter()->values();
+        $endyears = Ongoing::distinct()->pluck('endyear')->filter()->values();
+        $semesters = Ongoing::distinct()->pluck('semester')->filter()->values();
+
+        // dd($startyears, $endyears, $semesters);
+
+        return view('rsms', compact('startyears', 'endyears', 'semesters'));
 
     }
 
-    public function getOngoingData()
+
+    public function rsmsview2(Request $request)
     {
-        // $ongoing = Ongoing::select('BATCH', 'NUMBER', 'NAME', 'MF', 'SCHOLARSHIPPROGRAM', 'SCHOOL',);
-        $ongoing = Ongoing::select('*');
-          // Log the data to Laravel Debugbar
-    // Debugbar::info($ongoing->get());
+
+        $startyear = $request->input('startyear');
+        $endyear = $request->input('endyear');
+        $semester = $request->input('semester');
+
+
+        session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
+
+        $startyears = Ongoing::distinct()->pluck('startyear')->filter()->values();
+        $endyears = Ongoing::distinct()->pluck('endyear')->filter()->values();
+        $semesters = Ongoing::distinct()->pluck('semester')->filter()->values();
+
+        // dd($startyears, $endyears, $semesters);
+
+        return view('rsms2', compact('startyears', 'endyears', 'semesters'));
+
+    }
+
+    public function getOngoingData(Request $request)
+    {
+
+        $currentYear = Carbon::now()->year-1;
+
+        $ongoing = Ongoing::select('*')->where('startyear', $currentYear)->get();
+
         return DataTables::of($ongoing)->make(true);
+
+
     }
 
 
-    public function rsmsviewfixed()
+
+
+    public function getOngoingDataFiltered(Request $request)
     {
-        $ongoing = Ongoing::all();
-        return view('rsms', compact('ongoing1'));
+
+    $startyear = session('startyear');
+    $endyear = session('endyear');
+    $semester = session('semester');
+
+        $currentYear = Carbon::now()->year-1;
+
+        $ongoing = Ongoing::select('*')
+        ->where('startyear', $startyear)
+        ->where('endyear', $endyear)
+        ->where('semester', $semester)
+        ->get();
+
+        return DataTables::of($ongoing)->make(true);
+
+
     }
+
+
+
+    public function getOngoingById($number)
+    {
+        $ongoing = Ongoing::where('number', $number)->first();
+        if (!$ongoing) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        return response()->json($ongoing);
+    }
+
+
+
 
     public function rsmslistra7687view()
     {
