@@ -62,11 +62,7 @@
                 </a>
             </li>
 
-            {{--    <li id=""  class="sidebar-item">
-                     <a class='sidebar-link' href={{ route('rsms') }}>
-                         <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">RSMS</span>
-                     </a>
-                 </li> --}}
+
 
             <li class="sidebar-item {{ request()->is('rsms') || request()->is('rsmslistra7687') ? 'active' : '' }}">
                 <a data-bs-target="#rsms1" data-bs-toggle="collapse" class="sidebar-link collapsed">
@@ -76,8 +72,8 @@
                 <ul id="rsms1"
                     class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ request()->is('rsms') ? 'active' : '' }}"><a class='sidebar-link'
-                            href='{{ route('rsms') }}'>On-Going</a>
+                    <li class="sidebar-item {{ request()->is('ONGOINGLISTVIEW') ? 'active' : '' }}"><a class='sidebar-link'
+                            href='{{ route('ONGOINGLISTVIEW') }}'>On-Going</a>
                     </li>
 
                     <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a

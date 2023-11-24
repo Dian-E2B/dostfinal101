@@ -84,19 +84,10 @@
                 @include('layouts.header')
 
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem">
-
-
-
-
                     <div class="">
-
-
                         <div class="">
                             <img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}" style="display: none;">
-
                             <div class="">
-
-
                                 <table id="yourDataTable" class="display nowrap compact table-striped" style="width:100%">
                                     <thead>
                                         <tr>
@@ -132,231 +123,185 @@
                                     </tbody>
 
                                 </table>
+                            </div>
+                        </div>
 
 
+                        {{-- OFF-CANVAS --}}
+                        <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">EDIT SCHOLAR DETAILS</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>ID:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="idField" name="idField" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>Name:</strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control" id="nameField" name="nameField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>Gender:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="genderField" name="genderField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>Program:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="programField" name="programField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>School:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="schoolField" name="schoolField">
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-3">
+                                        <strong>Course:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="courseField" name="courseField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-6">
+                                        <strong>GRADES2NDSEM20212022:</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="gradesField" name="gradesField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>SummerREG:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="summerRegField" name="summerRegField">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <strong>REGFORMS1STSEM20222023:</strong>
+
+
+                                    <textarea class="form-control" id="regFormsField" name="regFormsField"></textarea>
+
+                                </div>
+
+                                <div class="row align-items-center">
+                                    <div class="">
+                                        <strong>REMARKS:</strong>
+                                    </div>
+                                    <div class="">
+                                        <textarea class="form-control" id="remarksField" name="remarksField"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>STATUSENDORSEMENT:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="statusEndorsementField" name="statusEndorsementField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>STATUSENDORSEMENT2:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="statusEndorsement2Field" name="statusEndorsement2Field">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>STATUS:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="statusField" name="statusField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>SUMMER:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="summerField" name="summerField">
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>FARELEASEDTUITION:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-md-auto">
+                                        <strong>FARELEASEDTUITIONBOOKSTIPEND:</strong>
+                                    </div>
+                                    <div class="col-md-auto">
+                                        <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>LVDCAccount:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="lvdCAccountField" name="lvdCAccountField">
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5">
+                                        <strong>HVCNotes:</strong>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control" id="hvcNotesField" name="hvcNotesField">
+                                    </div>
+                                </div>
 
                             </div>
-
-                            <form id="filterForm" action="{{ route('rsms2') }}" method="GET">
-                                <label for="startyear">Start Year:</label>
-                                <select name="startyear" id="startyear">
-                                    @foreach ($startyears as $startyear)
-                                        <option value="{{ $startyear }}">{{ $startyear }}</option>
-                                    @endforeach
-                                </select>
-
-                                <label for="endyear">End Year:</label>
-                                <select name="endyear" id="endyear">
-                                    @foreach ($endyears as $endyear)
-                                        <option value="{{ $endyear }}">{{ $endyear }}</option>
-                                    @endforeach
-                                </select>
-
-                                <label for="semester">Semester:</label>
-                                <select name="semester" id="semester">
-
-                                    <option value="1">1st</option>
-                                    <option value="2">2nd</option>
-                                    <option value="3">Summer</option>
-
-                                </select>
-
-                                <button id="filterBtn">Filter</button>
                         </div>
-                        </form>
-
 
                     </div>
-
-
-                    {{-- OFF-CANVAS --}}
-                    <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">EDIT SCHOLAR DETAILS</h5>
-                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>ID:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="idField" name="idField" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>Name:</strong>
-                                </div>
-                                <div class="col-9">
-                                    <input class="form-control" id="nameField" name="nameField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>Gender:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="genderField" name="genderField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>Program:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="programField" name="programField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>School:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="schoolField" name="schoolField">
-                                </div>
-                            </div>
-                            <div class="row align-items-center mb-1">
-                                <div class="col-3">
-                                    <strong>Course:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="courseField" name="courseField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-6">
-                                    <strong>GRADES2NDSEM20212022:</strong>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-control" id="gradesField" name="gradesField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>SummerREG:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="summerRegField" name="summerRegField">
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <strong>REGFORMS1STSEM20222023:</strong>
-
-
-                                <textarea class="form-control" id="regFormsField" name="regFormsField"></textarea>
-
-                            </div>
-
-                            <div class="row align-items-center">
-                                <div class="">
-                                    <strong>REMARKS:</strong>
-                                </div>
-                                <div class="">
-                                    <textarea class="form-control" id="remarksField" name="remarksField"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>STATUSENDORSEMENT:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="statusEndorsementField" name="statusEndorsementField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>STATUSENDORSEMENT2:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="statusEndorsement2Field" name="statusEndorsement2Field">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>STATUS:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="statusField" name="statusField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>SUMMER:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="summerField" name="summerField">
-                                </div>
-                            </div>
-
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>FARELEASEDTUITION:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-md-auto">
-                                    <strong>FARELEASEDTUITIONBOOKSTIPEND:</strong>
-                                </div>
-                                <div class="col-md-auto">
-                                    <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>LVDCAccount:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="lvdCAccountField" name="lvdCAccountField">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-1">
-                                <div class="col-5">
-                                    <strong>HVCNotes:</strong>
-                                </div>
-                                <div class="col-7">
-                                    <input class="form-control" id="hvcNotesField" name="hvcNotesField">
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-
+                </main>
             </div>
-
-
-
-
-
-            </main>
-
-
-
-
-
-
-
-        </div>
         </div>
 
 
@@ -372,7 +317,7 @@
                     serverSide: true,
 
                     // pageLength: 20, // Set the default page length to 10 rows
-                    ajax: '{{ route('getongoingfiltered') }}', // Adjust this route to your actual route
+                    ajax: '{{ route('getongoinglistgroupsajaxviewclicked') }}', // Adjust this route to your actual route
                     type: 'POST',
                     columns: [{
                             data: 'BATCH',
@@ -501,9 +446,9 @@
                     order: [
                         [0, 'asc'] //set batch sort from lowest
                     ],
-                    // fixedColumns: {
-                    //     leftColumns: 3,
-                    // },
+                    fixedColumns: {
+                        leftColumns: 3,
+                    },
 
                     initComplete: function() {
                         this.api().columns([3, 5, 4]).every(function(d) {
@@ -530,11 +475,8 @@
                     },
 
                     drawCallback: function() {
-
-
                         let start = table.page.info().start;
                         let i = start + 1;
-
                         table
                             .column(1, {
                                 search: 'applied',
@@ -550,9 +492,6 @@
 
                 $(document).on('click', '.edit-btn', function() {
                     var number = $(this).data('number');
-                    // alert(number); //kuha
-
-                    // Proceed with fetching data for editing
                     $.ajax({
                         url: '{{ url('/get-ongoing/') }}' + '/' + number,
                         method: 'GET',
@@ -645,20 +584,6 @@
                 dt.ajax.reload();
             }
 
-            var startYear = document.getElementById("startyear").value;
-            var endYear = document.getElementById("endyear").value;
-            var semester = document.getElementById("semester").value;
-            switch (semester) {
-                case '1':
-                    semester = '1st Semester';
-                    break;
-                case '2':
-                    semester = '2nd Semester';
-                    break;
-                case '3':
-                    semester = 'Summer';
-                    break;
-            }
 
             $.extend(true, $.fn.dataTable.defaults, {
                 dom: 'Bflrtip',

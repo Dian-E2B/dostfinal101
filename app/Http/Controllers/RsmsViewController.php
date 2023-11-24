@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
+use Termwind\Components\Dd;
 
 class RsmsViewController extends Controller
 {
@@ -27,41 +30,79 @@ class RsmsViewController extends Controller
         // dd($startyears, $endyears, $semesters);
 
         return view('rsms', compact('startyears', 'endyears', 'semesters'));
-
     }
 
-
-    public function rsmsview2(Request $request)
+    public function ongoinglistsview1(Request $request)
     {
-
         $startyear = $request->input('startyear');
         $endyear = $request->input('endyear');
         $semester = $request->input('semester');
 
+        Cache::put('startyear', $startyear);
+        Cache::put('endyear', $endyear);
+        Cache::put('semester', $semester);
 
-        session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
-
-        $startyears = Ongoing::distinct()->pluck('startyear')->filter()->values();
-        $endyears = Ongoing::distinct()->pluck('endyear')->filter()->values();
-        $semesters = Ongoing::distinct()->pluck('semester')->filter()->values();
-
-        // dd($startyears, $endyears, $semesters);
-
-        return view('rsms2', compact('startyears', 'endyears', 'semesters'));
-
+       return view('ongoinglists');
     }
+
+    public function ongoinglistsview2(Request $request)
+    {
+        $startyear = $request->input('startyear');
+        $endyear = $request->input('endyear');
+        $semester = $request->input('semester');
+
+        Cache::put('startyear', $startyear);
+        Cache::put('endyear', $endyear);
+        Cache::put('semester', $semester);
+
+        return view('rsms2');
+    }
+
+    public function getongoinglistgroupsajax(Request $request)
+    {
+        $results = DB::select("SELECT * FROM ongoing_monitoring ORDER BY startyear DESC;");
+        return DataTables::of($results)->make(true);
+    }
+
+    //FILTERED OR IF VIEW IS CLICKED FROM ONGOING
+    public function rsmsview2(Request $request)
+    {
+        return view('rsms2');
+    }
+
+    //RETRIEVE DATA ON RSMS2 PAGE
+    public function getongoinglistgroupsajaxviewclicked(Request $request)
+    {
+        $startyear = Cache::pull('startyear');
+        $endyear = Cache::pull('endyear');
+        $semester = Cache::pull('semester');
+
+        $results = DB::select("SELECT * FROM ongoing_monitoring WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
+        Debugbar::info( $startyear,$endyear,$semester );
+
+        return DataTables::of($results)->make(true);
+    }
+
 
     public function getOngoingData(Request $request)
     {
 
-        $currentYear = Carbon::now()->year-1;
+        $currentYear = Carbon::now()->year - 1;
 
         $ongoing = Ongoing::select('*')->where('startyear', $currentYear)->get();
 
         return DataTables::of($ongoing)->make(true);
-
-
     }
+
+
+    //     public function getongoinglistgroupsajax(Request $request)
+    //     {
+    //         $results = DB::select('SELECT * FROM ongoing_monitoring ORDER BY startyear DESC;');
+    // Debugbar::info($results);
+
+    //         return DataTables::of($results)->make(true);
+    //     }
+
 
 
 
@@ -69,21 +110,19 @@ class RsmsViewController extends Controller
     public function getOngoingDataFiltered(Request $request)
     {
 
-    $startyear = session('startyear');
-    $endyear = session('endyear');
-    $semester = session('semester');
+        $startyear = session('startyear');
+        $endyear = session('endyear');
+        $semester = session('semester');
 
-        $currentYear = Carbon::now()->year-1;
+        $currentYear = Carbon::now()->year - 1;
 
         $ongoing = Ongoing::select('*')
-        ->where('startyear', $startyear)
-        ->where('endyear', $endyear)
-        ->where('semester', $semester)
-        ->get();
+            ->where('startyear', $startyear)
+            ->where('endyear', $endyear)
+            ->where('semester', $semester)
+            ->get();
 
         return DataTables::of($ongoing)->make(true);
-
-
     }
 
 

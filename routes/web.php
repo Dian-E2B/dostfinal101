@@ -63,7 +63,7 @@ Route::get('/accesscontrolLOA', [\App\Http\Controllers\AccessControlViewControll
 Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolterminatedview'])->name('accesscontrolterminated');
 
 
-//RSMS
+//MONITORING
 Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
 Route::get('/rsms2', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview2'])->name('rsms2');
 Route::get('/rsmslistra7687', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
@@ -76,7 +76,10 @@ Route::get('/get-ongoing/{number}', [\App\Http\Controllers\RsmsViewController::c
 Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
 // Route::get('/getongoingfiltered/{startyear}/{endyear}/{semester}', 'YourController@getongoingfiltered')->name('getongoingfiltered');
 Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'] )->name('getongoingfiltered');
-
+Route::get('/ONGOINGLISTVIEW', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview1'])->name('ONGOINGLISTVIEW');
+Route::POST('/ONGOINGLISTVIEW2', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview2'])->name('ONGOINGLISTVIEW2'); //if view button is clicked
+Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'] )->name('getongoinglistgroupsajax');
+Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'] )->name('getongoinglistgroupsajaxviewclicked');
 
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
