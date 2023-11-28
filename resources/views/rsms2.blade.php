@@ -5,7 +5,7 @@
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <!-- Include DataTables CSS -->
-        <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
@@ -67,6 +67,14 @@
                 }
 
 
+                table,
+                table tr,
+                table td {
+                    border-top: #000 solid 1px;
+                    border-bottom: #000 solid 1px;
+                    border-left: #000 solid 1px;
+                    border-right: #000 solid 1px;
+                }
             }
         </style>
     </head>
@@ -308,7 +316,7 @@
 
         <script src="{{ asset('js/all.js') }}"></script>
         <!-- Include DataTables JS -->
-        <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
             $(document).ready(function() {
                 $.noConflict();
@@ -539,19 +547,6 @@
                     table.column(columnIndex).visible(false);
                 });
 
-                $('#filterBtn').on('click', function() {
-                    var startyearValue = startyearSelect.val();
-                    var endyearValue = endyearSelect.val();
-                    var semesterValue = semesterSelect.val();
-
-                    // Set the values in the form
-                    $('#startyear').val(startyearValue);
-                    $('#endyear').val(endyearValue);
-                    $('#semester').val(semesterValue);
-
-                    // Submit the form
-                    $('#filterForm').submit();
-                });
 
             });
 
@@ -586,70 +581,154 @@
 
 
             $.extend(true, $.fn.dataTable.defaults, {
-                dom: 'Bflrtip',
+                dom: 'flrtipB',
                 buttons: [{
-                    extend: 'print',
-                    text: '<i class="fas fa-print"></i>',
-                    title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        modifier: {
-                            search: 'none'
-                        }
-                    },
-                    action: customExportAction,
-                    customize: function(win) {
-                        $(win.document.body).find('h1').css('font-size', '20px'); // Change the font size of the title
-                        $(win.document.body).find('h1').css('font-weight', 'bold'); // Make the title bold
-                        if (win.document.body.innerHTML.indexOf('<img id="logo"') === -1) {
-                            $(win.document.body).prepend('<img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}">');
-                        }
-
-                        // Add your custom styles and content to the print window
-                        $(win.document.body)
-                            .css('font-size', '11pt')
-                            .find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit')
-                            .css('border', '1px solid black'); // Add border to the table
-
-                        // Customize the header names
-                        $(win.document.body).find('table thead th').each(function(index) {
-                            var customHeaderName;
-                            switch (index) {
-                                case 0:
-                                    customHeaderName = 'BATCH';
-                                    break;
-                                case 1:
-                                    customHeaderName = 'No'; // Change the second column header to 'No'
-                                    break;
-                                case 2:
-                                    customHeaderName = 'NAME';
-                                    break;
-                                case 3:
-                                    customHeaderName = 'M/F';
-                                    break;
-                                case 4:
-                                    customHeaderName = 'SCHOLARSHIP\nPROGRAM';
-                                    break;
-                                    // Add more cases as needed
-                                default:
-                                    customHeaderName = 'Default Header';
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i>',
+                        title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+                            modifier: {
+                                search: 'none'
                             }
-                            $(this).text(customHeaderName);
-                            $(this).css({
-                                'white-space': 'pre-wrap',
-                                'border': '1px solid black' // Add border to the header
+                        },
+                        action: customExportAction,
+                        customize: function(win) {
+                            $(win.document.body).find('table td').css({
+                                'white-space': 'normal',
+                                'word-wrap': 'break-word'
                             });
-                        });
 
-                        // Customize the data in the second column (index 1)
-                        $(win.document.body).find('table tbody td:nth-child(2)').each(function(index) {
-                            // Set the content of each cell in the second column to be the index + 1
-                            $(this).text(index + 1);
-                        });
-                    }
-                }]
+                            // Remove wrapping style from the 3rd column
+                            $(win.document.body).find('table td:nth-child(3)').css({
+                                'white-space': 'nowrap',
+                                'word-wrap': 'normal'
+                            });
+                            $(win.document.body).find('table td:nth-child(6)').css({
+                                'white-space': 'nowrap',
+                                'word-wrap': 'normal'
+                            });
+
+                            // Apply wrapping style to all columns except the 3rd column
+
+
+                            $(win.document.body).find('h1').css('font-size', '50pt'); // Change the font size of the title
+                            $(win.document.body).find('h1').css('font-weight', 'bold'); // Make the title bold
+                            if (win.document.body.innerHTML.indexOf('<img id="logo"') === -1) {
+                                $(win.document.body).prepend('<img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}">');
+                            }
+                            $(win.document.body)
+                                .css('font-size', '36pt')
+                                .find('td')
+                                .css('font-size', '36pt')
+                            // .css('border', '1px solid black');
+                            // Add borders to the table
+                            // $(win.document.body).find('table').css('border', '2px solid black');
+                            $(win.document.body).find('table td').css({
+                                'border': '2px solid black',
+                                'margin': '0.5rem'
+                            });
+                            // $(win.document.body).find('table th').css({'border': '1px solid black','margin': '10px'});
+
+
+                            $(win.document.body).find('table td, table th').css({
+
+                                'padding-left': '0.5rem',
+                                'padding-right': '0.5rem'
+                            });
+
+
+                            // Customize the header names
+                            $(win.document.body).find('table thead th').each(function(index) {
+                                var customHeaderName;
+                                switch (index) {
+                                    case 0:
+                                        customHeaderName = 'BATCH';
+                                        break;
+                                    case 1:
+                                        customHeaderName = 'No'; // Change the second column header to 'No'
+                                        break;
+                                    case 2:
+                                        customHeaderName = 'NAME';
+                                        break;
+                                    case 3:
+                                        customHeaderName = 'M/F';
+                                        break;
+                                    case 4:
+                                        customHeaderName = 'SCHOLARSHIP\nPROGRAM';
+                                        break;
+                                    case 5:
+                                        customHeaderName = 'School';
+                                        break;
+                                    case 6:
+                                        customHeaderName = 'Course';
+                                        break;
+                                    case 7:
+                                        customHeaderName = 'Grades';
+                                        break;
+                                    case 8:
+                                        customHeaderName = 'Summer REG';
+                                        break;
+                                    case 9:
+                                        customHeaderName = 'REG FORM';
+                                        break;
+                                    case 10:
+                                        customHeaderName = 'REMARKS';
+                                        break;
+                                    case 11:
+                                        customHeaderName = 'ENDORSEMENT';
+                                        break;
+                                    case 12:
+                                        customHeaderName = 'STATUS';
+                                        break;
+                                    case 13:
+                                        customHeaderName = 'NOTATION';
+                                        break;
+                                        // Add more cases as needed
+                                    default:
+                                        customHeaderName = 'Default Header';
+                                }
+                                $(this).text(customHeaderName);
+                                $(this).css({
+                                    'font-size': '40pt',
+                                    'white-space': 'pre-wrap',
+                                    'border': '2px solid black' // Add border to the header
+                                });
+                            });
+
+                            // Customize the data in the second column (index 1)
+                            $(win.document.body).find('table tbody td:nth-child(2)').each(function(index) {
+                                // Set the content of each cell in the second column to be the index + 1
+                                $(this).text(index + 1);
+                            });
+                            $(win.document.body).find('table').addClass('compact');
+
+                        },
+
+                    },
+                    {
+                        extend: 'excel',
+                        text: '<i class="fas fa-file-excel"></i>',
+                        title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+                            modifier: {
+                                search: 'none'
+                            }
+                        },
+                    },
+                    {
+          extend: 'csv',
+          text: '<i class="fas fa-file-csv"></i>',
+          title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
+          exportOptions: {
+              columns: [0,1,2,3,4,5,6,7,8,9,10,12,13,14],
+              modifier: {
+                search: 'none'
+              }
+          },
+      }
+                ]
             });
         </script>
 

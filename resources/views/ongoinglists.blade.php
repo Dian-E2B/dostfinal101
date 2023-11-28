@@ -178,11 +178,20 @@
                             orderable: false,
                             searchable: false,
                             render: function(data, type, row) {
-                                var number = row
-                                    .NUMBER; // Assuming 'NUMBER' is the column name in your database
+                                var startyear = row.startyear;
+                                var endyear = row.endyear;
+                                var semester = row.semester;
+
+                                // Assuming 'rsms2' is the route name
+                                var url = '{{ route('rsms2', [':startyear', ':endyear', ':semester']) }}';
+
+                                // Replace placeholders with actual values
+                                url = url.replace(':startyear', startyear)
+                                    .replace(':endyear', endyear)
+                                    .replace(':semester', semester);
 
                                 return '<td class="text-center" style="text-align: center !important;">' +
-                                    '<a href="#" class="edit-btn"><i class="fas fa-eye"></i></a></td>';
+                                    '<a href="' + url + '" class="edit-btn"><i class="fas fa-eye"></i></a></td>';
                             }
                         }
 
@@ -206,8 +215,8 @@
                                 url: 'ONGOINGLISTVIEW2',
                                 type: 'POST',
                                 headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
                                 data: {
                                     startyear: startyear,
                                     endyear: endyear,

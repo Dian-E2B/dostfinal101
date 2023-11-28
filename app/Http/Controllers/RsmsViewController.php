@@ -51,10 +51,6 @@ class RsmsViewController extends Controller
         $endyear = $request->input('endyear');
         $semester = $request->input('semester');
 
-        Cache::put('startyear', $startyear);
-        Cache::put('endyear', $endyear);
-        Cache::put('semester', $semester);
-
         return view('rsms2');
     }
 
@@ -65,19 +61,21 @@ class RsmsViewController extends Controller
     }
 
     //FILTERED OR IF VIEW IS CLICKED FROM ONGOING
-    public function rsmsview2(Request $request)
-    {
-        return view('rsms2');
-    }
+    public function rsmsview2($startyear, $endyear, $semester)
+{
+    session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
+    return view('rsms2');
+}
 
     //RETRIEVE DATA ON RSMS2 PAGE
     public function getongoinglistgroupsajaxviewclicked(Request $request)
     {
-        $startyear = Cache::pull('startyear');
-        $endyear = Cache::pull('endyear');
-        $semester = Cache::pull('semester');
+        // Retrieve values from the session
+$startyear = session('startyear');
+$endyear = session('endyear');
+$semester = session('semester');
 
-        $results = DB::select("SELECT * FROM ongoing_monitoring WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
+        $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
         Debugbar::info( $startyear,$endyear,$semester );
 
         return DataTables::of($results)->make(true);
