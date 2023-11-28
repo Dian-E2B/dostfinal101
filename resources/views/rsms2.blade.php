@@ -4,6 +4,7 @@
     <head>
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <!-- Include DataTables CSS -->
         <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <!-- Include jQuery -->
@@ -50,9 +51,10 @@
                 text-align: center;
             }
 
-            /* body{
-            background-color: rgb(255, 255, 255);
-        } */
+            body {
+                background-color: rgb(255, 255, 255);
+            }
+
             .content {
                 background-color: white;
             }
@@ -76,6 +78,12 @@
                     border-right: #000 solid 1px;
                 }
             }
+
+
+            .custom-font-size {
+                font-size: 12px;
+                /* Replace with your preferred font size */
+            }
         </style>
     </head>
 
@@ -93,6 +101,25 @@
 
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem">
                     <div class="">
+                        <h3>
+                            @if ($semester == 1)
+                                @php
+                                    echo $semester . 'ST SEM ' . $startyear . '-' . $endyear;
+                                @endphp
+                            @elseif ($semester == 2)
+                                @php
+                                    echo $semester . 'ND SEM ' . $startyear . '-' . $endyear;
+                                @endphp
+                            @else
+                                @php
+                                    echo 'SUMMER ' . $startyear . '-' . $endyear;
+                                @endphp
+                            @endif
+                        </h3>
+                        <input hidden id=startyear value="{{ $startyear }}">
+                        <input hidden id=endyear value="{{ $endyear }}">
+                        <input hidden id=semester value="{{ $semester }}">
+
                         <div class="">
                             <img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}" style="display: none;">
                             <div class="">
@@ -106,9 +133,61 @@
                                             <th>Scholarship Program</th>
                                             <th>School</th>
                                             <th>Course</th>
-                                            <th>Grades2NDSEM20212022</th>
+                                            <th>
+                                                @if ($semester == 1)
+                                                    {{-- 1ST SEM --}}
+                                                    @php
+                                                        $semester2 = $semester + 1; //2ND
+                                                        $startyear2 = $startyear - 1;
+                                                        $endyear2 = $endyear - 1;
+                                                    @endphp
+                                                    {{ 'GRADES' . $semester2 . 'NDSEM' . $startyear2 . '' . $endyear2 }}
+                                                @elseif ($semester == 2)
+                                                    {{-- 2ND SEM --}}
+                                                    @php
+                                                        $semester2 = $semester - 1; //1ST
+                                                        $startyear2 = $startyear;
+                                                        $endyear2 = $endyear;
+                                                    @endphp
+                                                    {{ 'GRADES' . $semester2 . 'STSEM' . $startyear2 . '' . $endyear2 }}
+                                                @elseif ($semester == 3)
+                                                    {{-- SUMMER --}}
+                                                    @php
+                                                        $semester2 = $semester - 1; //2ND SEM
+                                                        $startyear2 = $startyear - 1; //CURRENT
+                                                        $endyear2 = $endyear; //
+                                                    @endphp
+                                                    {{ 'GRADES' . $semester2 . 'NDSEM' . $startyear2 . '' . $endyear2 }}
+                                                @endif
+                                            </th>
                                             <th>SummerREG</th>
-                                            <th>REGFORMS1STSEM20222023</th>
+                                            <th>
+                                                @if ($semester == 1)
+                                                    {{-- 1ST SEM --}}
+                                                    @php
+                                                        $semester2 = $semester;
+                                                        $startyear2 = $startyear;
+                                                        $endyear2 = $endyear;
+                                                    @endphp
+                                                    {{ 'REG FORMS' . $semester2 . 'STSEM' . $startyear2 . '' . $endyear2 }}
+                                                @elseif ($semester == 2)
+                                                    {{-- 2ND SEM --}}
+                                                    @php
+                                                        $semester2 = $semester;
+                                                        $startyear2 = $startyear;
+                                                        $endyear2 = $endyear;
+                                                    @endphp
+                                                    {{ 'REG FORMS' . $semester2 . 'NDSEM' . $startyear2 . '' . $endyear2 }}
+                                                @elseif ($semester == 3)
+                                                    {{-- SUMMER --}}
+                                                    @php
+                                                        $semester2 = $semester - 2; //1ST SEM
+                                                        $startyear2 = $startyear; //(SAME STARTYEAR,+1 ENDYEAR)
+                                                        $endyear2 = $endyear + 1; //
+                                                    @endphp
+                                                    {{ 'REG FORMS' . $semester2 . 'STSEM' . $startyear2 . '' . $endyear2 }}
+                                                @endif
+                                            </th>
                                             <th>REMARKS</th>
                                             <th>STATUSENDORSEMENT</th>
                                             <th>STATUSENDORSEMENT2</th>
@@ -135,6 +214,12 @@
                         </div>
 
 
+
+                        {{-- YEAR LOGIC --}}
+
+
+
+
                         {{-- OFF-CANVAS --}}
                         <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                             <div class="offcanvas-header">
@@ -143,168 +228,180 @@
                             </div>
                             <div class="offcanvas-body">
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3   custom-font-size">
                                         <strong>ID:</strong>
                                     </div>
                                     <div class="col-6">
-                                        <input class="form-control" id="idField" name="idField" placeholder="">
+                                        <input disabled class="form-control form-control-sm" id="idField" name="idField" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3 custom-font-size ">
                                         <strong>Name:</strong>
                                     </div>
-                                    <div class="col-9">
-                                        <input class="form-control" id="nameField" name="nameField">
+                                    <div class="col-9 custom-font-size ">
+                                        <input class="form-control form-control-sm" id="nameField" name="nameField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3 custom-font-size ">
                                         <strong>Gender:</strong>
                                     </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="genderField" name="genderField">
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" id="genderField" name="genderField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3 custom-font-size ">
                                         <strong>Program:</strong>
                                     </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="programField" name="programField">
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" id="programField" name="programField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3 custom-font-size ">
                                         <strong>School:</strong>
                                     </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="schoolField" name="schoolField">
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" id="schoolField" name="schoolField">
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-3">
+                                    <div class="col-3 custom-font-size ">
                                         <strong>Course:</strong>
                                     </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="courseField" name="courseField">
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" id="courseField" name="courseField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-6">
-                                        <strong>GRADES2NDSEM20212022:</strong>
+                                    <div class="col-3 custom-font-size ">
+                                        <strong>GRADES:</strong>
                                     </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="gradesField" name="gradesField">
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" id="gradesField" name="gradesField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-4 custom-font-size ">
                                         <strong>SummerREG:</strong>
                                     </div>
-                                    <div class="col-7">
-                                        <input class="form-control" id="summerRegField" name="summerRegField">
+                                    <div class="col-8">
+                                        <input class="form-control form-control-sm" id="summerRegField" name="summerRegField">
                                     </div>
                                 </div>
 
                                 <div class="row">
-
-                                    <strong>REGFORMS1STSEM20222023:</strong>
-
-
-                                    <textarea class="form-control" id="regFormsField" name="regFormsField"></textarea>
-
+                                    <div class="col-4 custom-font-size ">
+                                        <strong class="custom-font-size">REGFORMS</strong>
+                                    </div>
+                                    <div class="col-8">
+                                        <input class="form-control form-control-sm" id="regFormsField" name="regFormsField">
+                                    </div>
                                 </div>
 
                                 <div class="row align-items-center">
-                                    <div class="">
+                                    <div class="custom-font-size ">
                                         <strong>REMARKS:</strong>
                                     </div>
                                     <div class="">
-                                        <textarea class="form-control" id="remarksField" name="remarksField"></textarea>
+                                        <textarea class="form-control form-control-sm" id="remarksField" name="remarksField"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>STATUSENDORSEMENT:</strong>
                                     </div>
                                     <div class="col-7">
-                                        <input class="form-control" id="statusEndorsementField" name="statusEndorsementField">
+                                        <input class="form-control form-control-sm" id="statusEndorsementField" name="statusEndorsementField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>STATUSENDORSEMENT2:</strong>
                                     </div>
-                                    <div class="col-7">
-                                        <input class="form-control" id="statusEndorsement2Field" name="statusEndorsement2Field">
+                                    <div class="col-7 custom-font-size ">
+                                        <input class="form-control form-control-sm" id="statusEndorsement2Field" name="statusEndorsement2Field">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>STATUS:</strong>
                                     </div>
-                                    <div class="col-7">
-                                        <input class="form-control" id="statusField" name="statusField">
+                                    <div class="col-7 custom-font-size ">
+                                        <input class="form-control form-control-sm" id="statusField" name="statusField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="custom-font-size ">
+                                        <strong>NOTATIONS:</strong>
+                                    </div>
+                                    <div class="">
+                                        <textarea class="form-control form-control-sm" id="notationsField" name="notationsField"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-1">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>SUMMER:</strong>
                                     </div>
                                     <div class="col-7">
-                                        <input class="form-control" id="summerField" name="summerField">
+                                        <input class="form-control form-control-sm" id="summerField" name="summerField">
                                     </div>
                                 </div>
 
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>FARELEASEDTUITION:</strong>
                                     </div>
                                     <div class="col-7">
-                                        <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
+                                        <input class="form-control form-control-sm" id="faReleaseTuitionField" name="faReleaseTuitionField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-md-auto">
-                                        <strong>FARELEASEDTUITIONBOOKSTIPEND:</strong>
+                                    <div class="col-5 custom-font-size ">
+                                        <strong>FARELEASEDTUITION<br>BOOKSTIPEND:</strong>
                                     </div>
-                                    <div class="col-md-auto">
-                                        <input class="form-control" id="faReleaseTuitionField" name="faReleaseTuitionField">
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" id="faReleaseTuitionBookStipendField" name="faReleaseTuitionBookStipendField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>LVDCAccount:</strong>
                                     </div>
                                     <div class="col-7">
-                                        <input class="form-control" id="lvdCAccountField" name="lvdCAccountField">
+                                        <input class="form-control form-control-sm" id="lvdCAccountField" name="lvdCAccountField">
                                     </div>
                                 </div>
 
                                 <div class="row align-items-center mb-1">
-                                    <div class="col-5">
+                                    <div class="col-5 custom-font-size ">
                                         <strong>HVCNotes:</strong>
                                     </div>
-                                    <div class="col-7">
-                                        <input class="form-control" id="hvcNotesField" name="hvcNotesField">
+                                    <div class="col-7 ">
+                                        <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
                                     </div>
                                 </div>
 
+                                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
                             </div>
+
+
                         </div>
 
                     </div>
@@ -319,6 +416,19 @@
         <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
             $(document).ready(function() {
+                var startyearValue = $('#startyear').val();
+                var endyearValue = $('#endyear').val();
+                var semesterValue = $('#semester').val();
+                var semesterValue2;
+
+                if (semesterValue == 1) {
+                    semesterValue2 = semesterValue + 1;
+                } else if (semesterValue == 2) {
+                    semesterValue2 = semesterValue - 1;
+                } else {
+                    semesterValue2 = "SUMMER";
+                }
+
                 $.noConflict();
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
@@ -356,15 +466,15 @@
                             name: 'COURSE'
                         },
                         {
-                            data: 'GRADES2NDSEM20212022',
-                            name: 'GRADES2NDSEM20212022'
+                            data: 'GRADES',
+                            name: 'GRADES' + semesterValue2 + 'SEM' + startyearValue - 1 + endyearValue - 1
                         },
                         {
                             data: 'SummerREG',
                             name: 'SummerREG'
                         },
                         {
-                            data: 'REGFORMS1STSEM20222023',
+                            data: 'REGFORMS',
                             name: 'REGFORMS1STSEM20222023'
                         },
                         {
@@ -510,13 +620,14 @@
                             $('#editModal #programField').val(data.SCHOLARSHIPPROGRAM);
                             $('#editModal #schoolField').val(data.SCHOOL);
                             $('#editModal #courseField').val(data.COURSE);
-                            $('#editModal #gradesField').val(data.GRADES2NDSEM20212022);
+                            $('#editModal #gradesField').val(data.GRADES);
                             $('#editModal #summerRegField').val(data.SummerREG);
-                            $('#editModal #regFormsField').val(data.REGFORMS1STSEM20222023);
-                            $('#editModal #statusEndorsementField').val(data.REMARKS);
-                            $('#editModal #statusEndorsement2Field').val(data.STATUSENDORSEMENT);
-                            $('#editModal #statusField').val(data.STATUSENDORSEMENT2);
-                            $('#editModal #NOTATIONSField').val(data.NOTATIONS);
+                            $('#editModal #regFormsField').val(data.REGFORMS);
+                            $('#editModal #remarksField').val(data.REMARKS);
+                            $('#editModal #statusEndorsementField').val(data.STATUSENDORSEMENT);
+                            $('#editModal #statusEndorsement2Field').val(data.STATUSENDORSEMENT2);
+                            $('#editModal #statusField').val(data.STATUS);
+                            $('#editModal #notationsField').val(data.NOTATIONS);
                             $('#editModal #summerField').val(data.SUMMER);
                             $('#editModal #faReleaseTuitionField').val(data.FARELEASEDTUITION);
                             $('#editModal #faReleaseTuitionBookStipendField').val(data
@@ -532,6 +643,114 @@
                         error: function(error) {
                             console.error('Error fetching data for editing:', error);
                         }
+                    });
+
+
+                    $('#saveChangesBtn').off('click').click(function() {
+                        // Gather the updated data from the modal fields
+                        var updatedData = {
+                            // NUMBER: $('#editModal #idField').val(),
+                            NAME: $('#editModal #nameField').val(),
+                            MF: $('#editModal #genderField').val(),
+                            SCHOLARSHIPPROGRAM: $('#editModal #programField').val(),
+                            SCHOOL: $('#editModal #schoolField').val(),
+                            COURSE: $('#editModal #courseField').val(),
+                            GRADES: $('#editModal #gradesField').val(),
+                            SummerREG: $('#editModal #summerRegField').val(),
+                            REGFORMS: $('#editModal #regFormsField').val(),
+                            REMARKS: $('#editModal #remarksField').val(),
+                            STATUSENDORSEMENT: $('#editModal #statusEndorsementField').val(),
+                            STATUSENDORSEMENT2: $('#editModal #statusEndorsement2Field').val(),
+                            STATUS: $('#editModal #statusField').val(),
+                            NOTATIONS: $('#editModal #notationsField').val(),
+                            SUMMER: $('#editModal #summerField').val(),
+                            FARELEASEDTUITION: $('#editModal #faReleaseTuitionField').val(),
+                            FARELEASEDTUITIONBOOKSTIPEND: $('#editModal #faReleaseTuitionField').val(),
+                            LVDCAccount: $('#editModal #lvdCAccountField').val(),
+                            HVCNotes: $('#editModal #lvdCAccountField').val(),
+                        };
+
+                        // Send the updated data to the server using AJAX
+                        $.ajax({
+                            url: '{{ url('/savechangesongongoing/') }}' + '/' + number, // Replace with your server endpoint
+                            method: 'POST', // You can use POST or PUT based on your server-side implementation
+                            data: updatedData,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                // Handle success, e.g., close the modal or show a success message
+                                console.log('Changes saved successfully:', response);
+                                notyf.success({
+                                    message: 'Record has been edited.',
+                                    duration: 3000,
+                                    position: {
+                                        x: 'right',
+                                        y: 'top',
+                                    },
+                                })
+                                // Update specific cells in DataTable with new data
+                                // Update specific cells in DataTable with new data
+                                var dataTable = $('#yourDataTable').DataTable();
+
+                                // Assuming 'response' is the updated data you received from the server
+                                var newData = response;
+
+                                // Assuming 'newData.NUMBER' is the unique identifier for the row
+                                var uniqueIdentifier = newData.NUMBER;
+
+
+
+                                // Iterate over each row in the DataTable
+                                dataTable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                                    // Access the data for the current row
+                                    var row = dataTable.row(rowIdx);
+
+
+                                    // Replace this condition with your own logic to identify the row
+                                    if (row.NUMBER == uniqueIdentifier) {
+                                        // Update the specific cells in the DataTable
+                                        dataTable.cell(rowIdx, 0).data(newData.BATCH);
+                                        dataTable.cell(rowIdx, 2).data(newData.NAME);
+                                        dataTable.cell(rowIdx, 3).data(newData.MF);
+                                        dataTable.cell(rowIdx, 4).data(newData.SCHOLARSHIPPROGRAM);
+                                        dataTable.cell(rowIdx, 5).data(newData.SCHOOL);
+                                        dataTable.cell(rowIdx, 6).data(newData.COURSE);
+                                        dataTable.cell(rowIdx, 7).data(newData.GRADES);
+                                        dataTable.cell(rowIdx, 8).data(newData.SummerREG);
+                                        dataTable.cell(rowIdx, 9).data(newData.REGFORMS);
+                                        dataTable.cell(rowIdx, 10).data(newData.REMARKS);
+                                        dataTable.cell(rowIdx, 11).data(newData.STATUSENDORSEMENT);
+                                        dataTable.cell(rowIdx, 12).data(newData.STATUSENDORSEMENT2);
+                                        dataTable.cell(rowIdx, 13).data(newData.STATUS);
+                                        dataTable.cell(rowIdx, 14).data(newData.NOTATIONS);
+                                        dataTable.cell(rowIdx, 15).data(newData.SUMMER);
+                                        dataTable.cell(rowIdx, 16).data(newData.FARELEASEDTUITION);
+                                        dataTable.cell(rowIdx, 17).data(newData.FARELEASEDTUITIONBOOKSTIPEND);
+                                        dataTable.cell(rowIdx, 18).data(newData.LVDCAccount);
+                                        dataTable.cell(rowIdx, 19).data(newData.HVCNotes);
+                                        // ... Repeat for other cells ...
+
+
+                                        this.invalidate();
+                                        // Exit the loop since we found the row to update
+                                        return false;
+                                    }
+
+                                    return true; // Continue the loop
+                                });
+
+
+                                // Redraw the DataTable
+                                dataTable.draw();
+                                $('#editModal input').val('');
+                                $('#editModal').offcanvas('hide'); // Assuming you want to hide the modal on success
+
+                            },
+                            error: function(error) {
+                                console.error('Error saving changes:', error);
+                            }
+                        });
                     });
 
                 });
@@ -611,7 +830,6 @@
 
                             // Apply wrapping style to all columns except the 3rd column
 
-
                             $(win.document.body).find('h1').css('font-size', '50pt'); // Change the font size of the title
                             $(win.document.body).find('h1').css('font-weight', 'bold'); // Make the title bold
                             if (win.document.body.innerHTML.indexOf('<img id="logo"') === -1) {
@@ -621,14 +839,14 @@
                                 .css('font-size', '36pt')
                                 .find('td')
                                 .css('font-size', '36pt')
-                            // .css('border', '1px solid black');
-                            // Add borders to the table
-                            // $(win.document.body).find('table').css('border', '2px solid black');
+                            //.css('border', '1px solid black');
+                            //Add borders to the table
+                            //$(win.document.body).find('table').css('border', '2px solid black');
                             $(win.document.body).find('table td').css({
                                 'border': '2px solid black',
                                 'margin': '0.5rem'
                             });
-                            // $(win.document.body).find('table th').css({'border': '1px solid black','margin': '10px'});
+                            //$(win.document.body).find('table th').css({'border': '1px solid black','margin': '10px'});
 
 
                             $(win.document.body).find('table td, table th').css({
@@ -702,6 +920,7 @@
                                 $(this).text(index + 1);
                             });
                             $(win.document.body).find('table').addClass('compact');
+                            $(win.document.body).find('table').removeClass('table-striped');
 
                         },
 
@@ -718,16 +937,16 @@
                         },
                     },
                     {
-          extend: 'csv',
-          text: '<i class="fas fa-file-csv"></i>',
-          title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
-          exportOptions: {
-              columns: [0,1,2,3,4,5,6,7,8,9,10,12,13,14],
-              modifier: {
-                search: 'none'
-              }
-          },
-      }
+                        extend: 'csv',
+                        text: '<i class="fas fa-file-csv"></i>',
+                        title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+                            modifier: {
+                                search: 'none'
+                            }
+                        },
+                    }
                 ]
             });
         </script>

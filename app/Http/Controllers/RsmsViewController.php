@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
 use Termwind\Components\Dd;
 
-class RsmsViewController extends Controller
+class RsmsViewController extends Controller //OR ONGOING
 {
     //
     public function rsmsview()
@@ -45,15 +45,6 @@ class RsmsViewController extends Controller
        return view('ongoinglists');
     }
 
-    public function ongoinglistsview2(Request $request)
-    {
-        $startyear = $request->input('startyear');
-        $endyear = $request->input('endyear');
-        $semester = $request->input('semester');
-
-        return view('rsms2');
-    }
-
     public function getongoinglistgroupsajax(Request $request)
     {
         $results = DB::select("SELECT * FROM ongoing_monitoring ORDER BY startyear DESC;");
@@ -62,18 +53,19 @@ class RsmsViewController extends Controller
 
     //FILTERED OR IF VIEW IS CLICKED FROM ONGOING
     public function rsmsview2($startyear, $endyear, $semester)
-{
-    session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
-    return view('rsms2');
-}
+    {
+        session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
+        return view('rsms2', compact('startyear', 'endyear', 'semester'));
+    }
+
 
     //RETRIEVE DATA ON RSMS2 PAGE
     public function getongoinglistgroupsajaxviewclicked(Request $request)
     {
         // Retrieve values from the session
-$startyear = session('startyear');
-$endyear = session('endyear');
-$semester = session('semester');
+        $startyear = session('startyear');
+        $endyear = session('endyear');
+        $semester = session('semester');
 
         $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
         Debugbar::info( $startyear,$endyear,$semester );
@@ -92,6 +84,22 @@ $semester = session('semester');
         return DataTables::of($ongoing)->make(true);
     }
 
+    public function SaveChangesOngoing(Request $request, $number)
+    {
+
+        // Find the record based on the given number
+        $record = Ongoing::where('NUMBER', $number)->first();
+
+        if (!$record) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        // Update the record with the new data
+        $record->update($request->all());
+
+        // You can return a response if needed
+        return response()->json(['message' => 'Changes saved successfully']);
+    }
 
     //     public function getongoinglistgroupsajax(Request $request)
     //     {
@@ -134,6 +142,19 @@ $semester = session('semester');
 
         return response()->json($ongoing);
     }
+
+
+    public function saveOngoingById($number)
+    {
+        $ongoing = Ongoing::where('number', $number)->first();
+        if (!$ongoing) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        return response()->json($ongoing);
+    }
+
+
 
 
 

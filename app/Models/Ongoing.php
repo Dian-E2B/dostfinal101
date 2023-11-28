@@ -14,6 +14,36 @@ class Ongoing extends Model
      // Specify the primary key column
      protected $primaryKey = 'NUMBER';
 
+
+     public $timestamps = false;
+
+     protected $fillable = [
+        'Name',
+        'BATCH',
+        'NUMBER',
+        'NAME',
+        'MF',
+        'SCHOLARSHIPPROGRAM',
+        'SCHOOL',
+        'COURSE',
+        'GRADES',
+        'SummerREG',
+        'REGFORMS',
+        'REMARKS',
+        'STATUSENDORSEMENT',
+        'STATUSENDORSEMENT2',
+        'STATUS',
+        'NOTATIONS',
+        'SUMMER',
+        'FARELEASEDTUITION',
+        'FARELEASEDTUITIONBOOKSTIPEND',
+        'LVDCAccount',
+        'HVCNotes',
+        'startyear',
+        'endyear',
+        'semester',
+    ];
+
      // Specify that the primary key is not an auto-incrementing integer
      public $incrementing = false;
 

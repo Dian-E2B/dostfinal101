@@ -6,7 +6,7 @@ use App\Http\Controllers\RsmsViewController;
 
 use App\Http\Controllers\StudentViewController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+
 
 use App\Http\Controllers\SeiQualifierviewController;
 use App\Http\Controllers\PDFController;
@@ -80,6 +80,7 @@ Route::get('/ONGOINGLISTVIEW', [\App\Http\Controllers\RsmsViewController::class,
 Route::POST('/ONGOINGLISTVIEW2', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview2'])->name('ONGOINGLISTVIEW2'); //if view button is clicked
 Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'] )->name('getongoinglistgroupsajax');
 Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'] )->name('getongoinglistgroupsajaxviewclicked');
+Route::post('/savechangesongongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'SaveChangesOngoing']);
 
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
