@@ -36,12 +36,17 @@ Route::get('/logged-out', [App\Http\Controllers\HomeController::class, 'index'])
 
 //SEI
 Route::get('/seilist', [SeiViewController::class, 'seiqualifierview'])->name('seilist');
+Route::get('/seilistviewajax', [SeiViewController::class, 'seiqualifierviewajax'])->name('seilistviewajax');
+Route::get('/seilistviewajaxpotential', [SeiViewController::class, 'seilistviewajaxpotential'])->name('seilistviewajaxpotential');
 Route::get('/seilist2', [SeiViewController::class, 'seipotientalqualifierview'])->name('seilist2');
 Route::get('/sei/create', [SeiViewController::class, 'create'])->name('sei.create');
 Route::post('/sei', [SeiViewController::class, 'store'])->name('sei.store');
 // Route::post('/seilist2_edit', [SeiViewController::class, 'editinfo'])->name('seilist2.edit');
 Route::post('/seilist2_edit', [SeiViewController::class, 'edit'])->name('editscholar');
 Route::post('/seilist2_save', [SeiViewController::class, 'saveedit'])->name('sei.saveedit');
+Route::get('/get-seilistrecord/{number}', [SeiViewController::class, 'getOngoingSeilistById']);
+Route::post('/savechangesseilist/{number}', [SeiViewController::class, 'SaveChangesSeilist']);
+
 
 //EMAILS
 Route::get('/emails', [EmailViewController::class, 'emailstatusview'])->name('emails');
@@ -71,17 +76,17 @@ Route::get('/rsmslistra10612', [\App\Http\Controllers\RsmsViewController::class,
 Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
 Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
-Route::get('datatable/data', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingData'] )->name('datatable.data');
+Route::get('datatable/data', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingData'])->name('datatable.data');
 Route::get('/get-ongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingById']);
 Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
 // Route::get('/getongoingfiltered/{startyear}/{endyear}/{semester}', 'YourController@getongoingfiltered')->name('getongoingfiltered');
-Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'] )->name('getongoingfiltered');
+Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'])->name('getongoingfiltered');
 Route::get('/ONGOINGLISTVIEW', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview1'])->name('ONGOINGLISTVIEW');
 Route::POST('/ONGOINGLISTVIEW2', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview2'])->name('ONGOINGLISTVIEW2'); //if view button is clicked
-Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'] )->name('getongoinglistgroupsajax');
-Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'] )->name('getongoinglistgroupsajaxviewclicked');
+Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'])->name('getongoinglistgroupsajax');
+Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'])->name('getongoinglistgroupsajaxviewclicked');
 Route::post('/savechangesongongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'SaveChangesOngoing']);
-
+Route::get('/viewscholarrecords/{number}', [RsmsViewController::class, 'viewscholarrecordsview'])->name('viewscholarrecords');
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
 Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');

@@ -31,6 +31,7 @@
 
 
 
+
             th {
                 padding-left: 8px;
                 padding-right: 8px;
@@ -47,9 +48,7 @@
             }
 
 
-            .text-center {
-                text-align: center;
-            }
+
 
             body {
                 background-color: rgb(255, 255, 255);
@@ -126,6 +125,7 @@
                                 <table id="yourDataTable" class="display nowrap compact table-striped" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>Action</th>
                                             <th>Batch</th>
                                             <th>Number</th>
                                             <th>Name</th>
@@ -201,7 +201,7 @@
                                             <th>startyear</th>
                                             <th>endyear</th>
                                             <th>semester</th>
-                                            <th style="vertical-align:center;">Action</th>
+
 
                                         </tr>
                                     </thead>
@@ -221,7 +221,7 @@
 
 
                         {{-- OFF-CANVAS --}}
-                        <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                        <div class="offcanvas offcanvas-end" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasScrollingLabel">EDIT SCHOLAR DETAILS</h5>
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -429,6 +429,8 @@
                     semesterValue2 = "SUMMER";
                 }
 
+
+
                 $.noConflict();
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
@@ -438,32 +440,47 @@
                     ajax: '{{ route('getongoinglistgroupsajaxviewclicked') }}', // Adjust this route to your actual route
                     type: 'POST',
                     columns: [{
+                            data: null,
+                            orderable: false,
+                            searchable: false,
+                            className: 'action-column',
+                            render: function(data, type, row) {
+                                var number = row
+                                    .NUMBER; // Assuming 'NUMBER' is the column name in your database
+
+                                return '<td >' +
+                                    '<a href="#" class="edit-btn" data-number="' + number +
+                                    '"><i class="fa fa-pencil"></i></a> <a href="#" class="view-btn" data-number="' + number +
+                                    '"><i class="fa fa-pencil"></i></a>' + '</td>';
+                            }
+                        },
+                        {
                             data: 'BATCH',
-                            name: 'BATCH'
+
                         },
                         {
                             data: 'NUMBER',
-                            name: 'NUMBER'
+
                         },
                         {
                             data: 'NAME',
-                            name: 'NAME'
+
                         },
                         {
                             data: 'MF',
-                            name: 'MF'
+
                         },
                         {
                             data: 'SCHOLARSHIPPROGRAM',
-                            name: 'SCHOLARSHIPPROGRAM'
+
                         },
                         {
                             data: 'SCHOOL',
-                            name: 'SCHOOL'
+
                         },
                         {
                             data: 'COURSE',
-                            name: 'COURSE'
+
                         },
                         {
                             data: 'GRADES',
@@ -471,87 +488,79 @@
                         },
                         {
                             data: 'SummerREG',
-                            name: 'SummerREG'
+
                         },
                         {
                             data: 'REGFORMS',
-                            name: 'REGFORMS1STSEM20222023'
+
                         },
                         {
                             data: 'REMARKS',
-                            name: 'REMARKS'
+
                         },
                         {
                             data: 'STATUSENDORSEMENT',
-                            name: 'STATUSENDORSEMENT'
+
                         },
                         {
                             data: 'STATUSENDORSEMENT2',
-                            name: 'STATUSENDORSEMENT2'
+
                         },
                         {
                             data: 'STATUS',
-                            name: 'STATUS'
+
                         },
                         {
                             data: 'NOTATIONS',
-                            name: 'NOTATIONS'
+
                         },
                         {
                             data: 'SUMMER',
-                            name: 'SUMMER'
+
                         },
                         {
                             data: 'FARELEASEDTUITION',
-                            name: 'FARELEASEDTUITION'
+
                         },
                         {
                             data: 'FARELEASEDTUITIONBOOKSTIPEND',
-                            name: 'FARELEASEDTUITIONBOOKSTIPEND'
+
                         },
                         {
                             data: 'LVDCAccount',
-                            name: 'LVDCAccount'
+
                         },
                         {
                             data: 'HVCNotes',
-                            name: 'HVCNotes'
+
                         },
                         {
                             data: 'startyear',
-                            name: 'startyear'
+
                         },
                         {
                             data: 'endyear',
-                            name: 'endyear'
+
                         },
                         {
                             data: 'semester',
-                            name: 'semester'
-                        },
 
-                        {
-                            data: null,
-                            orderable: false,
-                            searchable: false,
-                            render: function(data, type, row) {
-                                var number = row
-                                    .NUMBER; // Assuming 'NUMBER' is the column name in your database
-
-                                return '<td class="text-center" style="text-align: center !important;">' +
-                                    '<a href="#" class="edit-btn" data-number="' + number +
-                                    '"><i class="fa fa-pencil"></i></a></td>';
-                            }
                         }
+
+
 
                     ],
                     columnDefs: [{
-                            targets: [1], // Index of the "No" column
+                            targets: 'action-column', // Use a class to target the specific column
+                            className: 'text-center',
+                        },
+                        {
+                            targets: [0, 2], // Index of the "No" column
                             orderable: false,
                             searchable: false,
                         },
                         {
-                            targets: [3, 5, 19, 4],
+                            targets: [0, 3, 5, 19, 4],
                             orderable: false,
                         },
 
@@ -562,11 +571,15 @@
                     },
                     scrollX: true,
                     order: [
-                        [0, 'asc'] //set batch sort from lowest
+                        [1, 'asc'] //set batch sort from lowest
                     ],
                     fixedColumns: {
-                        leftColumns: 3,
+                        leftColumns: 4,
                     },
+                    createdRow: function(row, data, dataIndex) {
+                        $(row).find('.action-column').addClass('text-center');
+                    },
+
 
                     initComplete: function() {
                         this.api().columns([3, 5, 4]).every(function(d) {
@@ -596,7 +609,7 @@
                         let start = table.page.info().start;
                         let i = start + 1;
                         table
-                            .column(1, {
+                            .column(2, {
                                 search: 'applied',
                                 order: 'applied'
                             })
@@ -607,6 +620,12 @@
                     }
                 });
 
+
+                $(document).on('click', '.view-btn', function() {
+                    var number = $(this).data('number');
+                    var url = '{{ url('/viewscholarrecords/') }}' + '/' + number;
+                    window.location.href = url;
+                });
 
                 $(document).on('click', '.edit-btn', function() {
                     var number = $(this).data('number');
@@ -710,25 +729,25 @@
                                     // Replace this condition with your own logic to identify the row
                                     if (row.NUMBER == uniqueIdentifier) {
                                         // Update the specific cells in the DataTable
-                                        dataTable.cell(rowIdx, 0).data(newData.BATCH);
-                                        dataTable.cell(rowIdx, 2).data(newData.NAME);
-                                        dataTable.cell(rowIdx, 3).data(newData.MF);
-                                        dataTable.cell(rowIdx, 4).data(newData.SCHOLARSHIPPROGRAM);
-                                        dataTable.cell(rowIdx, 5).data(newData.SCHOOL);
-                                        dataTable.cell(rowIdx, 6).data(newData.COURSE);
-                                        dataTable.cell(rowIdx, 7).data(newData.GRADES);
-                                        dataTable.cell(rowIdx, 8).data(newData.SummerREG);
-                                        dataTable.cell(rowIdx, 9).data(newData.REGFORMS);
-                                        dataTable.cell(rowIdx, 10).data(newData.REMARKS);
-                                        dataTable.cell(rowIdx, 11).data(newData.STATUSENDORSEMENT);
-                                        dataTable.cell(rowIdx, 12).data(newData.STATUSENDORSEMENT2);
-                                        dataTable.cell(rowIdx, 13).data(newData.STATUS);
-                                        dataTable.cell(rowIdx, 14).data(newData.NOTATIONS);
-                                        dataTable.cell(rowIdx, 15).data(newData.SUMMER);
-                                        dataTable.cell(rowIdx, 16).data(newData.FARELEASEDTUITION);
-                                        dataTable.cell(rowIdx, 17).data(newData.FARELEASEDTUITIONBOOKSTIPEND);
-                                        dataTable.cell(rowIdx, 18).data(newData.LVDCAccount);
-                                        dataTable.cell(rowIdx, 19).data(newData.HVCNotes);
+                                        dataTable.cell(rowIdx, 1).data(newData.BATCH);
+                                        dataTable.cell(rowIdx, 3).data(newData.NAME);
+                                        dataTable.cell(rowIdx, 4).data(newData.MF);
+                                        dataTable.cell(rowIdx, 5).data(newData.SCHOLARSHIPPROGRAM);
+                                        dataTable.cell(rowIdx, 6).data(newData.SCHOOL);
+                                        dataTable.cell(rowIdx, 7).data(newData.COURSE);
+                                        dataTable.cell(rowIdx, 8).data(newData.GRADES);
+                                        dataTable.cell(rowIdx, 9).data(newData.SummerREG);
+                                        dataTable.cell(rowIdx, 10).data(newData.REGFORMS);
+                                        dataTable.cell(rowIdx, 11).data(newData.REMARKS);
+                                        dataTable.cell(rowIdx, 12).data(newData.STATUSENDORSEMENT);
+                                        dataTable.cell(rowIdx, 13).data(newData.STATUSENDORSEMENT2);
+                                        dataTable.cell(rowIdx, 14).data(newData.STATUS);
+                                        dataTable.cell(rowIdx, 15).data(newData.NOTATIONS);
+                                        dataTable.cell(rowIdx, 16).data(newData.SUMMER);
+                                        dataTable.cell(rowIdx, 17).data(newData.FARELEASEDTUITION);
+                                        dataTable.cell(rowIdx, 18).data(newData.FARELEASEDTUITIONBOOKSTIPEND);
+                                        dataTable.cell(rowIdx, 19).data(newData.LVDCAccount);
+                                        dataTable.cell(rowIdx, 20).data(newData.HVCNotes);
                                         // ... Repeat for other cells ...
 
 
@@ -742,7 +761,7 @@
 
 
                                 // Redraw the DataTable
-                                dataTable.draw();
+                                table.ajax.reload(null, false);
                                 $('#editModal input').val('');
                                 $('#editModal').offcanvas('hide'); // Assuming you want to hide the modal on success
 
@@ -755,12 +774,7 @@
 
                 });
 
-                // Populate startyear, endyear, and semester dropdowns
-                var startyearSelect = $('#startyear');
-                var endyearSelect = $('#endyear');
-                var semesterSelect = $('#semester');
-
-                var columnsToHide = [20, 21, 22];
+                // var columnsToHide = [21, 22, 22];
 
                 columnsToHide.forEach(function(columnIndex) {
                     table.column(columnIndex).visible(false);
@@ -806,7 +820,7 @@
                         text: '<i class="fas fa-print"></i>',
                         title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15],
                             modifier: {
                                 search: 'none'
                             }
@@ -917,7 +931,7 @@
                             // Customize the data in the second column (index 1)
                             $(win.document.body).find('table tbody td:nth-child(2)').each(function(index) {
                                 // Set the content of each cell in the second column to be the index + 1
-                                $(this).text(index + 1);
+                                $(this).text(index + 2);
                             });
                             $(win.document.body).find('table').addClass('compact');
                             $(win.document.body).find('table').removeClass('table-striped');

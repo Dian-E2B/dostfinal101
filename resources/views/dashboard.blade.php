@@ -1,95 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>DOST XI</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="{{ asset('css/all.css') }}">
+    <head>
+        <title>DOST XI</title>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="{{ asset('css/all.css') }}">
 
 
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-</head>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    </head>
 
-<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
-    <div class="wrapper">
+    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+        <div class="wrapper">
 
-        {{-- SIDEBAR START --}}
-        @include('layouts.sidebar')
-        {{-- SIDEBAR END --}}
+            {{-- SIDEBAR START --}}
+            @include('layouts.sidebar')
+            {{-- SIDEBAR END --}}
 
 
 
-        <div class="main">
-            @include('layouts.header')
+            <div class="main">
+                @include('layouts.header')
 
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="">
+                <main class="content">
+                    <div class="container-fluid p-0">
+                        <div class="">
 
-                        {{-- LINE SCHOOLS CHART SECTION --}}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Schools</h5>
-                                        <h6 class="card-subtitle text-muted">
-                                            {{-- DESCRIPTIVE COMPARISON --}}
-                                            <strong>
-                                                The school with the highest number of scholar applications is
-                                                <span style="color: blue">{{ $mostcommonschool->school }}</span>, while
-                                                @if (count($leastCommonSchools) > 0)
-                                                    <span
-                                                        style="color: blue">{{ implode(', ', $leastCommonSchools->pluck('school')->toArray()) }}</span>
-                                                @else
-                                                @endif
-                                                has the fewest applications.
-                                            </strong>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-contatiner">
-                                            <canvas id="myChart" width="" height="500"></canvas>
+                            {{-- LINE SCHOOLS CHART SECTION --}}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Schools</h5>
+                                            <h6 class="card-subtitle text-muted">
+                                                {{-- DESCRIPTIVE COMPARISON --}}
+                                                <strong>
+                                                    The school with the highest number of scholar applications is
+                                                    <span style="color: blue">{{ $mostcommonschool->school }}</span>, while
+                                                    @if (count($leastCommonSchools) > 0)
+                                                        <span style="color: blue">{{ implode(', ', $leastCommonSchools->pluck('school')->toArray()) }}</span>
+                                                    @else
+                                                    @endif
+                                                    has the fewest applications.
+                                                </strong>
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-contatiner">
+                                                <canvas id="myChart" width="" height="500"></canvas>
+                                            </div>
+
                                         </div>
 
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
 
-                        {{-- GENDER CHART SECTION --}}
-                        <div class="col-12 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">Gender Distribution of Scholar Applications</h5>
+                            {{-- GENDER CHART SECTION --}}
+                            <div class="col-12 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Gender Distribution of Scholar Applications</h5>
 
-                                    <h6 class="card-subtitle text-muted"> <strong>
-                                            {{-- DESCRIPTIVE COMPARISON --}}
-                                            The majority of scholar applications come from
-                                            @if ($mosthighestgender->MF == 'M')
-                                                <span style="color: blue">Male</span>
-                                            @else
-                                                <span style="color: pink">Female</span>
-                                            @endif
-                                            students, with @if ($mostlowestgender->MF == 'F')
-                                                <span style="color: pink">Female</span>
-                                            @else
-                                                <span style="color: blue">Male</span>
-                                            @endif
-                                            students making up the smaller portion.
-                                        </strong></h6>
+                                        <h6 class="card-subtitle text-muted"> <strong>
+                                                {{-- DESCRIPTIVE COMPARISON --}}
+                                                The majority of scholar applications come from
+                                                @if ($mosthighestgender->MF == 'M')
+                                                    <span style="color: blue">Male</span>
+                                                @else
+                                                    <span style="color: pink">Female</span>
+                                                @endif
+                                                students, with @if ($mostlowestgender->MF == 'F')
+                                                    <span style="color: pink">Female</span>
+                                                @else
+                                                    <span style="color: blue">Male</span>
+                                                @endif
+                                                students making up the smaller portion.
+                                            </strong></h6>
 
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart chart-sm">
-                                        <canvas id="genderPieChart"></canvas>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart chart-sm">
+                                            <canvas id="genderPieChart"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {{-- <div class="col-lg-12 col-lg-6">
+                            {{-- <div class="col-lg-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Doughnut Chart</h5>
@@ -106,7 +105,7 @@
 
 
 
-                        {{-- <div class="col-12 col-lg-6">
+                            {{-- <div class="col-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Radar Chart</h5>
@@ -123,7 +122,7 @@
                         </div>
 --}}
 
-                        {{--    <div class="col-12 col-lg-6">
+                            {{--    <div class="col-12 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">Polar Area Chart</h5>
@@ -140,114 +139,108 @@
                     </div> --}}
 
 
-                    </div>
+                        </div>
 
-            </main>
+                </main>
+            </div>
         </div>
-    </div>
-</body>
-{{-- CHART TOGGLING --}}
-<script src="{{ asset('js/all.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<script>
+    </body>
+    {{-- CHART TOGGLING --}}
+    <script src="{{ asset('js/all.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        // Register the required plugins
+        Chart.register([ChartDataLabels]);
 
-// Register the required plugins
-Chart.register([ChartDataLabels]);
+        var ctx = document.getElementById('myChart').getContext('2d');
 
-var ctx = document.getElementById('myChart').getContext('2d');
+        // Extract the aggregated data from the PHP array
+        var schoolCounts = @json($schoolCounts);
+        var labels = Object.keys(schoolCounts);
+        var data = Object.values(schoolCounts);
 
-// Extract the aggregated data from the PHP array
-var schoolCounts = @json($schoolCounts);
-var labels = Object.keys(schoolCounts);
-var data = Object.values(schoolCounts);
+        // Set a solid blue color for all bars
+        var backgroundColor = '#9FC5E8';
+        var borderColor = 'rgba(54, 162, 235, 1)';
 
-// Set a solid blue color for all bars
-var backgroundColor = 'rgba(54, 162, 235, 1)';
-var borderColor = 'rgba(54, 162, 235, 1)';
-
-var minValue = Math.min(...data);
-var minIndices = data.reduce((indices, value, index) => {
-    if (value === minValue) {
-        indices.push(index);
-    }
-    return indices;
-}, []);
-
-var maxValue = Math.max(...data);
-var maxIndex = data.indexOf(maxValue);
-
-// Set background color dynamically for each bar
-var dynamicBackgroundColors = data.map((value, index) => {
-    if (index === maxIndex) {
-        return 'green'; // Set color to green for the highest value
-    } else if (minIndices.includes(index)) {
-        return 'red'; // Set color to red for the lowest value
-    } else {
-        return backgroundColor; // Default color
-    }
-});
-
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: '',
-            data: data,
-            backgroundColor: dynamicBackgroundColors,
-            borderColor: borderColor,
-            borderWidth: 2
-        }]
-    },
-    options: {
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true
+        var minValue = Math.min(...data);
+        var minIndices = data.reduce((indices, value, index) => {
+            if (value === minValue) {
+                indices.push(index);
             }
-        },
-        plugins: {
-            legend: {
-                display: false
+            return indices;
+        }, []);
+
+        var maxValue = Math.max(...data);
+        var maxIndex = data.indexOf(maxValue);
+
+        // Set background color dynamically for each bar
+        var dynamicBackgroundColors = data.map((value, index) => {
+            if (index === maxIndex) {
+                return '#B6D7A8'; // Set color to green for the highest value
+            } else if (minIndices.includes(index)) {
+                return '#F4CCCC'; // Set color to red for the lowest value
+            } else {
+                return backgroundColor; // Default color
+            }
+        });
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '',
+                    data: data,
+                    backgroundColor: dynamicBackgroundColors,
+                    borderColor: borderColor,
+
+                }]
             },
-            datalabels: {
-                anchor: 'end', // Set to 'center' to center the label horizontally
-                align: 'top',  // Set to 'center' to center the label vertically
-                color: 'black',   // Set the default color to black
-                textAlign: 'center',
-                font: {
-                    weight: 'bold',  // Set to 'bold' to make the label bold
-                },
-                formatter: (value, context) => {
-                    const dataIndex = context.dataIndex;
-                    const datapoints = context.dataset.data;
-                    const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-                    const percentage = (value / total) * 100;
-
-                    let label = percentage.toFixed(1) + '%';
-
-                    if (dataIndex === maxIndex) {
-
-                        return 'Highest \n Value:\n' + label;
-                    } else if (minIndices.includes(dataIndex)) {
-
-                        return 'Lowest \n Value:\n' + label;
-                    } else {
-                        return label;
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        anchor: 'center', // Set to 'center' to center the label horizontally
+                        align: 'center', // Set to 'center' to center the label vertically
+                        color: 'black', // Set the default color to black
+                        textAlign: 'center',
+                        font: {
+                            style: 'italic',
+                            weight: 'bold'
+                            // Set to 'bold' to make the label bold
+                        },
+                        formatter: (value, context) => {
+                            const dataIndex = context.dataIndex;
+                            const datapoints = context.dataset.data;
+                            const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
+                            const percentage = (value / total) * 100;
+
+                            let label = percentage.toFixed(1) + '%';
+
+                            if (dataIndex === maxIndex) {
+
+                                return 'High:\n' + label;
+                            } else if (minIndices.includes(dataIndex)) {
+
+                                return 'Low:\n' + label;
+                            } else {
+                                return label;
+                            }
+                        },
+                    }
+                }
             }
-        }
-    }
-});
-
-
-
-
-
-
-
-</script>
+        });
+    </script>
 
 </html>

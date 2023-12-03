@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ongoing;
+use App\Models\Cog;
 use App\Models\Rsms_ra7687s;
 use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
@@ -38,11 +39,7 @@ class RsmsViewController extends Controller //OR ONGOING
         $endyear = $request->input('endyear');
         $semester = $request->input('semester');
 
-        Cache::put('startyear', $startyear);
-        Cache::put('endyear', $endyear);
-        Cache::put('semester', $semester);
-
-       return view('ongoinglists');
+        return view('ongoinglists');
     }
 
     public function getongoinglistgroupsajax(Request $request)
@@ -68,7 +65,7 @@ class RsmsViewController extends Controller //OR ONGOING
         $semester = session('semester');
 
         $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
-        Debugbar::info( $startyear,$endyear,$semester );
+        Debugbar::info($startyear, $endyear, $semester);
 
         return DataTables::of($results)->make(true);
     }
@@ -82,6 +79,13 @@ class RsmsViewController extends Controller //OR ONGOING
         $ongoing = Ongoing::select('*')->where('startyear', $currentYear)->get();
 
         return DataTables::of($ongoing)->make(true);
+    }
+
+    public function viewscholarrecordsview($number)
+    {
+
+        $cogData = Cog::where('scholar_id', $number)->get();
+        return view('viewscholarrecords', ['number' => $number, 'cogData' => $cogData]);
     }
 
     public function SaveChangesOngoing(Request $request, $number)

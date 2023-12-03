@@ -100,6 +100,7 @@
                                 <table id="yourDataTable" class="display nowrap compact table-striped" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="vertical-align:center;">Action</th>
                                             <th>Batch</th>
                                             <th>Number</th>
                                             <th>Name</th>
@@ -123,7 +124,6 @@
                                             <th>startyear</th>
                                             <th>endyear</th>
                                             <th>semester</th>
-                                            <th style="vertical-align:center;">Action</th>
 
                                         </tr>
                                     </thead>
@@ -138,33 +138,33 @@
                             </div>
 
                             <div>
-                            <form id="filterForm" action="{{ route('rsms2') }}" method="GET">
-                                <label for="startyear">Start Year:</label>
-                                <select name="startyear" id="startyear">
-                                    @foreach ($startyears as $startyear)
-                                        <option value="{{ $startyear }}">{{ $startyear }}</option>
-                                    @endforeach
-                                </select>
+                                <form id="filterForm" action="{{ route('rsms2') }}" method="GET">
+                                    <label for="startyear">Start Year:</label>
+                                    <select name="startyear" id="startyear">
+                                        @foreach ($startyears as $startyear)
+                                            <option value="{{ $startyear }}">{{ $startyear }}</option>
+                                        @endforeach
+                                    </select>
 
-                                <label for="endyear">End Year:</label>
-                                <select name="endyear" id="endyear">
-                                    @foreach ($endyears as $endyear)
-                                        <option value="{{ $endyear }}">{{ $endyear }}</option>
-                                    @endforeach
-                                </select>
+                                    <label for="endyear">End Year:</label>
+                                    <select name="endyear" id="endyear">
+                                        @foreach ($endyears as $endyear)
+                                            <option value="{{ $endyear }}">{{ $endyear }}</option>
+                                        @endforeach
+                                    </select>
 
-                                <label for="semester">Semester:</label>
-                                <select name="semester" id="semester">
+                                    <label for="semester">Semester:</label>
+                                    <select name="semester" id="semester">
 
-                                    <option value="1">1st</option>
-                                    <option value="2">2nd</option>
-                                    <option value="3">Summer</option>
+                                        <option value="1">1st</option>
+                                        <option value="2">2nd</option>
+                                        <option value="3">Summer</option>
 
-                                </select>
+                                    </select>
 
-                                <button id="filterBtn">Filter</button>
+                                    <button id="filterBtn">Filter</button>
                             </div>
-                        </form>
+                            </form>
 
                         </div>
 
@@ -350,12 +350,6 @@
 
                 </main>
 
-
-
-
-
-
-
             </div>
         </div>
 
@@ -365,8 +359,8 @@
         <!-- Include DataTables JS -->
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $.noConflict();
+            jQuery(document).ready(function($) {
+
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
                     serverSide: true,
@@ -374,7 +368,20 @@
                     // pageLength: 20, // Set the default page length to 10 rows
                     ajax: '{{ route('datatable.data') }}', // Adjust this route to your actual route
                     type: 'POST',
+
                     columns: [{
+                            data: null,
+                            orderable: false,
+                            searchable: false,
+                            render: function(data, type, row) {
+                                var number = row.NUMBER; // Assuming 'NUMBER' is the column name in your database
+
+                                return '<td class="text-center" style="text-align: center !important;">' +
+                                    '<a href="#" class="edit-btn" data-number="' + number +
+                                    '"><i class="fa fa-pencil"></i></a></td>';
+                            }
+                        },
+                        {
                             data: 'BATCH',
                             name: 'BATCH'
                         },
@@ -466,20 +473,6 @@
                             data: 'semester',
                             name: 'semester'
                         },
-
-                        {
-                            data: null,
-                            orderable: false,
-                            searchable: false,
-                            render: function(data, type, row) {
-                                var number = row
-                                    .NUMBER; // Assuming 'NUMBER' is the column name in your database
-
-                                return '<td class="text-center" style="text-align: center !important;">' +
-                                    '<a href="#" class="edit-btn" data-number="' + number +
-                                    '"><i class="fa fa-pencil"></i></a></td>';
-                            }
-                        }
 
                     ],
                     columnDefs: [{
@@ -589,10 +582,7 @@
 
                 });
 
-                // Populate startyear, endyear, and semester dropdowns
-                var startyearSelect = $('#startyear');
-                var endyearSelect = $('#endyear');
-                var semesterSelect = $('#semester');
+
 
                 var columnsToHide = [20, 21, 22];
 
@@ -601,19 +591,7 @@
                 });
 
 
- $('#filterBtn').on('click', function() {
-                    var startyearValue = startyearSelect.val();
-  var endyearValue = endyearSelect.val();
-  var semesterValue = semesterSelect.val();
 
-  // Set the values in the form
-  $('#startyear').val(startyearValue);
-  $('#endyear').val(endyearValue);
-  $('#semester').val(semesterValue);
-
-  // Submit the form
-  $('#filterForm').submit();
-});
 
             });
 
@@ -650,88 +628,87 @@
                 dt.ajax.reload();
             }
 
-var startYear = document.getElementById("startyear").value;
-var endYear = document.getElementById("endyear").value;
-var semester = document.getElementById("semester").value;
-switch(semester) {
-   case '1':
-       semester = '1st Semester';
-       break;
-   case '2':
-       semester = '2nd Semester';
-       break;
-   case '3':
-       semester = 'Summer';
-       break;
-}
-
-$.extend(true, $.fn.dataTable.defaults, {
-    dom: 'Bflrtip',
-    buttons: [{
-        extend: 'print',
-        text: '<i class="fas fa-print"></i>',
-        title: 'ON-GOING SCHOLARS MONITORING CHECKLIST ' + semester + ' AY ' + startYear + '-' + endYear,
-        exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-            modifier: {
-                search: 'none'
-            }
-        },
-        action: customExportAction,
-        customize: function(win) {
-            $(win.document.body).find('h1').css('font-size', '20px'); // Change the font size of the title
-            $(win.document.body).find('h1').css('font-weight', 'bold'); // Make the title bold
-            if (win.document.body.innerHTML.indexOf('<img id="logo"') === -1) {
-                $(win.document.body).prepend('<img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}">');
+            var startYear = document.getElementById("startyear").value;
+            var endYear = document.getElementById("endyear").value;
+            var semester = document.getElementById("semester").value;
+            switch (semester) {
+                case '1':
+                    semester = '1st Semester';
+                    break;
+                case '2':
+                    semester = '2nd Semester';
+                    break;
+                case '3':
+                    semester = 'Summer';
+                    break;
             }
 
-            // Add your custom styles and content to the print window
-            $(win.document.body)
-                .css('font-size', '11pt')
-                .find('table')
-                .addClass('compact')
-                .css('font-size', 'inherit')
-                .css('border', '1px solid black'); // Add border to the table
+            $.extend(true, $.fn.dataTable.defaults, {
+                dom: 'Bflrtip',
+                buttons: [{
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i>',
+                    title: 'ON-GOING SCHOLARS MONITORING CHECKLIST ' + semester + ' AY ' + startYear + '-' + endYear,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+                        modifier: {
+                            search: 'none'
+                        }
+                    },
+                    action: customExportAction,
+                    customize: function(win) {
+                        $(win.document.body).find('h1').css('font-size', '20px'); // Change the font size of the title
+                        $(win.document.body).find('h1').css('font-weight', 'bold'); // Make the title bold
+                        if (win.document.body.innerHTML.indexOf('<img id="logo"') === -1) {
+                            $(win.document.body).prepend('<img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}">');
+                        }
 
-            // Customize the header names
-            $(win.document.body).find('table thead th').each(function(index) {
-                var customHeaderName;
-                switch (index) {
-                    case 0:
-                        customHeaderName = 'BATCH';
-                        break;
-                    case 1:
-                        customHeaderName = 'No'; // Change the second column header to 'No'
-                        break;
-                    case 2:
-                        customHeaderName = 'NAME';
-                        break;
-                    case 3:
-                        customHeaderName = 'M/F';
-                        break;
-                    case 4:
-                        customHeaderName = 'SCHOLARSHIP\nPROGRAM';
-                        break;
-                        // Add more cases as needed
-                    default:
-                        customHeaderName = 'Default Header';
-                }
-                $(this).text(customHeaderName);
-                $(this).css({
-                    'white-space': 'pre-wrap',
-                    'border': '1px solid black' // Add border to the header
-                });
+                        // Add your custom styles and content to the print window
+                        $(win.document.body)
+                            .css('font-size', '11pt')
+                            .find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit')
+                            .css('border', '1px solid black'); // Add border to the table
+
+                        // Customize the header names
+                        $(win.document.body).find('table thead th').each(function(index) {
+                            var customHeaderName;
+                            switch (index) {
+                                case 0:
+                                    customHeaderName = 'BATCH';
+                                    break;
+                                case 1:
+                                    customHeaderName = 'No'; // Change the second column header to 'No'
+                                    break;
+                                case 2:
+                                    customHeaderName = 'NAME';
+                                    break;
+                                case 3:
+                                    customHeaderName = 'M/F';
+                                    break;
+                                case 4:
+                                    customHeaderName = 'SCHOLARSHIP\nPROGRAM';
+                                    break;
+                                    // Add more cases as needed
+                                default:
+                                    customHeaderName = 'Default Header';
+                            }
+                            $(this).text(customHeaderName);
+                            $(this).css({
+                                'white-space': 'pre-wrap',
+                                'border': '1px solid black' // Add border to the header
+                            });
+                        });
+
+                        // Customize the data in the second column (index 1)
+                        $(win.document.body).find('table tbody td:nth-child(2)').each(function(index) {
+                            // Set the content of each cell in the second column to be the index + 1
+                            $(this).text(index + 1);
+                        });
+                    }
+                }]
             });
-
-            // Customize the data in the second column (index 1)
-            $(win.document.body).find('table tbody td:nth-child(2)').each(function(index) {
-                // Set the content of each cell in the second column to be the index + 1
-                $(this).text(index + 1);
-            });
-        }
-    }]
-});
-
         </script>
 
     </body>

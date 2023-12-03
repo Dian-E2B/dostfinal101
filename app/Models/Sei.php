@@ -20,6 +20,7 @@ class Sei extends Model
         'program_id',
         'houseno',
         'street',
+        'village',
         'barangay',
         'zipcode',
         'district',
@@ -27,12 +28,22 @@ class Sei extends Model
         'hsname',
         'lacking',
         'remarks',
+        'lname',
+        'year',
+        'lname',
+        'fname',
+        'mname',
+        'suffix',
+        'bday',
+        'email',
+        'mobile',
+        'scholar_status_id',
     ];
 
 
     public $timestamps = false;
 
-
+    //MODIFIED NOV. 23 2023
     public function gender()
     {
         return $this->belongsTo(Gender::class);
@@ -48,12 +59,15 @@ class Sei extends Model
     //     return $this->belongsTo(Municipalities::class, 'municipal_id');
     // }
 
+    //MODIFIED NOV. 23 2023
     public function program()
     {
-        return $this->belongsTo(Programs::class);
+        return $this->belongsTo(Program::class);
     }
-    public function scholars()
-    {
-        return $this->hasMany(Scholars::class, 'spasno', 'spasno');
-    }
+
+    //MODIFIED NOV. 23 2023
+    // public function scholars()
+    // {
+    //     return $this->hasMany(Scholars::class, 'spasno', 'spasno');
+    // }
 }
