@@ -25,7 +25,7 @@ class SendMailController extends Controller
 
         $emailsra7687 = Sei::select('email')
             ->where('program_id', 201)
-            ->where('scholar_status_id', '!=', 0)
+            ->where('scholar_status_id', '!=', 1)
             ->whereNotNull('email') // Check for a non-null email
             ->groupBy('email')
             ->pluck('email') // Pluck the email addresses
@@ -35,7 +35,7 @@ class SendMailController extends Controller
         $emailsmerit = Sei::select('email')
             ->select('email')
             ->where('program_id', 101)
-            ->where('scholar_status_id', '!=', 0)
+            ->where('scholar_status_id', '!=', 1)
             ->whereNotNull('email') // Check for a non-null email
             ->groupBy('email')
             ->pluck('email') // Pluck the email addresses
@@ -45,7 +45,7 @@ class SendMailController extends Controller
         $emailsra10612 = Sei::select('email')
             ->select('email')
             ->where('program_id', 301)
-            ->where('scholar_status_id', '!=', 0)
+            ->where('scholar_status_id', '!=', 1)
             ->whereNotNull('email') // Check for a non-null email
             ->groupBy('email')
             ->pluck('email') // Pluck the email addresses
@@ -73,7 +73,10 @@ class SendMailController extends Controller
                 // Send the email
                 Mail::to($email2)->send(new Mailnotifyawards($mailData));
 
-                //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO AD IT
+                // Update the scholar_status_id to 1 meaning pending
+                Sei::where('id', $id)->update(['scholar_status_id' => 1]);
+
+                //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO ADd IT
                 Replyslips::firstOrCreate(
                     ['scholar_id' => $id],
                     ['replyslip_status_id' => 1] // 1 means pending

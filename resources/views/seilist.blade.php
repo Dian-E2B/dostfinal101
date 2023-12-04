@@ -56,6 +56,19 @@
                 text-align: center !important;
                 border-left: 0.5px solid #dddddd;
             }
+
+
+            .red {
+                color: rgb(6, 185, 240) !important;
+
+            }
+
+            /*
+            #thisdatatable tbody td:nth-child(23),
+            #thisdatatable thead th:nth-child(23),
+            #thisdatatable tbody th:nth-child(23) {
+                display: none;
+            } */
         </style>
     </head>
 
@@ -94,7 +107,6 @@
                                             <th>Middlename</th>
                                             <th>SPAS NO.</th>
                                             <th>Email</th>
-
                                             <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span></span>App ID </th>
                                             <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span style="display: none">Strand </span></th>
                                             <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span>Program </span></th>
@@ -112,6 +124,7 @@
                                             <th>Region</th>
                                             <th>HSname</th>
                                             <th>Remarks</th>
+                                            <th>Email</th>
                                             <th>Action</th>
 
                                         </tr>
@@ -214,7 +227,9 @@
             <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
             <script>
                 jQuery(document).ready(function($) {
+
                     var table = $('#thisdatatable').DataTable({
+
                         processing: true,
                         serverSide: true,
                         pageLength: 100,
@@ -236,6 +251,7 @@
                             },
                             {
                                 data: 'email',
+
                             },
                             {
                                 data: 'app_id',
@@ -294,6 +310,10 @@
                                 data: 'remarks',
                             },
                             {
+                                data: 'scholar_status_id',
+
+                            },
+                            {
                                 data: null,
                                 orderable: false,
                                 searchable: false,
@@ -313,19 +333,34 @@
                         ],
                         fixedColumns: {
                             right: 1,
-                            left: 3,
+                            left: 1,
                         },
                         columnDefs: [{
                                 targets: 'action-column', // Use a class to target the specific column
                                 className: 'text-center',
                             },
                             {
+
                                 targets: [6, 7, 8, 15, 16],
                                 orderable: false,
-                            },
+                            }, {
+                                visible: false,
+                                searchable: true,
+                                targets: 22,
 
+
+                            }
 
                         ],
+                        "createdRow": function(row, data, dataIndex) {
+                            if (data.scholar_status_id == '1') {
+                                $(row).find('td:first-child').css('color', 'green');
+                                // console.log("Row with value '0' found.");
+                            }
+                            // alert();
+                        },
+
+
 
 
                         initComplete: function() {
@@ -368,8 +403,7 @@
                         },
                     });
 
-
-
+                    // table.column(22).visible(false); // Column index starts from 0
 
                     $(document).on('click', '.table-edit', function() {
                         var number = $(this).data('id');
