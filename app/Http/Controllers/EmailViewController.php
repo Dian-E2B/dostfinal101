@@ -11,43 +11,48 @@ class EmailViewController extends Controller
 {
     //
 
-    public function emailcontentview(){
+    public function emailcontentview()
+    {
 
         $content = EmailContent::first();
-        return view('partials.emailcontent',compact('content'));
-
+        return view('partials.emailcontent', compact('content'));
     }
 
-    public function emaileditorview(){
+    public function emaileditorview()
+    {
         $emailContent = EmailContent::first();
         if (!$emailContent) {
             //abort(404); // Handle not found scenario
         }
-        return view('/emaileditor',['emailContent' => $emailContent]);
+        return view('/emaileditor', ['emailContent' => $emailContent]);
     }
 
     public function emailstatusview()
     {
-        $replyslipsandscholarjoinpending = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
-            ->select('replyslips.*', 'scholars.*')
-            ->where('replyslips.replyslip_status_id',1)
+        $replyslipsandscholarjoinpending = Replyslips::join('seis', 'replyslips.scholar_id', '=', 'seis.id')
+            ->select('replyslips.*', 'seis.*')
+            ->where('replyslips.replyslip_status_id', 1)
             ->get();
 
-        $replyslipsandscholarjoinaccepted = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
-            ->select('replyslips.*', 'scholars.*')
-            ->where('replyslips.replyslip_status_id',2)
+        $replyslipsandscholarjoinaccepted = Replyslips::join('seis', 'replyslips.scholar_id', '=', 'seis.id')
+            ->select('replyslips.*', 'seis.*')
+            ->where('replyslips.replyslip_status_id', 2)
             ->get();
 
-        $replyslipsandscholarjoinrejected = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
-            ->select('replyslips.*', 'scholars.*')
-            ->where('replyslips.replyslip_status_id',3)
+        // dd($replyslipsandscholarjoinaccepted);
+
+        $replyslipsandscholarjoinrejected = Replyslips::join('seis', 'replyslips.scholar_id', '=', 'seis.id')
+            ->select('replyslips.*', 'seis.*')
+            ->where('replyslips.replyslip_status_id', 3)
             ->get();
 
-        $replyslipsandscholarjoindeferred = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
-            ->select('replyslips.*', 'scholars.*')
-            ->where('replyslips.replyslip_status_id',4)
+        $replyslipsandscholarjoindeferred = Replyslips::join('seis', 'replyslips.scholar_id', '=', 'seis.id')
+            ->select('replyslips.*', 'seis.*')
+            ->where('replyslips.replyslip_status_id', 4)
             ->get();
-        return view('emails',
-            compact('replyslipsandscholarjoinpending','replyslipsandscholarjoinaccepted','replyslipsandscholarjoinrejected','replyslipsandscholarjoindeferred'));
+        return view(
+            'emails',
+            compact('replyslipsandscholarjoinpending', 'replyslipsandscholarjoinaccepted', 'replyslipsandscholarjoinrejected', 'replyslipsandscholarjoindeferred')
+        );
     }
 }

@@ -13,25 +13,7 @@
 
         <link href="{{ asset('css/all.css') }}">
 
-
-
-
-
-
-
         <style>
-            /* div.dataTables_scrollBody thead {
-    display: none;
-} */
-
-            /* #yourDataTable thead th,
-#yourDataTable tbody td {
-    box-sizing: border-box;
-} */
-
-
-
-
             th {
                 padding-left: 8px;
                 padding-right: 8px;
@@ -415,7 +397,7 @@
         <!-- Include DataTables JS -->
         <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
-            $(document).ready(function() {
+            jQuery(document).ready(function($) {
                 var startyearValue = $('#startyear').val();
                 var endyearValue = $('#endyear').val();
                 var semesterValue = $('#semester').val();
@@ -582,7 +564,7 @@
 
 
                     initComplete: function() {
-                        this.api().columns([3, 5, 4]).every(function(d) {
+                        this.api().columns([5, 4]).every(function(d) {
                             var column = this;
                             var theadname = $("#thisdatatable th").eq([d]).text();
                             var select = $(
@@ -708,56 +690,6 @@
                                         y: 'top',
                                     },
                                 })
-                                // Update specific cells in DataTable with new data
-                                // Update specific cells in DataTable with new data
-                                var dataTable = $('#yourDataTable').DataTable();
-
-                                // Assuming 'response' is the updated data you received from the server
-                                var newData = response;
-
-                                // Assuming 'newData.NUMBER' is the unique identifier for the row
-                                var uniqueIdentifier = newData.NUMBER;
-
-
-
-                                // Iterate over each row in the DataTable
-                                dataTable.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                                    // Access the data for the current row
-                                    var row = dataTable.row(rowIdx);
-
-
-                                    // Replace this condition with your own logic to identify the row
-                                    if (row.NUMBER == uniqueIdentifier) {
-                                        // Update the specific cells in the DataTable
-                                        dataTable.cell(rowIdx, 1).data(newData.BATCH);
-                                        dataTable.cell(rowIdx, 3).data(newData.NAME);
-                                        dataTable.cell(rowIdx, 4).data(newData.MF);
-                                        dataTable.cell(rowIdx, 5).data(newData.SCHOLARSHIPPROGRAM);
-                                        dataTable.cell(rowIdx, 6).data(newData.SCHOOL);
-                                        dataTable.cell(rowIdx, 7).data(newData.COURSE);
-                                        dataTable.cell(rowIdx, 8).data(newData.GRADES);
-                                        dataTable.cell(rowIdx, 9).data(newData.SummerREG);
-                                        dataTable.cell(rowIdx, 10).data(newData.REGFORMS);
-                                        dataTable.cell(rowIdx, 11).data(newData.REMARKS);
-                                        dataTable.cell(rowIdx, 12).data(newData.STATUSENDORSEMENT);
-                                        dataTable.cell(rowIdx, 13).data(newData.STATUSENDORSEMENT2);
-                                        dataTable.cell(rowIdx, 14).data(newData.STATUS);
-                                        dataTable.cell(rowIdx, 15).data(newData.NOTATIONS);
-                                        dataTable.cell(rowIdx, 16).data(newData.SUMMER);
-                                        dataTable.cell(rowIdx, 17).data(newData.FARELEASEDTUITION);
-                                        dataTable.cell(rowIdx, 18).data(newData.FARELEASEDTUITIONBOOKSTIPEND);
-                                        dataTable.cell(rowIdx, 19).data(newData.LVDCAccount);
-                                        dataTable.cell(rowIdx, 20).data(newData.HVCNotes);
-                                        // ... Repeat for other cells ...
-
-
-                                        this.invalidate();
-                                        // Exit the loop since we found the row to update
-                                        return false;
-                                    }
-
-                                    return true; // Continue the loop
-                                });
 
 
                                 // Redraw the DataTable
@@ -774,7 +706,7 @@
 
                 });
 
-                // var columnsToHide = [21, 22, 22];
+                var columnsToHide = [21, 22, 22];
 
                 columnsToHide.forEach(function(columnIndex) {
                     table.column(columnIndex).visible(false);

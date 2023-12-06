@@ -27,17 +27,17 @@ class StudentActionsController extends Controller
         $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
         $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
         if ($checkreplyslipstatus == 1) {
-            $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
-            $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
+            $request->file('signaturestudent')->storeAs('storage/signatures', $customstudentsignaturefilename);
+            $request->file('signatureparent')->storeAs('storage/signatures', $customparentsignaturefilename);
         }
 
         if ($request->has('acceptcheckbox')) {
 
             // echo 'acceptcheckbox is checked';
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
+                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
                 'reason' => $reason1,
-                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
+                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
                 'updated_at' => now(),
                 'replyslip_status_id' => 2
             ]);
@@ -46,8 +46,8 @@ class StudentActionsController extends Controller
         } else if ($request->has('defferedcheckbox')) {
 
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
-                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
+                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
+                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
                 'reason' => $reason1,
                 'updated_at' => now(),
                 'replyslip_status_id' => 4
@@ -56,8 +56,8 @@ class StudentActionsController extends Controller
         } else if ($request->has('rejectcheckbox')) {
 
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
-                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
+                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
+                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
                 'reason' => $reason1,
                 'updated_at' => now(),
                 'replyslip_status_id' => 3
@@ -83,7 +83,9 @@ class StudentActionsController extends Controller
         /* dd($data);*/
         $scholarid = $request->input('scholarid');
         $semesterinput = $request->input('semester');
-        $schoolyearinput = $request->input('schoolyear');
+        $startyearinput = $request->input('startyear');
+        $endyearinput = $request->input('endyear');
+        // $schoolyearinput = $request->input('schoolyear');
 
         $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
         $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
@@ -96,7 +98,8 @@ class StudentActionsController extends Controller
             'semester' => $semesterinput,
             'failnum' => 0,
             'cog_status' => 0,
-            'acadyear' => $schoolyearinput,
+            'startyear' => $startyearinput,
+            'endyear' => $endyearinput,
             'date_uploaded' => now(),
         ]);
 
@@ -107,7 +110,11 @@ class StudentActionsController extends Controller
                 'unit' => $data['units'][$index]['unit'],
             ]);
         }
-        flash()->addSuccess('Grades has been saved');
+        notyf()
+            ->position('x', 'center')
+            ->position('y', 'top')
+            ->duration(2000) // 2 seconds
+            ->addSuccess('Grades has been Saved');
         return back();
     }
 }

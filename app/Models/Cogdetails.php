@@ -9,11 +9,11 @@ class Cogdetails extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subjectname', 'grade' , 'unit'];
+    protected $fillable = ['subjectname', 'grade', 'unit'];
     public $timestamps = false;
+
     public function cog()
     {
         return $this->belongsTo(Cog::class);
     }
-
 }

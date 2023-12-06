@@ -66,6 +66,7 @@ Route::get('/accesscontrolenrolled', [\App\Http\Controllers\AccessControlViewCon
 Route::get('/accesscontroldeferred', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontroldeferredview'])->name('accesscontroldeferred');
 Route::get('/accesscontrolLOA', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolLOAview'])->name('accesscontrolLOA');
 Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolterminatedview'])->name('accesscontrolterminated');
+Route::get('/enrollscholartoongoing/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'enrollscholartoongoing'])->name('enrollscholartoongoing');
 
 
 //MONITORING
@@ -120,3 +121,4 @@ Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::c
     ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
 
 Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class, 'index']);
+

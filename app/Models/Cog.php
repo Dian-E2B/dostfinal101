@@ -16,6 +16,8 @@ class Cog extends Model
         'failnum',
         'cog_status',
         'acadyear',
+        'startyear',
+        'endyear',
         'date_uploaded'
     ];
 
@@ -23,5 +25,4 @@ class Cog extends Model
     {
         return $this->hasMany(Cogdetails::class);
     }
-
 }

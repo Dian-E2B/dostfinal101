@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class PrintController extends Controller
             $fpdi->useTemplate($template);
             $fpdi->SetFont("Arial", "", 9);
 
-            $fpdi->SetTextColor(0,0,0);
+            $fpdi->SetTextColor(0, 0, 0);
 
             $left = 133;
             $top = 42;
@@ -50,11 +51,8 @@ class PrintController extends Controller
 
             $editedImagePath = public_path('media/edited-image.png');
             $fpdi->Image($editedImagePath, 40, 90);
-
-
         }
 
         return $fpdi->Output($outputFilePath, 'F');
-
     }
 }

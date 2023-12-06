@@ -15,6 +15,7 @@
         "laravel/ui": "^4.2",
         "maatwebsite/excel": "^3.1",
         "php-flasher/flasher-laravel": "^1.15",
+        "php-flasher/flasher-notyf-laravel": "^1.15",
         "phpmailer/phpmailer": "^6.8",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.5",

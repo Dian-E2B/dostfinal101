@@ -12,6 +12,9 @@ use App\Models\Scholars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Mailnotifyawards;
+use App\Models\email_merit;
+use App\Models\email_ra10612;
+use App\Models\email_ra7687;
 use App\Models\Sei;
 
 class SendMailController extends Controller
@@ -23,35 +26,44 @@ class SendMailController extends Controller
     {
 
 
-        $emailsra7687 = Sei::select('email')
-            ->where('program_id', 201)
-            ->where('scholar_status_id', '!=', 1)
-            ->whereNotNull('email') // Check for a non-null email
-            ->groupBy('email')
-            ->pluck('email') // Pluck the email addresses
-            ->toArray(); // Convert the result to an array
+        // CREATE VIEW email_ra7687 AS
+        // SELECT email
+        // FROM seis
+        // WHERE program_id = 201
+        // AND (email IS NOT NULL OR email != '')
+        // AND (lacking IS NULL OR lacking = '')
+        // GROUP BY email;
 
 
-        $emailsmerit = Sei::select('email')
-            ->select('email')
-            ->where('program_id', 101)
-            ->where('scholar_status_id', '!=', 1)
-            ->whereNotNull('email') // Check for a non-null email
-            ->groupBy('email')
-            ->pluck('email') // Pluck the email addresses
-            ->toArray(); // Convert the result to an array
+
+        // $emailsmerit = Sei::select('email')
+        //     ->where('program_id', 101)
+        //     ->where('scholar_status_id', '=', 0)
+        //     ->whereNotNull('email')
+        //     ->where(function ($query) {
+        //         $query->whereNotNull('lacking')
+        //             ->where('lacking', '!=', ''); // Add condition for 'lacking' not being an empty string
+        //     })
+        //     ->groupBy('email')
+        //     ->pluck('email')
+        //     ->toArray();
 
 
-        $emailsra10612 = Sei::select('email')
-            ->select('email')
-            ->where('program_id', 301)
-            ->where('scholar_status_id', '!=', 1)
-            ->whereNotNull('email') // Check for a non-null email
-            ->groupBy('email')
-            ->pluck('email') // Pluck the email addresses
-            ->toArray(); // Convert the result to an array
+        // $emailsra10612 = Sei::select('email')
+        //     ->where('program_id', 301)
+        //     ->where('scholar_status_id', '=', 0)
+        //     ->whereNotNull('email')
+        //     ->where(function ($query) {
+        //         $query->whereNotNull('lacking')
+        //             ->where('lacking', '!=', ''); // Add condition for 'lacking' not being an empty string
+        //     })
+        //     ->groupBy('email')
+        //     ->pluck('email')
+        //     ->toArray();
 
-
+        $emailsra7687 = email_ra7687::pluck('email')->toArray();
+        $emailsmerit = email_merit::pluck('email')->toArray();
+        $emailsra10612 = email_ra10612::pluck('email')->toArray();
 
         $content = EmailContent::first();
 
@@ -71,10 +83,14 @@ class SendMailController extends Controller
 
             try {
                 // Send the email
-                Mail::to($email2)->send(new Mailnotifyawards($mailData));
+                $var = Mail::to($email2)->send(new Mailnotifyawards($mailData));
 
-                // Update the scholar_status_id to 1 meaning pending
-                Sei::where('id', $id)->update(['scholar_status_id' => 1]);
+                if ($var) {
+                    // Update the scholar_status_id to 1 meaning pending
+                    Sei::where('id', $id)->update(['scholar_status_id' => 1]);
+                }
+
+
 
                 //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO ADd IT
                 Replyslips::firstOrCreate(
@@ -113,6 +129,9 @@ class SendMailController extends Controller
                 // Send the email
                 Mail::to($email)->send(new Mailnotifyawards($mailData));
 
+                // Update the scholar_status_id to 1 meaning pending
+                Sei::where('id', $id)->update(['scholar_status_id' => 1]);
+
                 //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO AD IT
                 Replyslips::firstOrCreate(
                     ['scholar_id' => $id],
@@ -136,7 +155,7 @@ class SendMailController extends Controller
         foreach ($emailsra10612 as $email) {
 
             $mailData = [
-                'title' => '<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">MERIT</strong>.</span></h2> ',
+                'title' => '<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">RA 10612</strong>.</span></h2> ',
                 'message' => $content->content,
             ];
 
@@ -150,6 +169,9 @@ class SendMailController extends Controller
             try {
                 // Send the email
                 Mail::to($email)->send(new Mailnotifyawards($mailData));
+
+                // Update the scholar_status_id to 1 meaning pending
+                Sei::where('id', $id)->update(['scholar_status_id' => 1]);
 
                 //PUT ON PENDING ON EMAIL STATUS IF IT EXIST ALREADY, THEN NO NEED TO AD IT
                 Replyslips::firstOrCreate(

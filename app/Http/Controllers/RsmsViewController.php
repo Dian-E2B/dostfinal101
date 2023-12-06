@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
@@ -84,8 +84,11 @@ class RsmsViewController extends Controller //OR ONGOING
     public function viewscholarrecordsview($number)
     {
 
-        $cogData = Cog::where('scholar_id', $number)->get();
-        return view('viewscholarrecords', ['number' => $number, 'cogData' => $cogData]);
+        $cogdata = Cog::with('cogdetails')
+            ->where('scholar_id', $number)
+            ->get();
+
+        return view('viewscholarrecords', ['number' => $number, 'cogdata' => $cogdata]);
     }
 
     public function SaveChangesOngoing(Request $request, $number)

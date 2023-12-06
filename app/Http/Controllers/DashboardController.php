@@ -3,80 +3,104 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ongoing;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    //
-    public function dashboardview()
+
+    public function dashboardview(Request $request)
     {
+        $startYear = $request->input('startyear');
+        $endYear = $request->input('endyear');
 
-        /*START SCHOOL GRAPH AREA*/
-        // Fetch data from the "school" column
-        $data = Ongoing::select('school')->get();
+        $allowedSchools = ['ADDU', 'BROKENSHIRE COLLEGE', 'DDC', 'SPC', 'UIC', 'UM-Matina', 'UP Mindanao', 'USEP Mintal', 'USEP-Obrero'];
+        if (empty($startYear) && empty($endYear)) {
 
-        $mostcommonschool = DB::table('ongoing')
-            ->select('school')
-            ->groupBy('school')
-            ->orderByRaw('COUNT(*) DESC')
-            ->first();
+            $data = Ongoing::select('school')->get();
+            $preprocessedData = $data->map(function ($item) {  // Preprocess the data: trim and replace blanks with "deferred", then make all uppercase
+                $schoolName = trim($item->school);
 
-        // FIND THE MINIMUMS
-        $minimumCount = DB::table('ongoing')
-            ->select(DB::raw('COUNT(*) as min_count'))
-            ->groupBy('school')
-            ->orderBy('min_count', 'asc')
-            ->value('min_count');
+                $schoolName = empty($schoolName) ? "Deffered" : strtoupper($schoolName);  // Replace blanks with "deferred"
+                return $schoolName;
+            });
 
-        // COUNT THE MINIMUMS
-        $leastCommonSchools = DB::table('ongoing')
-            ->select('school')
-            ->groupBy('school')
-            ->havingRaw(
-                'COUNT(*) = ?',
-                [$minimumCount]
-            )
-            ->get();
+            //SCHOOL CHART
+            $schoolCounts = $preprocessedData->countBy(function ($schoolName) {
+                return trim($schoolName); // Count the occurrences of each preprocessed school name (case-insensitive)
+            });
+
+            //DAVAOCITY ra 7687
+            $ongoingRecords = DB::table('ongoing')
+                ->select('school', DB::raw('COUNT(*) as DAVAOCITY'))
+                ->where('scholarshipprogram', 'ra 7687')
+                ->whereIn('school', $allowedSchools)
+                ->groupBy('school')
+                ->get();
+
+            //SCHOLARSHIPPROGRAM
+            $ongoingPROGRAM = DB::table('ongoing')
+                ->select('scholarshipprogram', DB::raw('COUNT(*) as scholarshipprogramcount'))
+                ->whereNotNull('scholarshipprogram')
+                ->groupBy('scholarshipprogram')
+                ->get();
+
+            //COURSE
+            $ongoingCOURSE = DB::table('ongoing')
+                ->select('course', DB::raw('COUNT(*) as coursecount'))
+                ->whereNotNull('course')
+                ->groupBy('course')
+                ->get();
 
 
-        // Preprocess the data: trim and replace blanks with "deferred", then make all uppercase
-        $preprocessedData = $data->map(function ($item) {
-            $schoolName = trim($item->school);
+            return view('dashboard', compact('ongoingRecords', 'schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
+        } else {
 
-            // Replace blanks with "deferred"
-            $schoolName = empty($schoolName) ? "Deffered" : strtoupper($schoolName);
+            //SCHOOL CHART
+            $data = Ongoing::select('school')
+                ->where('startYear', $startYear)
+                ->where('endYear', $endYear)
+                ->get();
 
-            return $schoolName;
-        });
 
-        // Count the occurrences of each preprocessed school name (case-insensitive)
-        $schoolCounts = $preprocessedData->countBy(function ($schoolName) {
-            return trim($schoolName);
-        });
-        /*END SCHOOL GRAPH AREA*/
+            $preprocessedData = $data->map(function ($item) {  // Preprocess the data: trim and replace blanks with "deferred", then make all uppercase
+                $schoolName = trim($item->school);
 
-        /*START GENDER CHART AREA*/
-        $genderData = Ongoing::select('MF', DB::raw('count(*) as count'))
-            ->groupBy('MF')
-            ->get();
-        //gender highest
-        $mosthighestgender = DB::table('ongoing')
-            ->select('MF')
-            ->groupBy('MF')
-            ->orderByRaw('COUNT(*) DESC')
-            ->first();
+                $schoolName = empty($schoolName) ? "Deffered" : strtoupper($schoolName);  // Replace blanks with "deferred"
+                return $schoolName;
+            });
 
-        //gender MINIMUMS
-        $mostlowestgender = DB::table('ongoing')
-            ->select('MF')
-            ->groupBy('MF')
-            ->orderByRaw('COUNT(*) ASC')
-            ->first();
-        /*END GENDER CHART AREA*/
+            $schoolCounts = $preprocessedData->countBy(function ($schoolName) {
+                return trim($schoolName); // Count the occurrences of each preprocessed school name (case-insensitive)
+            });
 
-        // Pass the aggregated data to the view
-        return view('dashboard', compact('schoolCounts', 'genderData', 'leastCommonSchools', 'mostcommonschool', 'mosthighestgender', 'mostlowestgender'));
+
+            //SCHOLARSHIPPROGRAM
+            $ongoingPROGRAM = DB::table('ongoing')
+                ->select('scholarshipprogram', DB::raw('COUNT(*) as scholarshipprogramcount'))
+                ->where('startyear', '>=', $startYear)
+                ->where('endyear', '<=', $endYear)
+                ->groupBy('scholarshipprogram')
+                ->get();
+
+            //COURSE
+            $ongoingCOURSE = DB::table('ongoing')
+                ->select('course', DB::raw('COUNT(*) as coursecount'))
+                ->where('startyear', '>=', $startYear)
+                ->where('endyear', '<=', $endYear)
+                ->whereNotNull('course')
+                ->groupBy('course')
+                ->get();
+
+            return view('dashboard', compact('ongoingRecords', 'schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
+        }
+
+
+
+
+        // Debugbar::info($ongoingRecords);
     }
 }

@@ -21,9 +21,4 @@ class Replyslips extends Model
     ];
 
     //protected $dates = ['created_at', 'updated_at'];
-    public function scholars()
-    {
-        return $this->belongsTo(Scholars::class, 'scholar_id', 'id');
-    }
-
 }

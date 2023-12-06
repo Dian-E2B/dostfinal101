@@ -1,11 +1,10 @@
 <nav class="navbar navbar-expand navbar-light navbar-bg">
-   
 
-{{--REQUEST  DROPDOWN BUTTON--}}
+
+    {{-- REQUEST  DROPDOWN BUTTON --}}
     <ul class="navbar-nav d-none d-lg-flex">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Request
             </a>
             <div class="dropdown-menu" aria-labelledby="requestDropdown">
@@ -13,8 +12,7 @@
                     Scholarship Clearance</a>
                 <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
                     Documentation</a>
-                <a class="dropdown-item" href="https://adminkit.io/docs/getting-started/changelog/" target="_blank"><i class="align-middle me-1"
-                                                                                                                       data-feather="edit"></i> Changelog</a>
+                <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Changelog</a>
             </div>
         </li>
     </ul>
@@ -105,8 +103,8 @@
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
-{{--                                    <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle"--}}
-{{--                                        alt="Vanessa Tucker">--}}
+                                    {{--                                    <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" --}}
+                                    {{--                                        alt="Vanessa Tucker"> --}}
                                 </div>
                                 <div class="col-10 ps-2">
                                     <div class="text-dark">Vanessa Tucker</div>
@@ -119,8 +117,7 @@
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
-                                    <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
-                                        alt="William Harris">
+                                    <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
                                 </div>
                                 <div class="col-10 ps-2">
                                     <div class="text-dark">William Harris</div>
@@ -132,8 +129,8 @@
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
-{{--                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"--}}
-{{--                                        alt="Christina Mason">--}}
+                                    {{--                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" --}}
+                                    {{--                                        alt="Christina Mason"> --}}
                                 </div>
                                 <div class="col-10 ps-2">
                                     <div class="text-dark">Christina Mason</div>
@@ -145,8 +142,7 @@
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
-                                    <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle"
-                                        alt="Sharon Lessman">
+                                    <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
                                 </div>
                                 <div class="col-10 ps-2">
                                     <div class="text-dark">Sharon Lessman</div>
@@ -163,31 +159,24 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
-                    data-bs-toggle="dropdown">
+                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                     <i class="align-middle" data-feather="settings"></i>
                 </a>
 
-                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
-                    data-bs-toggle="dropdown">
+                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                     <span class="text-dark">{{ Auth::user()->username }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
-                            data-feather="user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                            data-feather="pie-chart"></i> Analytics</a>
+                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
                     <div class="dropdown-divider">
 
                     </div>
-                    <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
-                            data-feather="settings"></i> Settings & Privacy</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                            data-feather="help-circle"></i> Help Center</a>
+                    <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
                     <div class="dropdown-divider"></div>
                     {{-- LOGOUT --}}
-                    <a class="dropdown-item" href="{{ route('student.logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
+                    <a class="dropdown-item" href="{{ route('student.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
                     <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
