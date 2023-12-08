@@ -27,17 +27,17 @@ class StudentActionsController extends Controller
         $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
         $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
         if ($checkreplyslipstatus == 1) {
-            $request->file('signaturestudent')->storeAs('storage/signatures', $customstudentsignaturefilename);
-            $request->file('signatureparent')->storeAs('storage/signatures', $customparentsignaturefilename);
+            $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
+            $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
         }
 
         if ($request->has('acceptcheckbox')) {
 
             // echo 'acceptcheckbox is checked';
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
+                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
                 'reason' => $reason1,
-                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
+                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
                 'updated_at' => now(),
                 'replyslip_status_id' => 2
             ]);
@@ -46,8 +46,8 @@ class StudentActionsController extends Controller
         } else if ($request->has('defferedcheckbox')) {
 
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
-                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
+                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
+                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
                 'reason' => $reason1,
                 'updated_at' => now(),
                 'replyslip_status_id' => 4
@@ -56,8 +56,8 @@ class StudentActionsController extends Controller
         } else if ($request->has('rejectcheckbox')) {
 
             Replyslips::where('scholar_id', $scholarid)->update([
-                'signature' => 'public/signatures/' . $customstudentsignaturefilename,
-                'signatureparents' => 'public/signatures/' . $customparentsignaturefilename,
+                'signature' => 'storage/signatures/' . $customstudentsignaturefilename,
+                'signatureparents' => 'storage/signatures/' . $customparentsignaturefilename,
                 'reason' => $reason1,
                 'updated_at' => now(),
                 'replyslip_status_id' => 3
@@ -101,6 +101,7 @@ class StudentActionsController extends Controller
             'startyear' => $startyearinput,
             'endyear' => $endyearinput,
             'date_uploaded' => now(),
+            'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
         ]);
 
         foreach ($data['subjectnames'] as $index => $subject) {

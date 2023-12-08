@@ -9,7 +9,7 @@
         <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
 
         <link href="{{ asset('css/all.css') }}">
 
@@ -395,7 +395,7 @@
 
         <script src="{{ asset('js/all.js') }}"></script>
         <!-- Include DataTables JS -->
-        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+
         <script>
             jQuery(document).ready(function($) {
                 var startyearValue = $('#startyear').val();
@@ -412,8 +412,6 @@
                 }
 
 
-
-                $.noConflict();
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
                     serverSide: true,
@@ -433,7 +431,7 @@
                                 return '<td >' +
                                     '<a href="#" class="edit-btn" data-number="' + number +
                                     '"><i class="fa fa-pencil"></i></a> <a href="#" class="view-btn" data-number="' + number +
-                                    '"><i class="fa fa-pencil"></i></a>' + '</td>';
+                                    '"><i class="fa fa-eye"></i></a>' + '</td>';
                             }
                         },
                         {
@@ -707,13 +705,14 @@
                 });
 
                 var columnsToHide = [21, 22, 22];
-
                 columnsToHide.forEach(function(columnIndex) {
                     table.column(columnIndex).visible(false);
                 });
 
-
             });
+
+
+
 
 
             function customExportAction(e, dt, button, config) {
@@ -898,9 +897,7 @@
         </script>
 
     </body>
-    {{-- SIDEBAR TOGGLING --}}
 
-    <!-- Include SweetAlert2 JS -->
 
 
 

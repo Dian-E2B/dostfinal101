@@ -88,6 +88,11 @@ Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewControlle
 Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'])->name('getongoinglistgroupsajaxviewclicked');
 Route::post('/savechangesongongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'SaveChangesOngoing']);
 Route::get('/viewscholarrecords/{number}', [RsmsViewController::class, 'viewscholarrecordsview'])->name('viewscholarrecords');
+Route::get('/getscholargrades/{number}', [RsmsViewController::class, 'getscholargrades'])->name('getscholargrades');
+Route::post('/savecholargrades/{number}', [RsmsViewController::class, 'savecholargrades'])->name('savecholargrades');
+Route::get('/getprospectusdata/{number}', [RsmsViewController::class, 'getprospectusdata'])->name('getprospectusdata');
+Route::get('/viewscholarprospectus/{number}', [RsmsViewController::class, 'viewscholarprospectus'])->name('viewscholarprospectus');
+
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
 Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
@@ -121,4 +126,3 @@ Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::c
     ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
 
 Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class, 'index']);
-

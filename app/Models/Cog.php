@@ -18,7 +18,8 @@ class Cog extends Model
         'acadyear',
         'startyear',
         'endyear',
-        'date_uploaded'
+        'date_uploaded',
+        'prospectus_details'
     ];
 
     public function cogdetails()

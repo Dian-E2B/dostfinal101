@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ongoing;
 use App\Models\Cog;
+use App\Models\Cogdetails;
 use App\Models\Rsms_ra7687s;
 use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
@@ -88,7 +89,50 @@ class RsmsViewController extends Controller //OR ONGOING
             ->where('scholar_id', $number)
             ->get();
 
+        // return DataTables::of($cogdata)->make(true);
         return view('viewscholarrecords', ['number' => $number, 'cogdata' => $cogdata]);
+    }
+
+    public function getscholargrades($number)
+    {
+        $cogdata = Cogdetails::find($number);
+        Debugbar::info($number);
+
+        if ($cogdata) {
+            return response()->json($cogdata);
+        }
+    }
+
+
+
+    public function getprospectusdata($number)
+    {
+        $prospectusdata = Cog::where('scholar_id', $number)->get();
+        return DataTables::of($prospectusdata)->make(true);
+    }
+
+        public function viewscholarprospectus($number)
+        {
+            $prospectusdataview = Cog::where('id', $number)->get();
+            // return view('viewscholarprospectus', compact('prospectusdataview'));
+            return view('scaffold', ['prospectusdataview' => $prospectusdataview]);
+        }
+
+    public function savecholargrades(Request $request, $number)
+    {
+
+        // Find the record based on the given number
+        $cogdata = Cogdetails::where('id', $number)->first();
+
+        if (!$cogdata) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        // Update the record with the new data
+        $cogdata->update($request->all());
+
+        // You can return a response if needed
+        return response()->json(['message' => 'Changes saved successfully']);
     }
 
     public function SaveChangesOngoing(Request $request, $number)

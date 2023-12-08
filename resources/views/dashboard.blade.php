@@ -10,6 +10,12 @@
 
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     </head>
+    <style>
+        .custominput {
+            max-width: 1.9cm;
+
+        }
+    </style>
 
     <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div class="wrapper">
@@ -23,8 +29,31 @@
             <div class="main">
                 @include('layouts.header')
 
+
                 <main class="content" style="padding: 1rem 1rem 1.5rem;">
                     <div class="container-fluid p-0">
+                        <div class="col-xl-4 d-flex-start">
+                            <div class="w-100">
+                                <div class="card">
+
+                                    <form method="GET" action="{{ route('dashboard') }}">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-4">
+                                                <input style="margin-left: 10px;" type="text" class=" form-control " name="startyear" id="datepicker" />
+                                            </div>
+                                            <div class="col-4">
+                                                <input style=""type="text" class="form-control" name="endyear" id="datepicker2" />
+                                            </div>
+                                            <div class="col-4">
+                                                <button style="max-width:80px;" class="  form-control btn btn-primary" type="submit" value="">Filter</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="">
 
                             {{-- LINE SCHOOLS CHART SECTION --}}
@@ -76,34 +105,14 @@
                                     </div>
                                 </div> --}}
 
-                                {{-- COURSE COMPARISON --}}
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">DAVAO CITY RA7687</h5>
-                                            <h6 class="card-subtitle text-muted">
-                                                {{-- DESCRIPTIVE COMPARISON --}}
-                                                <strong>
 
-                                                </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-contatiner">
-                                                <canvas id="" width="" height="500"></canvas>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
 
 
                                 {{-- PIE PROGRAM CHART SECTION --}}
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="card-title">DAVAO CITY RA7687</h5>
+                                            <h5 class="card-title">Scholarship Applications by Program</h5>
                                             <h6 class="card-subtitle text-muted">
                                                 {{-- DESCRIPTIVE COMPARISON --}}
                                                 <strong>
@@ -113,7 +122,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-contatiner">
-                                                <canvas id="PROGRAM" width="" height="100"></canvas>
+                                                <canvas id="PROGRAM" width="" height="400"></canvas>
                                             </div>
 
                                         </div>
@@ -128,7 +137,7 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="card-title">DAVAO CITY RA7687</h5>
+                                            <h5 class="card-title">Scholarship Applications by course</h5>
                                             <h6 class="card-subtitle text-muted">
                                                 {{-- DESCRIPTIVE COMPARISON --}}
                                                 <strong>
@@ -148,14 +157,7 @@
 
                             </div>
 
-                            <div class="container mt-5" style="max-width: 450px">
-                                <h2 class="mb-4">Laravel Bootstrap Datepicker Demo</h2>
-                                <form method="GET" action="{{ route('dashboard') }}">
-                                    <input type="text" class="form-control" name="startyear" id="datepicker" />
-                                    <input type="text" class="form-control" name="endyear" id="datepicker2" />
-                                    <input type="submit" value="Filter">
-                                </form>
-                            </div>
+
 
                         </div>
 
@@ -188,37 +190,40 @@
 
         //START SCHOOLCHART
         var ctx = document.getElementById('SCHOOLSCHART').getContext('2d');
-
-
         var schoolCounts = @json($schoolCounts); // Extract the aggregated data from the PHP array
         var labels = Object.keys(schoolCounts);
-        var data1 = Object.values(schoolCounts);
+        var dataschoolCounts = Object.values(schoolCounts);
 
         // Set a solid blue color for all bars
         var backgroundColor = '#9FC5E8';
         var borderColor = 'rgba(54, 162, 235, 1)';
 
-        var minValue = Math.min(...data1);
-        var minIndices = data1.reduce((indices, value, index) => {
-            if (value === minValue) {
-                indices.push(index);
-            }
-            return indices;
-        }, []);
+        // Find the minimum and maximum values
+        var minValueschoolCounts = Math.min(...dataschoolCounts);
+        var maxValueschoolCounts = Math.max(...dataschoolCounts);
 
-        var maxValue = Math.max(...data1);
-        var maxIndex = data1.indexOf(maxValue);
+        // Find all indices with the minimum and maximum values
+        var minIndicesschoolCounts = [];
+        var maxIndicesschoolCounts = [];
+        dataschoolCounts.forEach((value, index) => {
+            if (value === minValueschoolCounts) {
+                minIndicesschoolCounts.push(index);
+            } else if (value === maxValueschoolCounts) {
+                maxIndicesschoolCounts.push(index);
+            }
+        });
 
         // Set background color dynamically for each bar
-        var dynamicBackgroundColors = data1.map((value, index) => {
-            if (index === maxIndex) {
-                return '#B6D7A8'; // Set color to green for the highest value
-            } else if (minIndices.includes(index)) {
-                return '#F4CCCC'; // Set color to red for the lowest value
+        var dynamicBackgroundColors = dataschoolCounts.map((value, index) => {
+            if (maxIndicesschoolCounts.includes(index)) {
+                return '#B6D7A8'; // Set color to green for the highest values
+            } else if (minIndicesschoolCounts.includes(index)) {
+                return '#F4CCCC'; // Set color to red for the lowest values
             } else {
                 return backgroundColor; // Default color
             }
         });
+
 
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -226,7 +231,7 @@
                 labels: labels,
                 datasets: [{
                     label: '',
-                    data: data1,
+                    data: dataschoolCounts,
                     backgroundColor: dynamicBackgroundColors,
                     borderColor: borderColor,
 
@@ -261,16 +266,15 @@
 
                             let label = percentage.toFixed(1) + '%';
 
-                            if (dataIndex === maxIndex) {
-
+                            if (maxIndicesschoolCounts.includes(dataIndex)) {
                                 return 'High:\n' + label;
-                            } else if (minIndices.includes(dataIndex)) {
-
+                            } else if (minIndicesschoolCounts.includes(dataIndex)) {
                                 return 'Low:\n' + label;
                             } else {
                                 return label;
                             }
                         },
+
                     }
                 }
             }
@@ -312,7 +316,7 @@
                 }]
             },
             options: {
-                // maintainAspectRatio: false,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: false

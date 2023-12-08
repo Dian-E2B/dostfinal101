@@ -34,11 +34,9 @@ class DashboardController extends Controller
             });
 
             //DAVAOCITY ra 7687
-            $ongoingRecords = DB::table('ongoing')
-                ->select('school', DB::raw('COUNT(*) as DAVAOCITY'))
-                ->where('scholarshipprogram', 'ra 7687')
-                ->whereIn('school', $allowedSchools)
-                ->groupBy('school')
+            $ongoingQualifiers = DB::table('ongoing')
+                ->select('startyear', DB::raw('COUNT(*) as QualifierCount'))
+                ->groupBy('startyear')
                 ->get();
 
             //SCHOLARSHIPPROGRAM
@@ -56,7 +54,7 @@ class DashboardController extends Controller
                 ->get();
 
 
-            return view('dashboard', compact('ongoingRecords', 'schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
+            return view('dashboard', compact('schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
         } else {
 
             //SCHOOL CHART
@@ -95,7 +93,7 @@ class DashboardController extends Controller
                 ->groupBy('course')
                 ->get();
 
-            return view('dashboard', compact('ongoingRecords', 'schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
+            return view('dashboard', compact('schoolCounts', 'ongoingPROGRAM', 'ongoingCOURSE'));
         }
 
 

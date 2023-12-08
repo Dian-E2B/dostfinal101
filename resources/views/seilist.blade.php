@@ -354,7 +354,7 @@
 
                         ],
                         "createdRow": function(row, data, dataIndex) {
-                            if (data.scholar_status_id == '1') {
+                            if (data.scholar_status_id != '0') {
                                 $(row).find('td:first-child').css('color', 'green');
                                 // console.log("Row with value '0' found.");
                             }
