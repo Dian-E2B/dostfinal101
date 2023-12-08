@@ -29,7 +29,12 @@
 
 
 
-                                        <iframe src="{{ asset($prospectusdataview[0]->prospectus_details) }}" frameborder="0" scrolling="100" height="450%" width="100%" type="application/pdf"></iframe>
+                                        @if ($prospectusdataview[0]->prospectus_details)
+                                            <iframe src="{{ url($prospectusdataview[0]->prospectus_details) }}" frameborder="0" scrolling="100" height="450%" width="100%" type="application/pdf" onerror="handleError()"></iframe>
+                                        @else
+                                            {{-- Handle the case where there is no valid URL --}}
+                                            <p>No prospectus details available.</p>
+                                        @endif
 
                                     </div>
 

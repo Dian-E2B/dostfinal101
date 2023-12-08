@@ -49,77 +49,79 @@
 
 
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <div class="tab">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item"><a class="nav-link tablinks active" href="#tab-1" data-bs-toggle="tab" role="tab">Grading</a></li>
+                                            <li class="nav-item"><a class="nav-link tablinks" id="tab2" href="#tab-2" data-bs-toggle="tab" role="tab">COR</a></li>
 
-                    <div class="row">
-                        <div class="col-12 col-lg-12">
-                            <div class="tab">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item"><a class="nav-link tablinks active" href="#tab-1" data-bs-toggle="tab" role="tab">Grading</a></li>
-                                    <li class="nav-item"><a class="nav-link tablinks" id="tab2" href="#tab-2" data-bs-toggle="tab" role="tab">Documents</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-1" role="tabpanel">
 
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab-1" role="tabpanel">
+                                                <table id="thisdatatable" class="display nowrap compact table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID: </th>
+                                                            <th>Subject Name: </th>
+                                                            <th>Grade:</th>
+                                                            <th>Unit:</th>
+                                                            <th>Semester:</th>
+                                                            <th>Academic Year:</th>
+                                                            <th>Edit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
 
-                                        <table id="thisdatatable" class="display nowrap compact table-striped" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID: </th>
-                                                    <th>Subject Name: </th>
-                                                    <th>Grade:</th>
-                                                    <th>Unit:</th>
-                                                    <th>Semester:</th>
-                                                    <th>Academic Year:</th>
-                                                    <th>Edit</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @foreach ($cogdata as $cog)
-                                                    <tr>
-                                                        @foreach ($cog->cogdetails as $detail)
-                                                            <td>{{ $cog->scholar_id }}</td>
-                                                            <td>{{ $detail->subjectname }}</td>
-                                                            <td> {{ $detail->grade }}</td>
-                                                            <td> {{ $detail->unit }}</td>
-                                                            <td> {{ $cog->semester }} </td>
-                                                            <td> {{ $cog->startyear }}- {{ $cog->endyear }} </td>
-                                                            <td> <a href="#" class="edit-btn" data-number="{{ $detail->id }}"><i class="fas fa-edit"></i></a></td>
+                                                        @foreach ($cogdata as $cog)
+                                                            <tr>
+                                                                @foreach ($cog->cogdetails as $detail)
+                                                                    <td>{{ $cog->scholar_id }}</td>
+                                                                    <td>{{ $detail->subjectname }}</td>
+                                                                    <td> {{ $detail->grade }}</td>
+                                                                    <td> {{ $detail->unit }}</td>
+                                                                    <td> {{ $cog->semester }} </td>
+                                                                    <td> {{ $cog->startyear }}- {{ $cog->endyear }} </td>
+                                                                    <td> <a href="#" class="edit-btn" data-number="{{ $detail->id }}"><i class="fas fa-edit"></i></a></td>
+                                                                @endforeach
+                                                            </tr>
                                                         @endforeach
-                                                    </tr>
-                                                @endforeach
 
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="tab-2" role="tabpanel">
+                                                <table id="thisdatatable2" class="display nowrap compact table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>View: </th>
+                                                            <th>COR/COG detail: </th>
+                                                            <th>Semester:</th>
+                                                            <th>Startyear:</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="tab-pane" id="tab-2" role="tabpanel">
-                                        <table id="thisdatatable2" class="display nowrap compact table-striped" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>View: </th>
-                                                    <th>COR/COG: </th>
-                                                    <th>Semester:</th>
-                                                    <th>Startyear:</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card">
 
-                        <div class="card-body">
-                            <input hidden value="{{ $number }}">
 
-                        </div>
-                    </div>
+                    <input hidden value="{{ $number }}">
+
+
+
                 </main>
             </div>
 

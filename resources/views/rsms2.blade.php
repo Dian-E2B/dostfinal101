@@ -19,6 +19,7 @@
                 padding-right: 8px;
                 border-bottom-width: thin;
                 border-collapse: separate;
+                /* vertical-align: bottom; */
             }
 
             table td {
@@ -61,9 +62,36 @@
             }
 
 
-            .custom-font-size {
-                font-size: 12px;
-                /* Replace with your preferred font size */
+            table.dataTable>thead .sorting::before,
+            table.dataTable>thead .sorting::after {
+                /* bottom: 2px !important; */
+                /*
+                top: 2px !important; */
+            }
+
+            .offcanvas.offcanvas-end {
+                width: 500px !important;
+            }
+
+            .canvastable td {
+                border-top: #b7b7b7 solid 1px;
+                border-bottom: #b7b7b7 solid 1px;
+                border-left: #b7b7b7 solid 1px;
+                border-right: #b7b7b7 solid 1px;
+            }
+
+            .canvastable input,
+            .canvastable textarea {
+                border: none;
+            }
+
+            .canvastable th {
+                width: 2in !important;
+                border-top: #b7b7b7 solid 1px;
+                border-bottom: #b7b7b7 solid 1px;
+                border-left: #b7b7b7 solid 1px;
+                border-right: #b7b7b7 solid 1px;
+                /* Adjust the minimum width as needed */
             }
         </style>
     </head>
@@ -109,10 +137,10 @@
                                         <tr>
                                             <th>Action</th>
                                             <th>Batch</th>
-                                            <th>Number</th>
+                                            <th style="width:100px !important;">Number</th>
                                             <th>Name</th>
-                                            <th>MF</th>
-                                            <th>Scholarship Program</th>
+                                            <th style="width:100px !important;"><span style="" hidden>MF</span></th>
+                                            <th style="width:100px !important;"><span style="" hidden>Program</span></th>
                                             <th>School</th>
                                             <th>Course</th>
                                             <th>
@@ -209,7 +237,124 @@
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
-                                <div class="row align-items-center mb-1">
+                                <table class="canvastable" style="width: 100%">
+
+                                    <tr>
+                                        <th class="canvasth"><strong>ID:</strong></th>
+                                        <td class="canvastable">
+                                            <input disabled class="form-control form-control-sm" id="idField" name="idField" placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>Name:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="nameField" name="nameField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>Gender:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="genderField" name="genderField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>Program:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="programField" name="programField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>School:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="schoolField" name="schoolField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>Course:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="courseField" name="courseField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>GRADES:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="gradesField" name="gradesField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>SummerREG:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="summerRegField" name="summerRegField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>REGFORMS:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="regFormsField" name="regFormsField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>REMARKS:</strong></th>
+                                        <td style="height:100px;   " class="canvastable">
+                                            <textarea style=" height: 100px;" class="form-control form-control-sm" id="remarksField" name="remarksField"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>STATUSENDORSEMENT :</strong></th>
+                                        <td style="" class="canvastable">
+                                            <input class="form-control form-control-sm" id="statusEndorsementField" name="statusEndorsementField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>STATUSENDORSEMENT2 :</strong></th>
+                                        <td style="" class="canvastable">
+                                            <input class="form-control form-control-sm" id="statusEndorsement2Field" name="statusEndorsement2Field">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>STATUS :</strong></th>
+                                        <td style="" class="canvastable">
+                                            <input class="form-control form-control-sm" id="statusField" name="statusField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>NOTATIONS :</strong></th>
+                                        <td style="" class="canvastable">
+                                            <textarea style=" height: 100px;" class="form-control form-control-sm" id="notationsField" name="notationsField"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>SUMMER :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="summerField" name="summerField">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="canvasth"><strong>FARELEASEDTUITION :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="faReleaseTuitionField" name="faReleaseTuitionField">
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <th class="canvasth"> <strong>FARELEASEDTUITION BOOKSTIPEND:</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="faReleaseTuitionBookStipendField" name="faReleaseTuitionBookStipendField">
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <th class="canvasth"> <strong>LVDCAccount :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="lvdCAccountField" name="lvdCAccountField">
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <th class="canvasth"> <strong>HVCNotes :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
+                                        </td>
+                                    </tr>
+                                </table>
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-3   custom-font-size">
                                         <strong>ID:</strong>
                                     </div>
@@ -252,43 +397,43 @@
                                     <div class="col-9">
                                         <input class="form-control form-control-sm" id="schoolField" name="schoolField">
                                     </div>
-                                </div>
-                                <div class="row align-items-center mb-1">
+                                </div> --}}
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-3 custom-font-size ">
                                         <strong>Course:</strong>
                                     </div>
                                     <div class="col-9">
                                         <input class="form-control form-control-sm" id="courseField" name="courseField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-3 custom-font-size ">
                                         <strong>GRADES:</strong>
                                     </div>
                                     <div class="col-9">
                                         <input class="form-control form-control-sm" id="gradesField" name="gradesField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-4 custom-font-size ">
                                         <strong>SummerREG:</strong>
                                     </div>
                                     <div class="col-8">
                                         <input class="form-control form-control-sm" id="summerRegField" name="summerRegField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-4 custom-font-size ">
                                         <strong class="custom-font-size">REGFORMS</strong>
                                     </div>
                                     <div class="col-8">
                                         <input class="form-control form-control-sm" id="regFormsField" name="regFormsField">
                                     </div>
-                                </div>
-
+                                </div> --}}
+                                {{--
                                 <div class="row align-items-center">
                                     <div class="custom-font-size ">
                                         <strong>REMARKS:</strong>
@@ -296,91 +441,91 @@
                                     <div class="">
                                         <textarea class="form-control form-control-sm" id="remarksField" name="remarksField"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>STATUSENDORSEMENT:</strong>
                                     </div>
                                     <div class="col-7">
                                         <input class="form-control form-control-sm" id="statusEndorsementField" name="statusEndorsementField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>STATUSENDORSEMENT2:</strong>
                                     </div>
                                     <div class="col-7 custom-font-size ">
                                         <input class="form-control form-control-sm" id="statusEndorsement2Field" name="statusEndorsement2Field">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>STATUS:</strong>
                                     </div>
                                     <div class="col-7 custom-font-size ">
                                         <input class="form-control form-control-sm" id="statusField" name="statusField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="custom-font-size ">
                                         <strong>NOTATIONS:</strong>
                                     </div>
                                     <div class="">
                                         <textarea class="form-control form-control-sm" id="notationsField" name="notationsField"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>SUMMER:</strong>
                                     </div>
                                     <div class="col-7">
                                         <input class="form-control form-control-sm" id="summerField" name="summerField">
                                     </div>
-                                </div>
+                                </div> --}}
 
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>FARELEASEDTUITION:</strong>
                                     </div>
                                     <div class="col-7">
                                         <input class="form-control form-control-sm" id="faReleaseTuitionField" name="faReleaseTuitionField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>FARELEASEDTUITION<br>BOOKSTIPEND:</strong>
                                     </div>
                                     <div class="col-7">
                                         <input class="form-control form-control-sm" id="faReleaseTuitionBookStipendField" name="faReleaseTuitionBookStipendField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>LVDCAccount:</strong>
                                     </div>
                                     <div class="col-7">
                                         <input class="form-control form-control-sm" id="lvdCAccountField" name="lvdCAccountField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="row align-items-center mb-1">
+                                {{-- <div class="row align-items-center mb-1">
                                     <div class="col-5 custom-font-size ">
                                         <strong>HVCNotes:</strong>
                                     </div>
                                     <div class="col-7 ">
                                         <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                                <button type="button" class="btn btn-primary mt-1" id="saveChangesBtn">Save Changes</button>
                             </div>
 
 
@@ -398,6 +543,7 @@
 
         <script>
             jQuery(document).ready(function($) {
+                jQuery.noConflict();
                 var startyearValue = $('#startyear').val();
                 var endyearValue = $('#endyear').val();
                 var semesterValue = $('#semester').val();
@@ -448,10 +594,20 @@
                         },
                         {
                             data: 'MF',
+                            render: function(data, type, row) {
+                                // Apply custom styles to the email address
+                                var styledgender = '<span style="padding-left:20px;padding-right: 20px;">' + data + '</span>';
+                                return styledgender;
+                            },
 
                         },
                         {
                             data: 'SCHOLARSHIPPROGRAM',
+                            render: function(data, type, row) {
+                                // Apply custom styles to the email address
+                                var styledgender = '<span style="padding-right: 90px;">' + data + '</span>';
+                                return styledgender;
+                            }
 
                         },
                         {
@@ -564,23 +720,20 @@
                     initComplete: function() {
                         this.api().columns([5, 4]).every(function(d) {
                             var column = this;
-                            var theadname = $("#thisdatatable th").eq([d]).text();
                             var select = $(
-                                    "<select style=\"padding: 1px !important;\" class=\"form-control\"><option value=\"\"> " +
-                                    theadname + " </option></select>"
+                                    "<select style=\"padding-top:1px !important; padding-bottom:1px !important;\" class=\"form-control\"><option value=\"\">" +
+                                    column.header().textContent + "</option></select>"
                                 )
                                 .appendTo($(column.header()))
                                 .on("change", function() {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
                                     column
                                         .search(val ? "^" + val + "$" : "", true, false)
                                         .draw();
                                 });
+
                             column.data().unique().sort().each(function(d, j) {
-                                select.append("<option value=\"" + d + "\">" + d +
-                                    "</option>")
+                                select.append("<option value=\"" + d + "\">" + d + "</option>");
                             });
                         });
                     },
