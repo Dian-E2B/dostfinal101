@@ -92,7 +92,9 @@ Route::get('/getscholargrades/{number}', [RsmsViewController::class, 'getscholar
 Route::post('/savecholargrades/{number}', [RsmsViewController::class, 'savecholargrades'])->name('savecholargrades');
 Route::get('/getprospectusdata/{number}', [RsmsViewController::class, 'getprospectusdata'])->name('getprospectusdata');
 Route::get('/viewscholarprospectus/{number}', [RsmsViewController::class, 'viewscholarprospectus'])->name('viewscholarprospectus');
-
+Route::get('/officialrsms/{number}', [RsmsViewController::class, 'officialrsms'])->name('officialrsms');
+Route::get('/getscholarshipstatus/{number}', [RsmsViewController::class, 'getscholarshipstatus'])->name('getscholarshipstatus');
+Route::post('/savescholarshipstatus/{number}', [RsmsViewController::class, 'savescholarshipstatus'])->name('savescholarshipstatus');
 //ANONUNCEMENT
 Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
 Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
@@ -125,4 +127,4 @@ Route::post('student/submitgrades', [\App\Http\Controllers\StudentActionsControl
 Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::class, 'gradeinputview'])
     ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
 
-Route::get('fill-data-pdf', [\App\Http\Controllers\PrintController::class, 'index']);
+Route::get('generatepdf/{number}', [\App\Http\Controllers\PrintController::class, 'generatePdf']);

@@ -9,6 +9,7 @@ use App\Models\Rsms_ra7687s;
 use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
 use App\Models\Rsms_noncompliance;
+use App\Models\Sei;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -85,13 +86,42 @@ class RsmsViewController extends Controller //OR ONGOING
     public function viewscholarrecordsview($number)
     {
 
-        $cogdata = Cog::with('cogdetails')
-            ->where('scholar_id', $number)
+        $results = Cog::select('startyear', DB::raw('COUNT(*) as row_count'))
+            ->where('scholar_id', 1)
+            ->groupBy('startyear')
             ->get();
 
-        // return DataTables::of($cogdata)->make(true);
-        return view('viewscholarrecords', ['number' => $number, 'cogdata' => $cogdata]);
+        // Convert the Eloquent collection to an array
+        $resultArrayyear = $results->pluck('startyear')->toArray();
+
+        $resultArray = [];
+
+
+
+
+        foreach ($resultArrayyear as $year) {
+            // Fetching data for consecutive semesters with the same year
+            for ($semester = 1; $semester <= 3; $semester++) {
+                $cogdata = Cog::with('cogdetails')
+                    ->where('scholar_id', $number)
+                    ->where('semester', $semester)
+                    ->where('startyear', $year)
+                    ->get();
+                //
+                // Store the data for the semester in the result array
+                $resultArray[$year][$semester] = $cogdata->toArray(); // Include all columns
+
+            }
+        }
+
+
+        return view('viewscholarrecords', [
+            'number' => $number,
+            'resultArray' => $resultArray
+        ]);
     }
+
+
 
     public function getscholargrades($number)
     {
@@ -111,12 +141,78 @@ class RsmsViewController extends Controller //OR ONGOING
         return DataTables::of($prospectusdata)->make(true);
     }
 
-        public function viewscholarprospectus($number)
-        {
-            $prospectusdataview = Cog::where('id', $number)->get();
-            // return view('viewscholarprospectus', compact('prospectusdataview'));
-            return view('scaffold', ['prospectusdataview' => $prospectusdataview]);
+    public function viewscholarprospectus($number)
+    {
+        $prospectusdataview = Cog::where('id', $number)->get();
+        // return view('viewscholarprospectus', compact('prospectusdataview'));
+        return view('viewpropectus', ['prospectusdataview' => $prospectusdataview]);
+    }
+
+    public function officialrsms($number)
+    {
+
+        $seiresult = Sei::where('id', 1)->get();
+
+        $results = Cog::select('startyear', DB::raw('COUNT(*) as row_count'))
+            ->where('scholar_id', 1)
+            ->groupBy('startyear')
+            ->get();
+
+        // Convert the Eloquent collection to an array
+        $resultArrayyear = $results->pluck('startyear')->toArray();
+
+        $resultArray = [];
+
+
+        foreach ($resultArrayyear as $year) {
+            // Fetching data for consecutive semesters with the same year
+            for ($semester = 1; $semester <= 3; $semester++) {
+                $cogdata = Cog::with('cogdetails')
+                    ->where('scholar_id', $number)
+                    ->where('semester', $semester)
+                    ->where('startyear', $year)
+                    ->get();
+                //
+                // Store the data for the semester in the result array
+                $resultArray[$year][$semester] = $cogdata->toArray(); // Include all columns
+
+            }
         }
+
+        return view('officialrsms', [
+            'number' => $number,
+            'resultArray' => $resultArray,
+            'seiresult' => $seiresult
+        ]);
+    }
+
+
+    public function getscholarshipstatus($number)
+    {
+        $cogdata = Cog::find($number);
+        // Debugbar::info($number);
+
+        if ($cogdata) {
+            return response()->json($cogdata);
+        }
+    }
+
+    public function savescholarshipstatus(Request $request, $number)
+    {
+
+        // Find the record based on the given number
+        $cogdata = Cog::where('id', $number)->first();
+        Debugbar::info($cogdata);
+        if (!$cogdata) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        // Update the record with the new data
+        $cogdata->update(['scholarshipstatus' => $request->input('scholarshipstatus')]);
+
+        // You can return a response if needed
+        return response()->json(['message' => 'Changes saved successfully']);
+    }
 
     public function savecholargrades(Request $request, $number)
     {
@@ -135,6 +231,8 @@ class RsmsViewController extends Controller //OR ONGOING
         return response()->json(['message' => 'Changes saved successfully']);
     }
 
+
+
     public function SaveChangesOngoing(Request $request, $number)
     {
 
@@ -151,17 +249,6 @@ class RsmsViewController extends Controller //OR ONGOING
         // You can return a response if needed
         return response()->json(['message' => 'Changes saved successfully']);
     }
-
-    //     public function getongoinglistgroupsajax(Request $request)
-    //     {
-    //         $results = DB::select('SELECT * FROM ongoing_monitoring ORDER BY startyear DESC;');
-    // Debugbar::info($results);
-
-    //         return DataTables::of($results)->make(true);
-    //     }
-
-
-
 
 
     public function getOngoingDataFiltered(Request $request)

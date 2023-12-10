@@ -49,6 +49,12 @@ class Sei extends Model
         return $this->belongsTo(Gender::class);
     }
 
+
+    public function cog()
+    {
+        return $this->hasOne(Cog::class, 'scholar_id', 'id');
+    }
+
     // public function province()
     // {
     //     return $this->belongsTo(Provinces::class);

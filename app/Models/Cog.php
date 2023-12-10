@@ -19,6 +19,7 @@ class Cog extends Model
         'startyear',
         'endyear',
         'date_uploaded',
+        'scholarshipstatus',
         'prospectus_details'
     ];
 
