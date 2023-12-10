@@ -12,7 +12,7 @@
                     Scholarship Clearance</a>
                 <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
                     Documentation</a>
-                <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Changelog</a>
+                <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Submit  Grades</a>
             </div>
         </li>
     </ul>

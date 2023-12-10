@@ -43,6 +43,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('student/login');
+        //MODIFIED
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        return redirect('/logged-out');
     }
 }

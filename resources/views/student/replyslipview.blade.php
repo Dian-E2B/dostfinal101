@@ -3,6 +3,7 @@
 
     <head>
         <title>DOST XI</title>
+        <link href="{{ asset('css/all.css') }}">
         <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -152,6 +153,7 @@
             </div>
         </div>
     </body>
+    <script src="{{ asset('js/all.js') }}"></script>
     <script src="{{ asset('js/notyf.min.js') }}"></script>
     <script>
         const checkbox1 = document.getElementById('checkbox1');
