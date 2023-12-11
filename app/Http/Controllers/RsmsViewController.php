@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ongoing;
 use App\Models\Cog;
 use App\Models\Cogdetails;
+use App\Models\Requestdocs;
 use App\Models\Rsms_ra7687s;
 use App\Models\Rsms_ra10612s;
 use App\Models\Rsms_merits;
@@ -75,11 +76,8 @@ class RsmsViewController extends Controller //OR ONGOING
 
     public function getOngoingData(Request $request)
     {
-
         $currentYear = Carbon::now()->year - 1;
-
         $ongoing = Ongoing::select('*')->where('startyear', $currentYear)->get();
-
         return DataTables::of($ongoing)->make(true);
     }
 
@@ -134,6 +132,23 @@ class RsmsViewController extends Controller //OR ONGOING
     }
 
 
+    public function getdocumentsdata($number)
+    {
+        $Requestdocs = Requestdocs::where('scholar_id', $number)->get();
+        Debugbar::info($number);
+        Debugbar::info($Requestdocs);
+
+        if ($Requestdocs) {
+            return DataTables::of($Requestdocs)->make(true);
+        }
+    }
+
+    public function viewdocument($number)
+    {
+        $Requestdocsview = Requestdocs::where('id', $number)->get();
+        // return view('viewscholarprospectus', compact('prospectusdataview'));
+        return view('viewdocument', ['Requestdocsview' => $Requestdocsview]);
+    }
 
     public function getprospectusdata($number)
     {

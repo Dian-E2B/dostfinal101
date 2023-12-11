@@ -9,10 +9,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="requestDropdown">
                 <a class="dropdown-item" href="{{ route('student.requestclearance') }}"><i class="align-middle me-1" data-feather="home"></i>
-                    Scholarship Clearance</a>
-                <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
-                    Documentation</a>
-                <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Submit  Grades</a>
+                    Documents</a>
+                {{-- <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
+                    Documentation</a> --}}
+                <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Submit Grades</a>
             </div>
         </li>
     </ul>

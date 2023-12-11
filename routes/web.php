@@ -29,10 +29,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //LOGOUT EXTRA PAUSE
-Route::get('/logged-out', [App\Http\Controllers\HomeController::class, 'index'])->name('logged-out');
+// Route::get('/logged-out', [App\Http\Controllers\HomeController::class, 'index'])->name('logged-out');
 
 
 Route::middleware(['auth', 'role:staff'])->group(function () {
@@ -97,6 +97,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/officialrsms/{number}', [RsmsViewController::class, 'officialrsms'])->name('officialrsms');
     Route::get('/getscholarshipstatus/{number}', [RsmsViewController::class, 'getscholarshipstatus'])->name('getscholarshipstatus');
     Route::post('/savescholarshipstatus/{number}', [RsmsViewController::class, 'savescholarshipstatus'])->name('savescholarshipstatus');
+    Route::get('/getdocumentsdata/{number}', [RsmsViewController::class, 'getdocumentsdata'])->name('getdocumentsdata');
+    Route::get('/viewdocument/{number}', [RsmsViewController::class, 'viewdocument'])->name('viewdocument');
     //ANONUNCEMENT
     Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
     Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
@@ -115,25 +117,27 @@ require __DIR__ . '/studentauth.php';
 Route::get('student/dashboard', [StudentViewController::class, 'index'])
     ->middleware(['auth:student', 'verified'])->name('student.dashboard');
 
+
+
 Route::get('student/replyslipview', [StudentViewController::class, 'replyslipview'])
     ->middleware(['auth:student', 'verified'])->name('student.replyslipview');
-
 Route::get('student/requestclearanceview', [StudentViewController::class, 'requestclearanceview'])
     ->middleware(['auth:student', 'verified'])->name('student.requestclearance');
-
-
 Route::post('replyslipsubmit', [\App\Http\Controllers\StudentActionsController::class, 'replyslipsave'])
     ->middleware(['auth:student', 'verified'])->name('replyslipsubmit');
-
 Route::post('student/submitgrades', [\App\Http\Controllers\StudentActionsController::class, 'cogsave'])
     ->middleware(['auth:student', 'verified'])->name('submitgrades');
-
 Route::get('student/gradeinput', [\App\Http\Controllers\StudentViewController::class, 'gradeinputview'])
     ->middleware(['auth:student', 'verified'])->name('student/gradeinput');
-
 Route::get('generatepdf/{number}', [\App\Http\Controllers\PrintController::class, 'generatePdf']);
+Route::get('/downloadpdfclearance/{filename}', [\App\Http\Controllers\StudentViewController::class, 'downloadpdfclearance'])
+    ->middleware(['auth:student', 'verified'])->name('downloadpdfclearance');
+Route::POST('/savepdfclearance', [\App\Http\Controllers\StudentViewController::class, 'savepdfclearance'])
+    ->middleware(['auth:student', 'verified'])->name('savepdfclearance');
+
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboardadmin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboardadmin');
+    Route::post('/admin/dashboardadmin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboardadmin');
 });

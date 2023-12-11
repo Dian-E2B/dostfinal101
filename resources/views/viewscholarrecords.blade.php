@@ -57,7 +57,7 @@
 
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem">
 
-                    <button class="print-button btn btn-primary mb-2-"><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fas fa-print"></i></button>
+
 
                     <div class="card">
 
@@ -70,7 +70,7 @@
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item"><a class="nav-link tablinks active" href="#tab-1" data-bs-toggle="tab" role="tab">Grading</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks" id="tab2" href="#tab-2" data-bs-toggle="tab" role="tab">COR</a></li>
-
+                                            <li class="nav-item"><a class="nav-link tablinks" id="tab3" href="#tab-3" data-bs-toggle="tab" role="tab">Documents</a></li>
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="tab-1" role="tabpanel">
@@ -216,6 +216,20 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <div class="tab-pane" id="tab-3" role="tabpanel">
+                                                <table id="thisdatatable3" class="display nowrap compact table-striped" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>View: </th>
+                                                            <th>Document Name: </th>
+                                                            <th>Document Name: </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -224,7 +238,7 @@
                         </div>
                     </div>
 
-
+                    <button class="print-button btn btn-primary "><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fas fa-print"></i></button>
                 </main>
             </div>
 
@@ -390,6 +404,7 @@
 
             var table1;
             var table2;
+            var table3;
 
             $('#tab-1').on('shown.bs.tab', function(e) {
                 if (!table1Initialized) {
@@ -449,6 +464,56 @@
                 }
             });
 
+            $('#tab3').on('click', function() {
+                if (!table3) {
+                    table3 = $('#thisdatatable3').DataTable({
+                        autoWidth: true,
+                        select: true,
+                        processing: true,
+                        serverSide: true,
+                        responsive: true,
+
+                        // pageLength: 20, // Set the default page length to 10 rows
+                        ajax: "{{ route('getdocumentsdata', ['number' => $number]) }}", // Adjust this route to your actual route
+                        type: 'GET',
+                        columns: [{
+                                data: null,
+                                orderable: false,
+                                searchable: false,
+                                render: function(data, type, row) {
+                                    var number = row
+                                        .id; // Assuming 'NUMBER' is the column name in your database
+
+                                    return '<td >' +
+                                        '<a href="#" class="view-btndocument" data-id="' + number +
+                                        '"><i class="fa fa-eye"></i></a>' + '</td>';
+                                }
+                            },
+                            {
+                                data: 'document_details',
+                            },
+                            {
+                                data: 'document',
+                            },
+
+                        ],
+                        fixedHeader: {
+                            header: true,
+                            footer: true
+                        },
+                        scrollX: true,
+
+                    });
+                } else {
+                    table3.columns.adjust().responsive.recalc().draw();
+                }
+            });
+
+            $(document).on('click', '.view-btndocument', function() {
+                var number = $(this).data('id');
+                var url = '{{ url('/viewdocument/') }}' + '/' + number;
+                window.location.href = url;
+            });
 
             $(document).on('click', '.view-btn', function() {
                 var number = $(this).data('id');
@@ -458,11 +523,7 @@
 
 
 
-            $('#tab-1').on('shown.bs.tab', function(e) {
-                setTimeout(function() {
-                    $('#thisdatatable').DataTable().columns.adjust().draw();
-                }, 100);
-            });
+
 
             // Code for the second tab
 

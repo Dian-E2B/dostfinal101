@@ -105,11 +105,13 @@
                                             <th>EndYear</th>
                                             <th>Semester</th>
                                             <th>Total Records</th>
-                                            <th>Total Records</th>
+                                            <th style="text-align: center !important;">View Records</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- DataTable content will be dynamically added here -->
+                                        <tr>
+                                            <!-- DataTable content will be dynamically added here -->
+                                        </tr>
                                     </tbody>
 
                                 </table>

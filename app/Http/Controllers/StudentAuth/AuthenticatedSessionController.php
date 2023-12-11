@@ -48,6 +48,6 @@ class AuthenticatedSessionController extends Controller
         header('Pragma: no-cache');
         header('Expires: 0');
 
-        return redirect('/logged-out');
+        return redirect('student/login');
     }
 }
