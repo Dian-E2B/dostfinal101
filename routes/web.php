@@ -84,7 +84,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
     // Route::get('/getongoingfiltered/{startyear}/{endyear}/{semester}', 'YourController@getongoingfiltered')->name('getongoingfiltered');
     Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'])->name('getongoingfiltered');
-    Route::get('/ONGOINGLISTVIEW', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview1'])->name('ONGOINGLISTVIEW');
+    Route::get('/ongoinglistsview1', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview1'])->name('ongoinglistsview1');
     Route::POST('/ONGOINGLISTVIEW2', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview2'])->name('ONGOINGLISTVIEW2'); //if view button is clicked
     Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'])->name('getongoinglistgroupsajax');
     Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'])->name('getongoinglistgroupsajaxviewclicked');

@@ -69,6 +69,18 @@
 
 
             }
+
+            .viewtd,
+            .viewth {
+                text-align: center !important;
+                vertical-align: middle !important;
+
+                margin-left: auto;
+                margin-right: auto;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
         </style>
     </head>
 
@@ -105,7 +117,7 @@
                                             <th>EndYear</th>
                                             <th>Semester</th>
                                             <th>Total Records</th>
-                                            <th style="text-align: center !important;">View Records</th>
+                                            <th class="viewth" style="align-items: center !important;">View</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -179,6 +191,8 @@
                             data: null,
                             orderable: false,
                             searchable: false,
+                            className: 'viewtd',
+
                             render: function(data, type, row) {
                                 var startyear = row.startyear;
                                 var endyear = row.endyear;
@@ -192,9 +206,10 @@
                                     .replace(':endyear', endyear)
                                     .replace(':semester', semester);
 
-                                return '<td class="text-center" style="text-align: center !important;">' +
-                                    '<a href="' + url + '" class="edit-btn"><i class="fas fa-eye"></i></a></td>';
+                                return '<td class="text-center" style="display: flex; justify-content: center; align-items: center;">' +
+                                    '<a href="' + url + '" class="edit-btn" style="display: block; margin: auto;"><i class="fad fa-eye" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>';
                             }
+
                         }
 
                     ],

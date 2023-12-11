@@ -3,6 +3,11 @@
         <i class="hamburger align-self-center"></i>
     </a>
 
+    <a style="{{ request()->is('viewdocument*') ? '' : 'display:none' }}; border: 1px solid #ccc;" href="{{ url()->previous() }}" class="btn ">
+        <i class="fad fa-long-arrow-left" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i>
+    </a>
+
+
     <div style="padding-right: 30px"></div>
 
     <div style="{{ request()->is('seilist') ? 'display:block' : 'display:none' }}" class="btn-group">

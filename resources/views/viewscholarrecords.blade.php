@@ -59,7 +59,7 @@
 
 
 
-                    <div class="card">
+                    <div class="">
 
                         <div class="card-body">
                             <div class="row">
@@ -107,7 +107,7 @@
                                                                                         <td>{{ $cogDetail['subjectname'] ?? 'N/A' }}</td>
                                                                                         <td>{{ $cogDetail['grade'] ?? 'N/A' }}</td>
                                                                                         <td>{{ $cogDetail['unit'] ?? 'N/A' }}</td>
-                                                                                        <td> <a href="#" class="edit-btn" data-number="{{ $cogDetail['id'] }}"><i class="fas fa-edit"></i></a></td>
+                                                                                        <td> <a href="#" class="edit-btn" data-number="{{ $cogDetail['id'] }}"><i class="fad fa-pencil" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>
                                                                                     </tr>
 
                                                                                     {{-- Add other columns from "CogDetails" as needed --}}
@@ -118,7 +118,8 @@
                                                                                     <td>{{ $record['cogdetails']['subjectname'] ?? 'N/A' }}</td>
                                                                                     <td>{{ $record['cogdetails']['grade'] ?? 'N/A' }}</td>
                                                                                     <td>{{ $record['cogdetails']['unit'] ?? 'N/A' }}</td>
-                                                                                    <td> <a href="#" class="edit-btn" data-number="{{ $record['cogdetails']['id'] ?? 'N/A' }}"><i class="fas fa-edit"></i></a></td>
+                                                                                    <td> <a href="#" class="edit-btn" data-number="{{ $record['cogdetails']['id'] ?? 'N/A' }}"><i class="fad fa-pencil"
+                                                                                                style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>
                                                                                 </tr>
 
                                                                                 {{-- Add other columns from "CogDetails" as needed --}}
@@ -130,7 +131,8 @@
                                                                                         {{ $record['scholarshipstatus'] }}
                                                                                     @endif
                                                                                 </td>
-                                                                                <td><a href="#" class="edit-scholarshipstatusbtn" data-cognumber="{{ $record['id'] }}"><i class="fas fa-edit"></i></a></td>
+                                                                                <td><a href="#" class="edit-scholarshipstatusbtn" data-cognumber="{{ $record['id'] }}"><i class="fad fa-pencil"
+                                                                                            style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></i></a></td>
                                                                             </tr>
                                                                         @endforeach
                                                                         {{-- @php
@@ -142,7 +144,8 @@
                                                         @endforeach
                                                     </div>
                                                 @endforeach
-
+                                                <button class="print-button btn " style="background-color: rgb(240, 240, 240)"><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fad fa-print"
+                                                        style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></button>
 
                                                 {{-- START OFFCANVAS --}}
                                                 <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -238,7 +241,7 @@
                         </div>
                     </div>
 
-                    <button class="print-button btn btn-primary "><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fas fa-print"></i></button>
+
                 </main>
             </div>
 
@@ -486,7 +489,7 @@
 
                                     return '<td >' +
                                         '<a href="#" class="view-btndocument" data-id="' + number +
-                                        '"><i class="fa fa-eye"></i></a>' + '</td>';
+                                        '"><i class="fad fa-eye" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a>' + '</td>';
                                 }
                             },
                             {

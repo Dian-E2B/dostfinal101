@@ -30,7 +30,7 @@
                 color: black;
             }
 
-
+            .action-column {}
 
 
             body {
@@ -92,6 +92,10 @@
                 border-left: #b7b7b7 solid 1px;
                 border-right: #b7b7b7 solid 1px;
                 /* Adjust the minimum width as needed */
+            }
+
+            .view-btn {
+                padding-left: 6px;
             }
         </style>
     </head>
@@ -575,9 +579,8 @@
                                     .NUMBER; // Assuming 'NUMBER' is the column name in your database
 
                                 return '<td >' +
-                                    '<a href="#" class="edit-btn" data-number="' + number +
-                                    '"><i class="fa fa-pencil"></i></a> <a href="#" class="view-btn" data-number="' + number +
-                                    '"><i class="fa fa-eye"></i></a>' + '</td>';
+                                    '<a href="#" class="edit-btn" data-number="' + number + '"> <i class="fad fa-pencil" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a> <a href="#" class="view-btn" data-number="' + number +
+                                    '"><i class="fad fa-eye" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a>' + '</td>';
                             }
                         },
                         {
