@@ -27,7 +27,11 @@ class WordController extends Controller
         // dd($phpWord); // Debug statement
 
         // Output the text content
-        $thirdColumnContent = $this->getThirdColumnText($phpWord);
+        // $thirdColumnContent = $this->getThirdColumnText($phpWord);
+
+        $thirdColumnContent = $this->separateTableAndText($phpWord);
+        // dd($thirdColumnContent['tableData']);
+        // dd($thirdColumnContent['otherText']);
         dd($thirdColumnContent);
         foreach ($thirdColumnContent as $content) {
         }
@@ -39,30 +43,34 @@ class WordController extends Controller
 
     // WordController.php
 
-    private function getThirdColumnText($phpWord)
+    private function separateTableAndText($phpWord)
     {
-        $thirdColumnContent = [];
+        $tableData = [];
+        $otherText = [];
 
         foreach ($phpWord->getSections() as $section) {
             foreach ($section->getElements() as $element) {
-                // Check if the element is a table
                 if ($element instanceof \PhpOffice\PhpWord\Element\Table) {
+                    // Handle table content
                     foreach ($element->getRows() as $row) {
-                        // Check if the row has at least 3 cells
                         if (count($row->getCells()) >= 3) {
-                            // Access the 3rd cell directly and extract its text, handling hyperlinks
+                            // Extract text from the 3rd cell of the table
                             $thirdColumnText = $this->extractTextWithHyperlinks($row->getCells()[2]);
-
-                            // Add the extracted text to the result array
-                            $thirdColumnContent[] = $thirdColumnText;
+                            $tableData[] = $thirdColumnText;
                         }
                     }
+                } elseif ($element instanceof \PhpOffice\PhpWord\Element\TextRun || $element instanceof \PhpOffice\PhpWord\Element\Text) {
+                    // Handle text outside of the table
+                    $textContent = $this->extractTextWithHyperlinks($element);
+                    $otherText[] = $textContent;
                 }
             }
         }
 
-        // Use the result array as needed
-        return $thirdColumnContent;
+        return [
+            'tableData' => $tableData,
+            'otherText' => $otherText,
+        ];
     }
 
     private function extractTextWithHyperlinks($cell)
@@ -88,5 +96,32 @@ class WordController extends Controller
         }
 
         return $text;
+    }
+
+    private function getAllText($phpWord)
+    {
+        $allTextContent = [];
+
+        foreach ($phpWord->getSections() as $section) {
+            foreach ($section->getElements() as $element) {
+                if ($element instanceof \PhpOffice\PhpWord\Element\Table) {
+                    // Handle table content
+                    foreach ($element->getRows() as $row) {
+                        if (count($row->getCells()) >= 3) {
+                            // Extract text from the 3rd cell of the table
+                            $thirdColumnText = $this->extractTextWithHyperlinks($row->getCells()[2]);
+                            $allTextContent[] = $thirdColumnText;
+                        }
+                    }
+                } elseif ($element instanceof \PhpOffice\PhpWord\Element\TextRun || $element instanceof \PhpOffice\PhpWord\Element\Text) {
+                    // Handle text outside of the table
+                    $textContent = $this->extractTextWithHyperlinks($element);
+                    $allTextContent[] = $textContent;
+                }
+            }
+        }
+
+        // Use the result array as needed
+        return $allTextContent;
     }
 }

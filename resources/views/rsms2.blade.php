@@ -102,13 +102,9 @@
 
     <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div data-bs-theme="dark" class="wrapper">
-
             {{-- SIDEBAR START --}}
             @include('layouts.sidebar')
             {{-- SIDEBAR END --}}
-
-
-
             <div class="main">
                 @include('layouts.header')
 
@@ -221,8 +217,6 @@
                                             <th>startyear</th>
                                             <th>endyear</th>
                                             <th>semester</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
