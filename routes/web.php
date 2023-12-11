@@ -12,7 +12,7 @@ use App\Http\Controllers\SeiQualifierviewController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\WordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +101,10 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/viewdocument/{number}', [RsmsViewController::class, 'viewdocument'])->name('viewdocument');
     //ANONUNCEMENT
     Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
+
     Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
+
+    Route::post('/upload', [WordController::class, 'upload']);
 });
 
 

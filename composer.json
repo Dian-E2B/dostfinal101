@@ -17,6 +17,7 @@
         "php-flasher/flasher-laravel": "^1.15",
         "php-flasher/flasher-notyf-laravel": "^1.15",
         "phpmailer/phpmailer": "^6.8",
+        "phpoffice/phpword": "^1.1",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.5",
         "tinymce/tinymce": "^6.7",

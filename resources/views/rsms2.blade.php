@@ -133,6 +133,12 @@
                         <input hidden id=endyear value="{{ $endyear }}">
                         <input hidden id=semester value="{{ $semester }}">
 
+                        <form method="POST" action="/upload" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="wordFile">
+                            <button type="submit">Upload</button>
+                        </form>
+
                         <div class="">
                             <img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}" style="display: none;">
                             <div class="">
