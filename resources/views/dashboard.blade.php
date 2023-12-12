@@ -7,8 +7,11 @@
         <link href="{{ asset('css/all.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 
-
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+
     </head>
     <style>
         .custominput {
@@ -30,136 +33,88 @@
                 @include('layouts.header')
 
 
-                <main class="content" style="padding: 1rem 1rem 1.5rem;">
+                <main class="content" style="padding: 0.5rem 0.5rem 0.5rem;">
                     <div class="container-fluid p-0">
-                        <div class="col-xl-4 d-flex-start">
-                            <div class="w-100">
+
+
+
+
+                        {{-- <form method="GET" action="{{ route('dashboard') }}">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-4">
+                                    <input style="margin-left: 10px;" type="text" class=" form-control " name="startyear" id="datepicker" />
+                                </div>
+                                <div class="col-4">
+                                    <input style=""type="text" class="form-control" name="endyear" id="datepicker2" />
+                                </div>
+                                <div class="col-4">
+                                    <button style="max-width:80px;" class="  form-control btn btn-primary" type="submit" value="">Filter</button>
+                                </div>
+                            </div>
+                        </form> --}}
+
+
+
+
+
+
+
+                        {{-- LINE SCHOOLS CHART SECTION --}}
+
+
+                        <div class="row">
+                            <div class="col-6">
                                 <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Schools</h5>
+                                        <h6 class="card-subtitle text-muted">
+                                            <p>This chart displays the number of scholarships awarded each year for different programs.</p>
+                                            <strong>
 
-                                    <form method="GET" action="{{ route('dashboard') }}">
-                                        <div class="row mt-2 mb-2">
-                                            <div class="col-4">
-                                                <input style="margin-left: 10px;" type="text" class=" form-control " name="startyear" id="datepicker" />
-                                            </div>
-                                            <div class="col-4">
-                                                <input style=""type="text" class="form-control" name="endyear" id="datepicker2" />
-                                            </div>
-                                            <div class="col-4">
-                                                <button style="max-width:80px;" class="  form-control btn btn-primary" type="submit" value="">Filter</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            </strong>
+                                        </h6>
+                                    </div>
+                                    <div class="chart-contatiner" style="padding: 10px;">
+                                        <canvas id="myLineChart" width="" height="200"></canvas>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-4">
+                                <div>
+                                    <label for="yearFilter">Select Year:</label>
+                                    <select id="yearFilter" onchange="updateComparisonDiv()">
+                                        <!-- Populate the select options with unique years from your data -->
+                                        @foreach ($uniqueYears as $year)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button onclick="updateComparisonDiv()">Filter</button>
+                                </div>
+                                <div class="card">
+                                    <div id="comparisonDiv">
+                                        <h2>Percentage Comparison</h2>
+                                        <p id="comparisonResults"></p>
+                                    </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="">
-
-                            {{-- LINE SCHOOLS CHART SECTION --}}
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Schools</h5>
-                                            <h6 class="card-subtitle text-muted">
-                                                {{-- DESCRIPTIVE COMPARISON --}}
-                                                <strong>
-
-                                                </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-contatiner">
-                                                <canvas id="SCHOOLSCHART" width="" height="500"></canvas>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                {{-- DAVAOCIT SCHOOLS CHART SECTION --}}
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">DAVAO CITY RA7687</h5>
-                                            <h6 class="card-subtitle text-muted">
-
-                                                <strong>
-
-                                                </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-contatiner">
-                                                <canvas id="DAVAOCITYRA7687CHART" width="" height="500"></canvas>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div> --}}
 
 
 
 
-                                {{-- PIE PROGRAM CHART SECTION --}}
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Scholarship Applications by Program</h5>
-                                            <h6 class="card-subtitle text-muted">
-                                                {{-- DESCRIPTIVE COMPARISON --}}
-                                                <strong>
-
-                                                </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-contatiner">
-                                                <canvas id="PROGRAM" width="" height="400"></canvas>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Scholarship Applications by course</h5>
-                                            <h6 class="card-subtitle text-muted">
-                                                {{-- DESCRIPTIVE COMPARISON --}}
-                                                <strong>
-
-                                                </strong>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-contatiner">
-                                                <canvas id="COURSE" width="" height="500"></canvas>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
 
 
 
-                        </div>
+
+
+
+
+                    </div>
 
                 </main>
             </div>
@@ -172,250 +127,119 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script>
-        $("#datepicker").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
-        $("#datepicker2").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
         // Register the required plugins
         Chart.register([ChartDataLabels]);
-
-
-        //START SCHOOLCHART
-        var ctx = document.getElementById('SCHOOLSCHART').getContext('2d');
-        var schoolCounts = @json($schoolCounts); // Extract the aggregated data from the PHP array
-        var labels = Object.keys(schoolCounts);
-        var dataschoolCounts = Object.values(schoolCounts);
-
-        // Set a solid blue color for all bars
-        var backgroundColor = '#9FC5E8';
-        var borderColor = 'rgba(54, 162, 235, 1)';
-
-        // Find the minimum and maximum values
-        var minValueschoolCounts = Math.min(...dataschoolCounts);
-        var maxValueschoolCounts = Math.max(...dataschoolCounts);
-
-        // Find all indices with the minimum and maximum values
-        var minIndicesschoolCounts = [];
-        var maxIndicesschoolCounts = [];
-        dataschoolCounts.forEach((value, index) => {
-            if (value === minValueschoolCounts) {
-                minIndicesschoolCounts.push(index);
-            } else if (value === maxValueschoolCounts) {
-                maxIndicesschoolCounts.push(index);
-            }
-        });
-
-        // Set background color dynamically for each bar
-        var dynamicBackgroundColors = dataschoolCounts.map((value, index) => {
-            if (maxIndicesschoolCounts.includes(index)) {
-                return '#B6D7A8'; // Set color to green for the highest values
-            } else if (minIndicesschoolCounts.includes(index)) {
-                return '#F4CCCC'; // Set color to red for the lowest values
-            } else {
-                return backgroundColor; // Default color
-            }
-        });
-
-
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: '',
-                    data: dataschoolCounts,
-                    backgroundColor: dynamicBackgroundColors,
-                    borderColor: borderColor,
-
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    datalabels: {
-                        anchor: 'center', // Set to 'center' to center the label horizontally
-                        align: 'center', // Set to 'center' to center the label vertically
-                        color: 'black', // Set the default color to black
-                        textAlign: 'center',
-                        font: {
-                            style: 'italic',
-                            weight: 'bold'
-                            // Set to 'bold' to make the label bold
-                        },
-                        formatter: (value, context) => {
-                            const dataIndex = context.dataIndex;
-                            const datapoints = context.dataset.data;
-                            const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-                            const percentage = (value / total) * 100;
-
-                            let label = percentage.toFixed(1) + '%';
-
-                            if (maxIndicesschoolCounts.includes(dataIndex)) {
-                                return 'High:\n' + label;
-                            } else if (minIndicesschoolCounts.includes(dataIndex)) {
-                                return 'Low:\n' + label;
-                            } else {
-                                return label;
-                            }
-                        },
-
-                    }
-                }
-            }
-        });
-        //END SCHOOLCHART
-
-
-
-
-
-
-        //START PROGRAM
+        // Get the data from the PHP variable
         var ongoingPROGRAM = @json($ongoingPROGRAM);
-        var LABELsongoingRA787Data = ongoingPROGRAM.map(record => record.scholarshipprogram);
-        var DATAsongoingRA787Data = @json($ongoingPROGRAM->pluck('scholarshipprogramcount'));
 
-        var minValueprogram = Math.min(...DATAsongoingRA787Data);
-        var minIndicesprogram = DATAsongoingRA787Data.reduce((indices, value, index) => {
-            if (value === minValueprogram) {
-                indices.push(index);
-            }
-            return indices;
-        }, []);
+        // Extract unique start years and scholarship programs for labels and datasets
+        var startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
+        var scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
 
-        var maxValueprogram = Math.max(...DATAsongoingRA787Data);
-        var maxIndex = DATAsongoingRA787Data.indexOf(maxValueprogram);
-
-        var ctx = document.getElementById('PROGRAM').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: LABELsongoingRA787Data,
-                datasets: [{
-                    data: DATAsongoingRA787Data,
-                    backgroundColor: ['rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                    ],
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    datalabels: {
-                        anchor: 'center',
-                        align: 'center',
-                        color: 'black',
-                        textAlign: 'center',
-                        font: {
-                            style: 'italic',
-                            weight: 'bold'
-                        },
-                        formatter: (value, context) => {
-                            const dataIndex = context.dataIndex;
-                            const datapoints = context.dataset.data;
-                            const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-                            const percentage = (value / total) * 100;
-
-                            let label = percentage.toFixed(1) + '%';
-
-                            if (dataIndex === maxIndex) {
-                                return 'High:\n' + label;
-                            } else if (minIndicesprogram.includes(dataIndex)) {
-                                return 'Low:\n' + label;
-                            } else {
-                                return label;
-                            }
-                        },
-                    }
-                }
-            }
+        // Create datasets for each scholarship program
+        var datasets = scholarshipPrograms.map(program => {
+            return {
+                label: program,
+                data: startYears.map(year => {
+                    var match = ongoingPROGRAM.find(item => item.startyear === year && item.scholarshipprogram === program);
+                    return match ? match.scholarshipprogramcount : 0;
+                }),
+                borderColor: getRandomColor(),
+                borderWidth: 2,
+                fill: false,
+                backgroundColor: getRandomColor(), // Solid color for the area under the line
+            };
         });
 
-
-        //COURSE
-        var ongoingCOURSE = @json($ongoingCOURSE);
-        var LABELongoingCOURSE = ongoingCOURSE.map(record => record.course);
-        var DATAongoingCOURSE = @json($ongoingCOURSE->pluck('coursecount'));
-
-        var minValueCOURSE = Math.min(...DATAongoingCOURSE);
-        var minIndicesCOURSE = DATAongoingCOURSE.reduce((indices, value, index) => {
-            if (value === minValueCOURSE) {
-                indices.push(index);
-            }
-            return indices;
-        }, []);
-
-        var maxValueCOURSE = Math.max(...DATAongoingCOURSE);
-        var maxIndexCOURSE = DATAongoingCOURSE.indexOf(maxValueCOURSE);
-
-        var ctx = document.getElementById('COURSE').getContext('2d');
-        var myChart = new Chart(ctx, {
+        // Create a line chart
+        var ctx = document.getElementById('myLineChart').getContext('2d');
+        var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: LABELongoingCOURSE,
-                datasets: [{
-                    data: DATAongoingCOURSE,
-                    backgroundColor: ['rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                    ],
-                }]
+                labels: startYears.map(String),
+                datasets: datasets,
             },
             options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
+                scales: {
+                    x: {
+                        type: 'category',
+                        labels: startYears.map(String),
                     },
-                    datalabels: {
-                        anchor: 'center',
-                        align: 'center',
-                        color: 'black',
-                        textAlign: 'center',
-                        font: {
-                            style: 'italic',
-                            weight: 'bold'
-                        },
-                        formatter: (value, context) => {
-                            const dataIndex = context.dataIndex;
-                            const datapoints = context.dataset.data;
-                            const total = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-                            const percentage = (value / total) * 100;
-
-                            let label = percentage.toFixed(1) + '%';
-
-                            if (dataIndex === maxIndexCOURSE) {
-                                return 'High:\n' + label;
-                            } else if (minIndicesCOURSE.includes(dataIndex)) {
-                                return 'Low:\n' + label;
-                            } else {
-                                return label;
-                            }
-                        },
-                    }
-                }
-            }
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                elements: {
+                    line: {
+                        tension: 0, // Make the lines straight
+                    },
+                },
+                legend: {
+                    display: true,
+                    labels: {
+                        boxWidth: 20, // Adjust the box width for each legend item
+                        usePointStyle: true, // Use a square instead of a line for legend items
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                },
+            },
         });
+
+        // Function to generate a random color (for demonstration purposes)
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function updateComparisonDiv() {
+            var comparisonResultsElement = document.getElementById('comparisonResults');
+            comparisonResultsElement.innerHTML = '';
+
+            // Convert the selected year to an integer
+            var selectedYear = parseInt(document.getElementById('yearFilter').value);
+
+            var filteredData = ongoingPROGRAM.filter(item => item.startyear === selectedYear);
+
+            console.log('Filtered Data:', filteredData);
+
+            var total = scholarshipPrograms.reduce((sum, program) => {
+                var count = filteredData.reduce((programSum, item) => {
+                    if (item.scholarshipprogram === program) {
+                        return programSum + item.scholarshipprogramcount;
+                    }
+                    return programSum;
+                }, 0);
+                return sum + count;
+            }, 0);
+
+            comparisonResultsElement.innerHTML += `<strong>${selectedYear}:</strong><br>`;
+
+            scholarshipPrograms.forEach(program => {
+                var count = filteredData.reduce((programSum, item) => {
+                    if (item.scholarshipprogram === program) {
+                        return programSum + item.scholarshipprogramcount;
+                    }
+                    return programSum;
+                }, 0);
+                var percentage = total === 0 ? 0 : (count / total) * 100;
+                comparisonResultsElement.innerHTML += ` ${program}: ${percentage.toFixed(2)}%,<br>`;
+            });
+
+            comparisonResultsElement.innerHTML += '<br>';
+        }
+
+
+        updateComparisonDiv();
     </script>
+
 
 </html>
