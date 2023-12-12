@@ -15,23 +15,25 @@
             }
 
             .logo {
-                overflow: hidden;
+
                 shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
                 transform: translatey(0px);
-                animation: float 6s ease-in-out infinite;
-                z-index: -1;
-                position: absolute;
-                align-items: center;
-                justify-content: center;
-                margin: -100px -300px;
+                animation: float 2s ease-in-out infinite;
+
             }
 
+            /* overflow: hidden; */
+            /* z-index: -1; */
+            /* position: absolute; */
+            /* align-items: center;
+                justify-content: center; */
+            /* margin: -100px -300px; */
             .dostbrand {
-                position: absolute;
+                position: ;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 font-weight: bold;
                 font-size: 1.5rem;
-                margin: 0.5rem;
+                /* margin: 0.5rem; */
             }
 
             @keyframes float {
@@ -56,9 +58,9 @@
 
     <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <main class="d-flex w-100 h-100">
-
+            {{--
             <span style="" class="dostbrand">DOST REGION XI
-                <br>SCHOLAR MONITORING SYSTEM</span>
+                <br>SCHOLAR MONITORING SYSTEM</span> --}}
 
             <div s class="container d-flex flex-column">
 
@@ -67,14 +69,40 @@
                     <div class="col-sm-5 col-md-12 col-lg-5 col-xl-5 mx-auto d-table ">
                         <div class="d-table-cell align-middle">
 
-                            <div class="text-center mt-0">
-
-                                <img class="logo lead" src="{{ asset('icons/DOSTLOGOsmall.png') }}" alt="Girl in a jacket" width="600" height="600">
-                            </div>
 
                             <div class="card">
-                                <span class="justify-content-center" style="margin: auto; padding-top: 10px; font-weight: bold; font-size: 20px">Welcome!
-                                </span>
+
+                                <div class="container">
+
+
+                                    <div class="row justify-content-center mt-5">
+                                        <div class="col-4 justify-content-end text-end">
+                                            <img class="logo lead" src="{{ asset('icons/DOSTLOGOsmall.png') }}" alt="" width="100" height="100">
+
+                                        </div>
+                                        <div class="dostbrand col-4 justify-content-start">
+
+                                            DOST REGION XI
+                                            <br>
+                                            {{-- SCHOLAR MONITORING
+                                            <br>SYSTEM --}}
+                                        </div>
+                                    </div>
+                                    {{-- <div class="row justify-content-center text-center mt-1 ">
+                                        <div>Welcome!</div>
+                                    </div> --}}
+                                </div>
+
+                                {{-- <span class=" " style="padding-top: 0.5in; font-weight: bold; font-size: 20px">
+                                    <div class="row">
+                                        <div class=" col-md-12 offset-md-3 ">
+
+                                        </div>
+
+
+
+                                    </div>
+                                </span> --}}
                                 <div class="card-body">
 
                                     <div class="m-sm-3">

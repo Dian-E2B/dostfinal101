@@ -3,6 +3,7 @@
 
     <head>
         <title>DOST XI</title>
+        <link href="{{ asset('css/all.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
             .noborder-bottom {
@@ -83,6 +84,15 @@
                 text-align: center;
                 vertical-align: center;
             }
+
+            .btn-a {
+                border: 1px solid gray;
+            }
+
+            .btn-a:hover {
+                background-color: rgb(64, 172, 179);
+                color: white;
+            }
         </style>
     </head>
 
@@ -105,41 +115,87 @@
 
 
 
-                        <a href="{{ route('downloadpdfclearance', ['filename' => 'ScholarshipClearance.pdf']) }}" class="btn btn-primary mb-3">
-                            Download Clearance
-                        </a>
 
-                        <div class="col-xxl-12">
-                            <div style="padding-right: 20px; padding-left: 20px;" class="card">
-
-
-
-                                <div class="" style="align-self: center; font-size: 18pt; font-weight:bold">Upload Documents</div>
-                                <div class="" style="align-self: center; font-size: 10spt; font-weight:bold">please upload your files here</div>
-
-
-
-
-                                <form class="" method="POST" action="{{ route('savepdfclearance') }}" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row">
-
-                                        <div class="col-md-6 offset-md-3">
-                                            <input name="fileuploadedname" placeholder="Filename" required style="width: 100%" class="form-control mt-3">
-                                            <input name="fileupload" required style="width: 100%" class="form-control mt-3" type="file" accept="image/*,.pdf">
-                                            <button class="d-grid btn btn-primary col-4 mx-auto" style="margin: 20px auto;" type="submit">Submit</button>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <div style="padding-right: 20px; padding-left: 20px;" class="card">
+                                            <a href="{{ route('downloadpdfclearance', ['filename' => 'ScholarshipClearance.pdf']) }}" class="btn btn-a mb-3 mt-3">
+                                                <i class="fad fa-download" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i> Clearance
+                                            </a>
                                         </div>
                                     </div>
-                                </form>
+
+                                </div>
+                                {{-- <div class="row">
+                                    <div class="col">
+                                        <div style="padding-right: 20px; padding-left: 20px;" class="card">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Files Uploaded</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div> --}}
                             </div>
+
+                            <div class="col-xl-6 align-items-center">
+                                <div style="padding-right: 20px; padding-left: 20px;" class="card">
+                                    <div class="mt-3" style="align-self: center; font-size: 18pt; font-weight:bold">Upload Documents</div>
+                                    <div class="" style="align-self: center; font-size: 10spt; font-weight:bold">please upload your files here</div>
+
+
+
+
+                                    <form class="" method="POST" action="{{ route('savepdfclearance') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+
+                                            <div class="col-md-6 offset-md-3">
+                                                <select required name="fileuploadedname" required class="form-control mt-3" style="width: 100%">
+                                                    <option value="">Document Type</option>
+                                                    <option value="Reply Slip Form">Reply Slip Form</option>
+                                                    <option value="Scholars' Oath">Scholars' Oath</option>
+                                                    <option value="Prospectus">Prospectus</option>
+                                                    <option value="Certificate of Registration">Certificate of Registration</option>
+                                                    <option value="Certificate of Grades">Certificate of Grades</option>
+                                                    <option value="Clearance Request Form">Clearance Request Form</option>
+                                                    <option value="Shifting and Transfer Form">Shifting and Transfer Form</option>
+                                                    <option value="Scholar Thesis Form">Scholar Thesis Form</option>
+                                                    <option value="Scholar Graduate Data File">Scholar Graduate Data File</option>
+                                                    <option value="Transcript of Records">Transcript of Records</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                </select>
+                                                <input name="fileupload" required style="width: 100%" class="form-control mt-3" type="file" accept="image/*,.pdf">
+                                                <button class="d-grid btn btn-primary col-4 mx-auto" style="margin: 20px auto;" type="submit">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
+
+
+
                     </div>
             </div>
             </main>
         </div>
         </div>
 
-
+        <script src="{{ asset('js/all.js') }}"></script>
     </body>
     {{-- PRINT TOGGLING --}}
 

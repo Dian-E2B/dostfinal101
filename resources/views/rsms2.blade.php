@@ -129,11 +129,11 @@
                         <input hidden id=endyear value="{{ $endyear }}">
                         <input hidden id=semester value="{{ $semester }}">
 
-                        <form method="POST" action="/upload" enctype="multipart/form-data">
+                        {{-- <form method="POST" action="/upload" enctype="multipart/form-data">
                             @csrf
                             <input type="file" name="wordFile">
                             <button type="submit">Upload</button>
-                        </form>
+                        </form> --}}
 
                         <div class="">
                             <img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}" style="display: none;">
@@ -820,7 +820,7 @@
                             NOTATIONS: $('#editModal #notationsField').val(),
                             SUMMER: $('#editModal #summerField').val(),
                             FARELEASEDTUITION: $('#editModal #faReleaseTuitionField').val(),
-                            FARELEASEDTUITIONBOOKSTIPEND: $('#editModal #faReleaseTuitionField').val(),
+                            FARELEASEDTUITIONBOOKSTIPEND: $('#editModal #faReleaseTuitionBookStipendField').val(),
                             LVDCAccount: $('#editModal #lvdCAccountField').val(),
                             HVCNotes: $('#editModal #lvdCAccountField').val(),
                         };
