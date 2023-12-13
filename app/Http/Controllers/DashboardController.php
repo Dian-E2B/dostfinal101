@@ -40,4 +40,17 @@ class DashboardController extends Controller
 
         // Debugbar::info($ongoingRecords);
     }
+
+    public function getprogramchartyearfilter($selectedYear)
+    {
+
+        $ongoingPROGRAM = DB::table('ongoing')
+            ->select('scholarshipprogram', DB::raw('COUNT(*) as scholarshipprogramcount'))
+            ->whereNotNull('scholarshipprogram')
+            ->where('startyear', $selectedYear)
+            ->groupBy('scholarshipprogram')
+            ->get();
+
+        return response()->json($ongoingPROGRAM);
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailViewController;
 use App\Http\Controllers\SeiViewController;
 use App\Http\Controllers\RsmsViewController;
@@ -98,13 +99,18 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/getscholarshipstatus/{number}', [RsmsViewController::class, 'getscholarshipstatus'])->name('getscholarshipstatus');
     Route::post('/savescholarshipstatus/{number}', [RsmsViewController::class, 'savescholarshipstatus'])->name('savescholarshipstatus');
     Route::get('/getdocumentsdata/{number}', [RsmsViewController::class, 'getdocumentsdata'])->name('getdocumentsdata');
-    Route::get('/viewdocument/{number}', [RsmsViewController::class, 'viewdocument'])->name('viewdocument');
+
+
+    Route::get('/getprogramchartyearfilter/{year}', 'YourController@getProgramChartData');
     //ANONUNCEMENT
     Route::get('/announcement', [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcement');
 
     Route::get('/requests', [\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
 
     Route::post('/upload', [WordController::class, 'upload']);
+
+
+    Route::get('/getprogramchartyearfilter/{year}', [DashboardController::class, 'getprogramchartyearfilter'])->name('getprogramchartyearfilter');
 });
 
 
