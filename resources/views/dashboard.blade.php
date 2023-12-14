@@ -20,7 +20,7 @@
 
         body {
             font-family:"Calibri", sans-serif;
-            font-size: 11pt;
+            font-size: 12pt;
         }
 
         .sidebar{
@@ -101,6 +101,7 @@
                     datasets: datasets,
                 },
                 options: {
+
                     scales: {
                         x: {
                             type: 'category',
@@ -112,7 +113,7 @@
                     },
                     elements: {
                         line: {
-                            tension: 0,
+                            tension: 0.4,
                         },
                     },
                     legend: {
@@ -205,7 +206,7 @@
                             },
                             elements: {
                                 line: {
-                                    tension: 0, // Make the lines straight
+                                    tension: 0.4, // Make the lines straight
                                 },
                             },
                             legend: {
@@ -242,8 +243,8 @@
 
                     function updateProgramTable(updatedData) {
                         var containerDiv = $('#programportioncounter-body');
-                        // Clear existing content
-                        containerDiv.empty(); // or containerDiv.html('');
+
+                        containerDiv.empty(); // or containerDiv.html(''); // Clear existing content
                         // Update the content of the div
                         containerDiv.html(updatedData);
                     }
