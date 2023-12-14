@@ -71,14 +71,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
     <script>
+    var ongoingPROGRAM;
+    var startYears;
+    var scholarshipPrograms;
+    var datasets;
+
 
         //START PROGRAMCHART
-        function initiateprogramchart() {
-            var ongoingPROGRAM = @json($ongoingPROGRAM);
-            var startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
-            var scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
 
-            var datasets = scholarshipPrograms.map(function(program, index) {
+             ongoingPROGRAM = @json($ongoingPROGRAM);
+             startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
+             scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
+
+             datasets = scholarshipPrograms.map(function(program, index) {
                 return {
                     label: program,
                     data: startYears.map(year => {
@@ -130,11 +135,11 @@
                         },
                         zoom: {
                             pan: {
-                                enabled: !0,
+                                enabled: true,
                                 mode: 'xy',
                             },
                             zoom: {
-                                enabled: !0,
+                                enabled: true,
                                 mode: 'xy',
                             },
                         },
@@ -146,10 +151,9 @@
                 var predefinedColors = ['#3498db', '#000000', '#49C4D3'];
                 return predefinedColors[index % predefinedColors.length];
             }
-        }
+
 
         document.addEventListener("DOMContentLoaded", function(event) {
-            initiateprogramchart(); //CALL MAINPROGRAM CHART
 
              //ON SUBMIT FILTER, DESTROY OLD AND CREATE NEW PROGRAM CHART
             $('#programyearform').on('submit', function(e) {
@@ -162,91 +166,26 @@
                 }).done(function(response) {
                     // Destroy the existing chart
                     if (window.myProgramChart) {
-                        window.myProgramChart.destroy();
-                    }
+                        // window.myProgramChart.destroy();
+                        ongoingPROGRAM = response.ongoingPROGRAM;
+                        startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
+                        scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
 
-                    updateProgramTable(response.htmlContent);  //PROGRAMCHART PORTION SECTION
-
-                    // console.log(response); //VIEW RESPONSES
-
-                    var ongoingPROGRAM = response.ongoingPROGRAM;
-                    var startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
-                    var scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
-
-                    var datasets = scholarshipPrograms.map(function(program, index) {
-                        return {
-                            label: program,
-                            data: startYears.map(year => {
-                                var match = ongoingPROGRAM.find(item => item.startyear === year && item.scholarshipprogram === program);
+                        myProgramChart.data.labels = startYears.map(String);
+                        myProgramChart.data.datasets.forEach((dataset, index) => {
+                            dataset.data = startYears.map(year => {
+                                var match = ongoingPROGRAM.find(item => item.startyear === year && item.scholarshipprogram === scholarshipPrograms[index]);
                                 return match ? match.scholarshipprogramcount : 0;
-                            }),
-                            borderColor: getPredefinedColor(index),
-                            borderWidth: 3,
-                            fill: false,
-                            backgroundColor: getPredefinedColor(index), // Solid color for the area under the line
-                        };
-                    });
+                            });
+                        });
 
-                    var newChart = document.getElementById('myProgramChart').getContext('2d');
-                    window.myProgramChart = new Chart(newChart, {
-                        type: 'line',
-                        data: {
-                            labels: startYears.map(String),
-                            datasets: datasets,
-                        },
-                        options: {
-                            scales: {
-                                x: {
-                                    type: 'category',
-                                    labels: startYears.map(String),
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                },
-                            },
-                            elements: {
-                                line: {
-                                    tension: 0.4, // Make the lines straight
-                                },
-                            },
-                            legend: {
-                                display: true,
-                                labels: {
-                                    boxWidth: 20, // Adjust the box width for each legend item
-                                    usePointStyle: true, // Use a square instead of a line for legend items
-                                },
-                            },
-                            plugins: {
-                                tooltip: {
-                                    mode: 'index',
-                                    intersect: false,
-                                },
-                                zoom: {
-                                    pan: {
-                                        enabled: true,
-                                        mode: 'xy',
-                                    },
-                                    zoom: {
-                                        enabled: true,
-                                        mode: 'xy',
-                                    },
-                                },
-                            },
-                        },
-
-                    });
-
-                    function getPredefinedColor(index) {
-                        var predefinedColors = ['#3498db', '#000000', '#49C4D3'];
-                        return predefinedColors[index % predefinedColors.length];
+                        myProgramChart.update(); // Update the chart to reflect the changes
                     }
-
+                    updateProgramTable(response.htmlContentprogram);  //PROGRAMCHART PORTION SECTION
                     function updateProgramTable(updatedData) {
                         var containerDiv = $('#programportioncounter-body');
-
                         containerDiv.empty(); // or containerDiv.html(''); // Clear existing content
-                        // Update the content of the div
-                        containerDiv.html(updatedData);
+                        containerDiv.html(updatedData);// Update the content of the div  table
                     }
 
                 }).catch(error => {

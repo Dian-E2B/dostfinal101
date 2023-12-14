@@ -68,36 +68,36 @@ class DashboardController extends Controller
             // Calculate total count for all years
             $totalCount = $ongoingPROGRAMcounter->sum('scholarshipprogramcount');
 
-            $htmlContent = '';
+            $htmlContentprogram = '';
             foreach ($ongoingPROGRAMcounter as $index => $result) {
-                $htmlContent .= '<tr>';
-                $htmlContent .= '<td>';
+                $htmlContentprogram .= '<tr>';
+                $htmlContentprogram .= '<td>';
 
                 // Add your conditions for scholarshipprogram
                 if ($result->scholarshipprogram == 'MERIT') {
-                    $htmlContent .= '<i class="fas fa-circle portionicon" style="color :blue" style:></i>' . $result->scholarshipprogram . ':';
+                    $htmlContentprogram .= '<i class="fas fa-circle portionicon" style="color :blue" style:></i>' . $result->scholarshipprogram . ':';
                 } elseif ($result->scholarshipprogram == 'RA 10612') {
-                    $htmlContent .= '<i class="fas fa-circle portionicon" style="color :rgb(27, 27, 28)"></i>' . $result->scholarshipprogram . ':';
+                    $htmlContentprogram .= '<i class="fas fa-circle portionicon" style="color :rgb(27, 27, 28)"></i>' . $result->scholarshipprogram . ':';
                 } elseif ($result->scholarshipprogram == 'RA 7687') {
-                    $htmlContent .= '<i class="fas fa-circle portionicon" style="color :rgb(40, 253, 243)"></i>' . $result->scholarshipprogram . ':';
+                    $htmlContentprogram .= '<i class="fas fa-circle portionicon" style="color :rgb(40, 253, 243)"></i>' . $result->scholarshipprogram . ':';
                 }
 
-                $htmlContent .= '</td>';
-                $htmlContent .= '<td style="">';
+                $htmlContentprogram .= '</td>';
+                $htmlContentprogram .= '<td style="">';
 
                 // Calculate percentage and add to HTML content
                 $percentage = ($result->scholarshipprogramcount / $totalCount) * 100;
-                $htmlContent .= number_format($percentage, 2) . '%';
+                $htmlContentprogram .= number_format($percentage, 2) . '%';
 
-                $htmlContent .= '</td>';
-                $htmlContent .= '</tr>';
+                $htmlContentprogram .= '</td>';
+                $htmlContentprogram .= '</tr>';
             }
 
 
             return response()->json([
                 'ongoingPROGRAM' => $ongoingPROGRAM,
                 'uniqueYears' => $uniqueYears,
-                'htmlContent' => $htmlContent
+                'htmlContentprogram' => $htmlContentprogram
             ]);
         } else {
 
