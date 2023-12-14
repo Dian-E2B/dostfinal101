@@ -110,7 +110,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::post('/upload', [WordController::class, 'upload']);
 
 
-    Route::get('/getprogramchartyearfilter/{year}', [DashboardController::class, 'getprogramchartyearfilter'])->name('getprogramchartyearfilter');
+    Route::post('/getprogramchartyearfilter', [DashboardController::class, 'getprogramchartyearfilter'])->name('getprogramchartyearfilter');
 });
 
 
