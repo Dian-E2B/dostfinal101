@@ -42,7 +42,8 @@
         }
 
 
-        .programportioncard {
+        .programportioncard,
+        .genderportioncard {
             box-shadow: 1px 2px 5px 4px rgb(214, 214, 214);
         }
     </style>
@@ -152,26 +153,26 @@
         }
 
         /* Start ProgamChartPortion*/
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-        var data = @json($ongoingPROGRAMcounter);
-        var labels = [];
-        var counts = [];
+        var ctxPROGRAMPIE = document.getElementById('myPieChart').getContext('2d');
+        var dataPROGRAM = @json($ongoingPROGRAMcounter);
+        var labelsPROGRAM = [];
+        var countsPROGRAM = [];
 
-        data.forEach(item => {
-            labels.push(item.scholarshipprogram);
-            counts.push(item.scholarshipprogramcount);
+        dataPROGRAM.forEach(item => { // Use dataPROGRAM instead of data
+            labelsPROGRAM.push(item.scholarshipprogram);
+            countsPROGRAM.push(item.scholarshipprogramcount);
         });
 
-        var myPieChart = new Chart(ctx, {
+        var myPieChart = new Chart(ctxPROGRAMPIE, {
             type: 'pie',
             data: {
-                labels: labels,
+                labels: labelsPROGRAM, // Use labelsPROGRAM
                 datasets: [{
-                    data: counts,
+                    data: countsPROGRAM, // Use countsPROGRAM
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
+                        '#3498db',
+                        '#000000',
+                        '#49C4D3',
                     ],
                 }]
             },
@@ -182,9 +183,9 @@
                 },
                 plugins: {
                     datalabels: {
-                        formatter: (value, ctx) => {
+                        formatter: (value, ctxPROGRAMPIE) => {
                             let sum = 0;
-                            let dataArr = ctx.chart.data.datasets[0].data;
+                            let dataArr = ctxPROGRAMPIE.chart.data.datasets[0].data;
                             dataArr.map(data => {
                                 sum += data;
                             });
@@ -196,8 +197,124 @@
             },
         });
 
+        /* Start GenderChart */
+        ongoingGender = @json($ongoingGender);
+        startYearsGender = [...new Set(ongoingGender.map(item => item.startyear))];
+        scholarshipGender = [...new Set(ongoingGender.map(item => item.MF))];
+        datasetsGender = scholarshipGender.map(function(gender, index) {
+            return {
+                label: gender,
+                data: startYearsGender.map(year => {
+                    var match = ongoingGender.find(item => item.startyear === year && item.MF === gender);
+                    return match ? match.MFcount : 0;
+                }),
+                borderColor: getPredefinedColorGender(index),
+                borderWidth: 3,
+                fill: false,
+                backgroundColor: getPredefinedColorGender(index), // Solid color for the area under the line
+            };
+        });
 
+        /* Gender Chart Setup */
+        var myGenderChart = document.getElementById('myGenderChart').getContext('2d');
+        window.myGenderChart = new Chart(myGenderChart, {
+            type: 'line',
+            data: {
+                labels: startYearsGender.map(String),
+                datasets: datasetsGender,
+            },
+            options: {
 
+                scales: {
+                    x: {
+                        type: 'category',
+                        labels: startYearsGender.map(String),
+                    },
+                    y: {
+                        beginAtZero: !0,
+                    },
+                },
+                elements: {
+                    line: {
+                        tension: 0.4,
+                    },
+                },
+                legend: {
+                    display: !0,
+                    labels: {
+                        boxWidth: 20,
+                        usePointStyle: !0,
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: !1,
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'xy',
+                        },
+                        zoom: {
+                            enabled: true,
+                            mode: 'xy',
+                        },
+                    },
+                },
+            },
+        });
+
+        /* Gender Chart Colors */
+        function getPredefinedColorGender(index) {
+            var predefinedColors = ['#FFC0CB', '#A52A2A'];
+            return predefinedColors[index % predefinedColors.length];
+        }
+
+        /* Gender Chart Proportion */
+        var ctxgenderproportion = document.getElementById('myGenderPie').getContext('2d');
+        var datagender = @json($ongoingGendercounter);
+        var labelsgender = [];
+        var countsgender = [];
+
+        datagender.forEach(item => {
+            labelsgender.push(item.MF);
+            countsgender.push(item.MFcount);
+        });
+
+        var myGenderPieChart = new Chart(ctxgenderproportion, {
+            type: 'pie',
+            data: {
+                labels: labelsgender,
+                datasets: [{
+                    data: countsgender,
+                    backgroundColor: [
+                        '#FFC0CB',
+                        '#A52A2A',
+
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'left',
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value, ctxgenderproportion) => {
+                            let sum = 0;
+                            let dataArr = ctxgenderproportion.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value * 100 / sum).toFixed() + "%";
+                            return percentage;
+                        }
+                    }
+                },
+            },
+        });
 
         document.addEventListener("DOMContentLoaded", function(event) {
             /* Filter Submit */
@@ -230,19 +347,68 @@
                     }
 
                     if (window.myPieChart) {
-                        var data = response.ongoingPROGRAMcounter;
-                        var labels = [];
-                        var counts = [];
+                        var dataPROGRAM = response.ongoingPROGRAMcounter;
+                        var labelsPROGRAM = [];
+                        var countsPROGRAM = [];
 
-                        data.forEach(item => {
-                            labels.push(item.scholarshipprogram);
-                            counts.push(item.scholarshipprogramcount);
+                        dataPROGRAM.forEach(item => { // Use dataPROGRAM instead of data
+                            labelsPROGRAM.push(item.scholarshipprogram);
+                            countsPROGRAM.push(item.scholarshipprogramcount);
                         });
 
-                        myPieChart.data.labels = labels; // Update the labels
-                        myPieChart.data.datasets[0].data = counts; // Update the data
+                        myPieChart.data.labels = labelsPROGRAM; // Update the labels
+                        myPieChart.data.datasets[0].data = countsPROGRAM; // Update the data
                         myPieChart.update(); // Update the chart
                     }
+
+
+                }).catch(error => {
+                    console.error('Error fetching or processing data:', error);
+                });
+            });
+
+            $('#genderyearform').on('submit', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                $.ajax({
+                    url: $this.prop('action'),
+                    method: 'POST',
+                    data: $this.serialize(),
+                }).done(function(response) {
+                    console.log(response);
+                    //Destroy the existing chart
+                    if (window.myGenderChart) {
+                        var ongoingGenderResponse = response.ongoingGender; // Rename to avoid conflict
+                        var startYearsGenderResponse = [...new Set(ongoingGenderResponse.map(item => item.startyear))]; // Rename
+                        var scholarshipGenderResponse = [...new Set(ongoingGenderResponse.map(item => item.MF))]; // Rename
+
+                        myGenderChart.data.labels = startYearsGenderResponse.map(String);
+                        myGenderChart.data.datasets.forEach((dataset, index) => {
+                            dataset.data = startYearsGenderResponse.map(year => {
+                                var match = ongoingGenderResponse.find(item => item.startyear === year && item.MF === scholarshipGenderResponse[index]);
+                                return match ? match.MFcount : 0;
+                            });
+                        });
+
+                        myGenderChart.update(); // Update the chart to reflect the changes
+                    }
+
+                    if (window.myGenderPieChart) {
+                        var dataGender = response.ongoingGendercounter; // Use dataGender instead of dataPROGRAM
+                        var labelsGender = [];
+                        var countsGender = [];
+
+                        dataGender.forEach(item => {
+                            labelsGender.push(item.MF);
+                            countsGender.push(item.MFcount);
+                        });
+
+                        myGenderPieChart.data.labels = labelsGender;
+                        myGenderPieChart.data.datasets[0].data = countsGender;
+                        myGenderPieChart.update();
+                    }
+
+
                 }).catch(error => {
                     console.error('Error fetching or processing data:', error);
                 });

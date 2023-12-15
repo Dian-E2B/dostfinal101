@@ -111,6 +111,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
 
     Route::post('/getprogramchartyearfilter', [DashboardController::class, 'getprogramchartyearfilter'])->name('getprogramchartyearfilter');
+    Route::post('/getgenderchartyearfilter', [DashboardController::class, 'getgenderchartyearfilter'])->name('getgenderchartyearfilter');
 });
 
 

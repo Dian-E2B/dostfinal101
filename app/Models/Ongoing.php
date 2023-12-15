@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Ongoing extends Model
 {
     use HasFactory;
-     // Specify the table name
-     protected $table = 'ongoing';
+    // Specify the table name
+    protected $table = 'ongoing';
 
-     // Specify the primary key column
-     protected $primaryKey = 'NUMBER';
+    // Specify the primary key column
+    protected $primaryKey = 'NUMBER';
 
 
-     public $timestamps = false;
+    public $timestamps = false;
 
-     protected $fillable = [
+    protected $fillable = [
         'Name',
         'BATCH',
         'NUMBER',
@@ -42,9 +42,9 @@ class Ongoing extends Model
         'startyear',
         'endyear',
         'semester',
+        'year',
     ];
 
-     // Specify that the primary key is not an auto-incrementing integer
-     public $incrementing = false;
-
+    // Specify that the primary key is not an auto-incrementing integer
+    public $incrementing = false;
 }
