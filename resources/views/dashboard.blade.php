@@ -5,7 +5,8 @@
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link href="{{ asset('css/all.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -37,8 +38,23 @@
             font-size: 17px;
         }
 
-        .selectportion {
+        /* .selectportion {
             padding: 10px;
+        } */
+
+        .card {
+            padding: 2%;
+            margin-top: 6px !important;
+            margin-bottom: 6px !important;
+        }
+
+        .gendercard,
+        .programcard {
+            margin-botom: 0% !important;
+        }
+
+        .coursecard {
+            margin-top: 0% !important;
         }
 
 
@@ -68,8 +84,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.js" integrity="sha512-qeclqxc+2KW7GtbmHcj/Ev5eBoYpPnuAcPqusYRIfvaC9OWHlDwu1BrIVPYvfNDG+SRIRiPIokiSvhlLJXDqsw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"
+        integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.js"
+        integrity="sha512-qeclqxc+2KW7GtbmHcj/Ev5eBoYpPnuAcPqusYRIfvaC9OWHlDwu1BrIVPYvfNDG+SRIRiPIokiSvhlLJXDqsw=="
+        crossorigin="anonymous"></script>
 
 
     <script>
@@ -82,11 +102,13 @@
         ongoingPROGRAM = @json($ongoingPROGRAM);
         startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
         scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
+
         datasets = scholarshipPrograms.map(function(program, index) {
             return {
                 label: program,
                 data: startYears.map(year => {
-                    var match = ongoingPROGRAM.find(item => item.startyear === year && item.scholarshipprogram === program);
+                    var match = ongoingPROGRAM.find(item => item.startyear === year && item
+                        .scholarshipprogram === program);
                     return match ? match.scholarshipprogramcount : 0;
                 }),
                 borderColor: getPredefinedColor(index),
@@ -96,12 +118,22 @@
             };
         });
 
+        /* customize x label (program) */
+        var labelsprogram = startYears.map((year, index) => {
+            if (index < startYears.length - 1) {
+                return year + "-" + (year + 1);
+            } else {
+                return year + "-" + (year + 1);
+            }
+        });
+
+
         /* ProgramChart Setup */
         var myProgramChart = document.getElementById('myProgramChart').getContext('2d');
         window.myProgramChart = new Chart(myProgramChart, {
             type: 'line',
             data: {
-                labels: startYears.map(String),
+                labels: labelsprogram,
                 datasets: datasets,
             },
             options: {
@@ -109,7 +141,7 @@
                 scales: {
                     x: {
                         type: 'category',
-                        labels: startYears.map(String),
+                        labels: labelsprogram,
                     },
                     y: {
                         beginAtZero: !0,
@@ -128,6 +160,13 @@
                     },
                 },
                 plugins: {
+                    datalabels: {
+                        color: 'black', // change this to your preferred color
+                        font: {
+                            weight: 'bold',
+                            size: 11.5 // change this to your preferred font size
+                        },
+                    },
                     tooltip: {
                         mode: 'index',
                         intersect: !1,
@@ -135,11 +174,11 @@
                     zoom: {
                         pan: {
                             enabled: true,
-                            mode: 'xy',
+                            mode: 'x',
                         },
                         zoom: {
                             enabled: true,
-                            mode: 'xy',
+                            mode: 'x',
                         },
                     },
                 },
@@ -177,6 +216,11 @@
                 }]
             },
             options: {
+                animation: {
+                    duration: 1500, // duration of the animation in milliseconds
+                    easing: 'easeOutQuart', // easing function to use
+                    loop: true,
+                },
                 responsive: true,
                 legend: {
                     position: 'left',
@@ -191,9 +235,15 @@
                             });
                             let percentage = (value * 100 / sum).toFixed() + "%";
                             return percentage;
-                        }
+                        },
+                        color: 'black', // change this to your preferred color
+                        font: {
+                            weight: 'bold',
+                            size: 11.5 // change this to your preferred font size
+                        },
                     }
                 },
+
             },
         });
 
@@ -215,20 +265,34 @@
             };
         });
 
+        /* customize x label (gender) */
+        var labelsprogram = startYearsGender.map((year, index) => {
+            if (index < startYearsGender.length - 1) {
+                return year + "-" + (year + 1);
+            } else {
+                return year + "-" + (year + 1);
+            }
+        });
+
         /* Gender Chart Setup */
         var myGenderChart = document.getElementById('myGenderChart').getContext('2d');
         window.myGenderChart = new Chart(myGenderChart, {
             type: 'line',
             data: {
-                labels: startYearsGender.map(String),
+                labels: labelsprogram,
                 datasets: datasetsGender,
             },
             options: {
+                animation: {
+                    duration: 1500, // duration of the animation in milliseconds
+                    easing: 'easeInOutBounce', // easing function to use
+
+                },
 
                 scales: {
                     x: {
                         type: 'category',
-                        labels: startYearsGender.map(String),
+                        labels: labelsprogram,
                     },
                     y: {
                         beginAtZero: !0,
@@ -247,6 +311,13 @@
                     },
                 },
                 plugins: {
+                    datalabels: {
+                        color: 'black', // change this to your preferred color
+                        font: {
+                            weight: 'bold',
+                            size: 11.5 // change this to your preferred font size
+                        },
+                    },
                     tooltip: {
                         mode: 'index',
                         intersect: !1,
@@ -254,11 +325,11 @@
                     zoom: {
                         pan: {
                             enabled: true,
-                            mode: 'xy',
+                            mode: 'x',
                         },
                         zoom: {
                             enabled: true,
-                            mode: 'xy',
+                            mode: 'x',
                         },
                     },
                 },
@@ -288,14 +359,15 @@
                 labels: labelsgender,
                 datasets: [{
                     data: countsgender,
-                    backgroundColor: [
-                        '#FFC0CB',
-                        '#A52A2A',
-
-                    ],
+                    backgroundColor: ['#FFC0CB', '#A52A2A', ],
                 }]
             },
             options: {
+                animation: {
+                    duration: 1500, // duration of the animation in milliseconds
+                    easing: 'easeInOutBounce', // easing function to use
+
+                },
                 responsive: true,
                 legend: {
                     position: 'left',
@@ -310,7 +382,40 @@
                             });
                             let percentage = (value * 100 / sum).toFixed() + "%";
                             return percentage;
-                        }
+                        },
+                        color: 'black', // change this to your preferred color
+                        font: {
+                            weight: 'bold'
+                        },
+                    },
+                },
+            },
+        });
+
+        var ctxcourse = document.getElementById('myCoursesChart').getContext('2d');
+        var myCoursesChart = new Chart(ctxcourse, {
+            type: 'bar',
+            data: {
+                labels: @json($dataCourses['labelscourses']),
+                datasets: [{
+                    label: 'Scholarship Courses Availed',
+                    data: @json($dataCourses['datascourses']),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 2000, // duration of the animation in milliseconds
+                    easing: 'easeInOutBounce', // easing function to use
+
+                },
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        fontColor: 'black',
+
                     }
                 },
             },
@@ -327,22 +432,37 @@
                     data: $this.serialize(),
                 }).done(function(response) {
 
-                    console.log(response);
+                    // console.log(response);
                     //Destroy the existing chart
                     if (window.myProgramChart) {
                         // window.myProgramChart.destroy();
                         ongoingPROGRAM = response.ongoingPROGRAM;
                         startYears = [...new Set(ongoingPROGRAM.map(item => item.startyear))];
-                        scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item.scholarshipprogram))];
+                        scholarshipPrograms = [...new Set(ongoingPROGRAM.map(item => item
+                            .scholarshipprogram))];
 
-                        myProgramChart.data.labels = startYears.map(String);
+
+                        /* customize x label (program) */
+                        var labelsprogram = startYears.map((year, index) => {
+                            if (index < startYears.length - 1) {
+                                return year + "-" + (year + 1);
+                            } else {
+                                return year + "-" + (year + 1);
+                            }
+                        });
+                        myProgramChart.data.labels = labelsprogram;
                         myProgramChart.data.datasets.forEach((dataset, index) => {
                             dataset.data = startYears.map(year => {
-                                var match = ongoingPROGRAM.find(item => item.startyear === year && item.scholarshipprogram === scholarshipPrograms[index]);
-                                return match ? match.scholarshipprogramcount : 0;
+                                var match = ongoingPROGRAM.find(item => item
+                                    .startyear === year && item
+                                    .scholarshipprogram ===
+                                    scholarshipPrograms[
+                                        index]);
+                                return match ? match.scholarshipprogramcount :
+                                    0;
                             });
                         });
-
+                        myProgramChart.reset();
                         myProgramChart.update(); // Update the chart to reflect the changes
                     }
 
@@ -378,14 +498,29 @@
                     console.log(response);
                     //Destroy the existing chart
                     if (window.myGenderChart) {
-                        var ongoingGenderResponse = response.ongoingGender; // Rename to avoid conflict
-                        var startYearsGenderResponse = [...new Set(ongoingGenderResponse.map(item => item.startyear))]; // Rename
-                        var scholarshipGenderResponse = [...new Set(ongoingGenderResponse.map(item => item.MF))]; // Rename
 
-                        myGenderChart.data.labels = startYearsGenderResponse.map(String);
+                        var ongoingGenderResponse = response
+                            .ongoingGender; // Rename to avoid conflict
+                        var startYearsGenderResponse = [...new Set(ongoingGenderResponse.map(
+                            item =>
+                            item.startyear))]; // Rename
+                        var scholarshipGenderResponse = [...new Set(ongoingGenderResponse.map(
+                            item => item.MF))]; // Rename
+                        /* customize x label (program) */
+                        var labelsgender = startYears.map((year, index) => {
+                            if (index < startYears.length - 1) {
+                                return year + "-" + (year + 1);
+                            } else {
+                                return year + "-" + (year + 1);
+                            }
+                        });
+                        myGenderChart.data.labels = labelsgender;
                         myGenderChart.data.datasets.forEach((dataset, index) => {
                             dataset.data = startYearsGenderResponse.map(year => {
-                                var match = ongoingGenderResponse.find(item => item.startyear === year && item.MF === scholarshipGenderResponse[index]);
+                                var match = ongoingGenderResponse.find(item =>
+                                    item
+                                    .startyear === year && item.MF ===
+                                    scholarshipGenderResponse[index]);
                                 return match ? match.MFcount : 0;
                             });
                         });
@@ -394,7 +529,9 @@
                     }
 
                     if (window.myGenderPieChart) {
-                        var dataGender = response.ongoingGendercounter; // Use dataGender instead of dataPROGRAM
+                        myGenderChart.destroy();
+                        var dataGender = response
+                            .ongoingGendercounter; // Use dataGender instead of dataPROGRAM
                         var labelsGender = [];
                         var countsGender = [];
 

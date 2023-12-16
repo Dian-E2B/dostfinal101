@@ -55,6 +55,16 @@ class DashboardController extends Controller
                 ->groupBy('MF')
                 ->get();
 
+            /* ongGoingCourses */
+            $courses = Ongoing::select('course', DB::raw('count(*) as courseCount'))
+                ->whereNotNull('course')
+                ->where('course', '<>', '')
+                ->groupBy('course')
+                ->get();
+            $dataCourses = [
+                'labelscourses' => $courses->pluck('course'),
+                'datascourses' => $courses->pluck('courseCount'),
+            ];
 
 
             return view('dashboard', compact(
@@ -62,7 +72,8 @@ class DashboardController extends Controller
                 'uniqueYears',
                 'ongoingPROGRAMcounter',
                 'ongoingGender',
-                'ongoingGendercounter'
+                'ongoingGendercounter',
+                'dataCourses',
             ));
         }
     }
