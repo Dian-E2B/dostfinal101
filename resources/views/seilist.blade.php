@@ -9,7 +9,9 @@
         <link href="{{ asset('css/all.css') }}">
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
+        <link
+            href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
+            rel="stylesheet">
         <style>
             .form-control {
                 color: #000000 !important;
@@ -47,10 +49,8 @@
                 color: #000000
             }
 
-            body {
-                background-color: #dddddd;
-
-            }
+            /*
+            body {} */
 
             .action-column {
                 text-align: center !important;
@@ -61,6 +61,16 @@
             .red {
                 color: rgb(6, 185, 240) !important;
 
+            }
+
+            body {
+                background-color: #dddddd;
+                font-family: "Calibri", sans-serif;
+                /*  font-size: 12pt; */
+            }
+
+            .sidebar {
+                font-size: 12pt;
             }
 
             /*
@@ -95,7 +105,8 @@
                         <div class="card    ">
                             <div class="card-body">
                                 {{-- TABLE --}}
-                                <table id="thisdatatable" cellspacing="0" class="table-striped display nowrap" style="width:100%;">
+                                <table id="thisdatatable" cellspacing="0" class="table-striped display nowrap"
+                                    style="width:100%;">
 
                                     <thead>
                                         <tr>
@@ -107,9 +118,15 @@
                                             <th>Middlename</th>
                                             <th>SPAS NO.</th>
                                             <th>Email</th>
-                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span></span>App ID </th>
-                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span style="display: none">Strand </span></th>
-                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span>Program </span></th>
+                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;">
+                                                <span></span>App ID
+                                            </th>
+                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;">
+                                                <span style="display: none">Strand </span>
+                                            </th>
+                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;">
+                                                <span>Program </span>
+                                            </th>
                                             <th>Sex</th>
                                             <th>Bithdate</th>
                                             <th>Contact</th>
@@ -117,7 +134,9 @@
                                             <th>Street</th>
                                             <th>Village</th>
                                             <th>Barangay</th>
-                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;"><span> Municipality </span></th>
+                                            <th style="  padding-left: 5px !important; padding-right: 5px !important;">
+                                                <span> Municipality </span>
+                                            </th>
                                             <th>Province</th>
                                             <th>Zipcode</th>
                                             <th>District</th>
@@ -145,20 +164,25 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editModalLabel" style="font-weight: bold">Scholar Details</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h1 class="modal-title fs-5" id="editModalLabel" style="font-weight: bold">Scholar Details
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>ID: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField" name="IdField" disabled></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField"
+                                        name="IdField" disabled></div>
                                 <div class="col-2 customlabel"> <label>App ID: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField" name="AppIDField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField"
+                                        name="AppIDField"></div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Email: </label></div>
-                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField" name="EmailField"></div>
+                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField"
+                                        name="EmailField"></div>
                                 <div class="col-2 customlabel"> <label>Program: </label></div>
                                 <div class="col-4">
                                     <select name="ProgramField" id="ProgramField" class="form-control form-control-sm">
@@ -171,7 +195,8 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Surname: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField" name="SurnameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField"
+                                        name="SurnameField"></div>
                                 <div class="col-2 customlabel"> <label>Strand: </label></div>
                                 <div class="col-4">
                                     <select name="StrandField" id="StrandField" class="form-control form-control-sm">
@@ -184,17 +209,20 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Firstname: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField" name="FirstnameField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField"
+                                        name="FirstnameField"></div>
 
                                 <div class="col-2 customlabel"> <label>Contact: </label></div>
                                 <div class="col-4">
-                                    <input class=" form-control   form-control-sm" id="ContactField" name="ContactField">
+                                    <input class=" form-control   form-control-sm" id="ContactField"
+                                        name="ContactField">
                                 </div>
                             </div>
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Middlename: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="MiddlenameField" name="MiddlenameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm"
+                                        id="MiddlenameField" name="MiddlenameField"></div>
                                 <div class="col-2 customlabel"> <label>Gender: </label></div>
                                 <div class="col-4">
                                     <select name="GenderField" id="GenderField" class="form-control form-control-sm">
@@ -214,8 +242,10 @@
 
                             {{-- FOOTER --}}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="saveChangesBtn" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" id="saveChangesBtn" class="btn btn-primary">Save
+                                    changes</button>
                             </div>
                         </div>
                     </div>
@@ -225,7 +255,9 @@
             </div>
 
             <script src="{{ asset('js/all.js') }}"></script>
-            <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+            <script
+                src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
+            </script>
             <script>
                 jQuery(document).ready(function($) {
 
@@ -267,7 +299,8 @@
                                 data: 'gendername',
                                 render: function(data, type, row) {
                                     // Apply custom styles to the email address
-                                    var styledgender = '<span style="padding-right: 10px;">' + data + '</span>';
+                                    var styledgender = '<span style="padding-right: 10px;">' + data +
+                                        '</span>';
                                     return styledgender;
                                 },
                             },
@@ -321,7 +354,8 @@
                                 className: 'action-column',
                                 render: function(data, type, row) {
                                     var number = row.id;
-                                    return '' + '<a class="table-edit" data-id="' + number + '" ><i class="fas fa-edit"></i></a>' + ''
+                                    return '' + '<a class="table-edit" data-id="' + number +
+                                        '" ><i class="fas fa-edit"></i></a>' + ''
                                 }
                             },
 
@@ -466,7 +500,8 @@
 
                             // Send the updated data to the server using AJAX
                             $.ajax({
-                                url: '{{ url('/savechangesseilist/') }}' + '/' + number, // Replace with your server endpoint
+                                url: '{{ url('/savechangesseilist/') }}' + '/' +
+                                    number, // Replace with your server endpoint
                                 method: 'POST', // You can use POST or PUT based on your server-side implementation
                                 data: updatedData,
                                 headers: {
@@ -488,7 +523,9 @@
                                     // Redraw the DataTable
                                     table.ajax.reload(null, false);
                                     $('#editModal input').val('');
-                                    $('#editModal').modal('hide'); // Assuming you want to hide the modal on success
+                                    $('#editModal').modal(
+                                        'hide'
+                                    ); // Assuming you want to hide the modal on success
 
                                 },
                                 error: function(error) {

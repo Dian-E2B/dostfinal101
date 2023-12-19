@@ -30,9 +30,6 @@ class DashboardController extends Controller
 
             $uniqueYears = $ongoingPROGRAM->pluck('startyear')->unique()->sort()->values(); /* For filter */
 
-
-
-
             /* ScholarshipProgram Filter */
             $ongoingPROGRAMcounter = DB::table('ongoing')
                 ->select('scholarshipprogram')
@@ -66,6 +63,38 @@ class DashboardController extends Controller
                 'datascourses' => $courses->pluck('courseCount'),
             ];
 
+            /* ongcountbyProvinces */ //TODO: to be adjusted.
+            $ongoingProvince = DB::table('seis')
+                ->select('PROVINCE', DB::raw('COUNT(*) as countProvince'))
+                ->groupBy('PROVINCE')
+                ->get();
+            $dataProvinces = [
+                'labelsprovince' => $ongoingProvince->pluck('PROVINCE'),
+                'datasprovince' => $ongoingProvince->pluck('countProvince'),
+            ];
+
+            /* ongcountbyProvinces */
+            $ongoingSchools = DB::table('ongoing')
+                ->select('school', DB::raw('count(*) as countSchool'))
+                ->groupBy('school')
+                ->get();
+            $dataSchoool = [
+                'labelsschool' => $ongoingSchools->pluck('school'),
+                'datasschool' => $ongoingSchools->pluck('countSchool'),
+            ];
+
+
+            $ongoingMovements = DB::table('seis')
+                ->join('scholar_statuses', 'seis.scholar_status_id', '=', 'scholar_statuses.id')
+                ->select('scholar_statuses.status_name', DB::raw('count(*) as countMovement'))
+                ->groupBy('scholar_statuses.status_name')
+                ->get();
+            $dataMovements  = [
+                'labelsmovements' => $ongoingMovements->pluck('status_name'),
+                'datasmovements' => $ongoingMovements->pluck('countMovement'),
+            ];
+
+
 
             return view('dashboard', compact(
                 'ongoingPROGRAM',
@@ -74,6 +103,9 @@ class DashboardController extends Controller
                 'ongoingGender',
                 'ongoingGendercounter',
                 'dataCourses',
+                'dataProvinces',
+                'dataSchoool',
+                'dataMovements',
             ));
         }
     }
@@ -136,6 +168,37 @@ class DashboardController extends Controller
             return response()->json([
                 'ongoingGender' => $ongoingGender,
                 'ongoingGendercounter' => $ongoingGendercounter,
+            ]);
+        } else {
+            // Debugbar::info($ongoingPROGRAMcounter);
+            return response()->json([]);
+        }
+    }
+
+
+    public function getprovincechartyearfilter(Request $request)
+    {
+        $startYear = $request->input('startyearprovince');
+        $endYear = $request->input('endyearprovince');
+
+        if ($startYear) {
+
+            $ongoingProvince = DB::table('seis')
+                ->select('PROVINCE', DB::raw('COUNT(*) as countProvince'))
+                ->groupBy('PROVINCE')
+                ->where('year', $startYear)
+                ->get();
+            $dataProvinces = [
+                'labelsprovince' => $ongoingProvince->pluck('PROVINCE'),
+                'datasprovince' => $ongoingProvince->pluck('countProvince'),
+            ];
+
+
+
+
+
+            return response()->json([
+                'dataProvinces' => $dataProvinces,
             ]);
         } else {
             // Debugbar::info($ongoingPROGRAMcounter);

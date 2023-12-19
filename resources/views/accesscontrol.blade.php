@@ -5,9 +5,19 @@
         <title>DOST XI</title>
         <link href="{{ asset('css/all.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
+        <link
+            href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
+            rel="stylesheet">
         <style>
+            body {
+                background-color: #dddddd;
+                font-family: "Calibri", sans-serif;
+                /*  font-size: 12pt; */
+            }
 
+            .sidebar {
+                font-size: 12pt;
+            }
         </style>
     </head>
 
@@ -36,7 +46,8 @@
                                     <div class="row">
                                         <div class="col-8">
                                             <h5 class="card-title">Scholars</h5>
-                                            <h6 class="card-subtitle text-muted">All scholars that have access to the system
+                                            <h6 class="card-subtitle text-muted">All scholars that have access to the
+                                                system
                                                 after accepting notice of awards.
                                             </h6>
                                         </div>
@@ -48,11 +59,14 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <table id="thisdatatable" style="margin-bottom: 1rem !important;" class="table table-striped table-sm">
+                                    <table id="thisdatatable" style="margin-bottom: 1rem !important;"
+                                        class="table table-striped table-sm">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Fullname</th>
+                                                <th>SCHOLARSHIP BATCH</th>
+                                                <th>NAME</th>
+                                                <th>M/F</th>
                                                 <th class="d-none d-md-table-cell">Email</th>
                                                 <th class="d-none d-md-table-cell">Status</th>
                                                 <th>Action</th>
@@ -105,8 +119,14 @@
                                                         @endif
 
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
                                                         </td>
                                                 @endforeach
                                                 </tr>
@@ -123,9 +143,18 @@
                                                             <strong>{{ $rasp->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account"><i class="fas fa-trash"></i></a>
-                                                            <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check"
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                            <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}"
+                                                                style="color:  black; margin-left: 8px;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Enroll Scholar"><i class="fas fa-user-check"
                                                                     style="color: #006f1c;"></i></a>
                                                         </td>
 
@@ -138,13 +167,20 @@
                                                         <td>{{ $replyslipsjoinscholarongoing1->lname }},
                                                             {{ $replyslipsjoinscholarongoing1->fname }}
                                                             {{ $replyslipsjoinscholarongoing1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholarongoing1->email }}</td>
+                                                        <td class="">{{ $replyslipsjoinscholarongoing1->email }}
+                                                        </td>
                                                         <td style="color:deepskyblue">
                                                             <strong>{{ $replyslipsjoinscholarongoing1->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -155,13 +191,20 @@
                                                         <td>{{ $replyslipsjoinscholarenrolled1->lname }},
                                                             {{ $replyslipsjoinscholarenrolled1->fname }}
                                                             {{ $replyslipsjoinscholarenrolled1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholarenrolled1->email }}</td>
+                                                        <td class="">{{ $replyslipsjoinscholarenrolled1->email }}
+                                                        </td>
                                                         <td style="color:green">
                                                             <strong>{{ $replyslipsjoinscholarenrolled1->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
                                                         </td>
                                                 @endforeach
                                                 </tr>
@@ -172,49 +215,82 @@
                                                         <td>{{ $replyslipsjoinscholardeferred1->lname }},
                                                             {{ $replyslipsjoinscholardeferred1->fname }}
                                                             {{ $replyslipsjoinscholardeferred1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholardeferred1->email }}</td>
+                                                        <td class="">{{ $replyslipsjoinscholardeferred1->email }}
+                                                        </td>
                                                         <td style="color:green">
                                                             <strong>{{ $replyslipsjoinscholardeferred1->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
 
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                            @elseif(request()->is('replyslipsjoinscholarLOA'))
+                                            @elseif(request()->is(''))
                                                 @foreach ($replyslipsjoinscholarLOA as $replyslipsjoinscholarLOA1)
                                                     <tr>
                                                         <td>{{ $replyslipsjoinscholarLOA1->id }}</td>
                                                         <td>{{ $replyslipsjoinscholarLOA1->lname }},
                                                             {{ $replyslipsjoinscholarLOA1->fname }}
                                                             {{ $replyslipsjoinscholarLOA1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholarLOA1->email }}</td>
+                                                        <td class="">{{ $replyslipsjoinscholarLOA1->email }}
+                                                        </td>
                                                         <td style="color:green">
                                                             <strong>{{ $replyslipsjoinscholarLOA1->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                            @elseif(request()->is('replyslipsjoinscholarterminated'))
-                                                @foreach ($replyslipsjoinscholarterminated as $replyslipsjoinscholarterminated1)
+                                            @elseif(request()->is('accesscontrolterminated'))
+                                                @foreach ($seisterminated as $seisterminated1)
                                                     <tr>
-                                                        <td>{{ $replyslipsjoinscholarterminated1->id }}</td>
-                                                        <td>{{ $replyslipsjoinscholarterminated1->lname }},
-                                                            {{ $replyslipsjoinscholarterminated1->fname }}
-                                                            {{ $replyslipsjoinscholarterminated1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholarterminated1->email }}</td>
+                                                        <td>{{ $seisterminated1->id }}</td>
+                                                        <td>{{ $seisterminated1->year }}</td>
+                                                        <td>{{ $seisterminated1->lname }},
+                                                            {{ $seisterminated1->fname }}
+                                                            {{ $seisterminated1->mname }}</td>
+                                                        <td>
+                                                            @if ($seisterminated1->gender_id == 1)
+                                                                F
+                                                            @else
+                                                                M
+                                                            @endif
+                                                            {{--  {{ $seisterminated1->gender_id }} --}}
+                                                        </td>
+                                                        <td class="">
+                                                            {{ $seisterminated1->email }}</td>
                                                         <td style="color:green">
-                                                            <strong>{{ $replyslipsjoinscholarterminated1->status_name }}</strong>
+                                                            <strong>{{ $seisterminated1->status_name }}</strong>
                                                         </td>
                                                         <td class="table-action">
-                                                            <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
-                                                            <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account	"><i class="fas fa-trash"></i></a>
+                                                            <a href="#" style="color: black;"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Temporary lock account	"><i
+                                                                    class="fad fa-user-lock"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                            <a style="color: red; margin-left: 8px;" href="#"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Permanently delete account	"><i
+                                                                    class="fas fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -241,7 +317,9 @@
     <script src="{{ asset('js/all.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+    <script
+        src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
+    </script>
     <script>
         jQuery(document).ready(function($) {
             var table = $('#thisdatatable').DataTable({});

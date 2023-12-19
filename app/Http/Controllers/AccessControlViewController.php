@@ -6,7 +6,7 @@ use App\Models\Ongoing;
 use App\Models\Replyslips;
 use App\Models\Sei;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\alert;
 
 class AccessControlViewController extends Controller
@@ -112,12 +112,17 @@ class AccessControlViewController extends Controller
     {
 
         try {
-            $replyslipsjoinscholarterminated = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            /* $replyslipsjoinscholarterminated = Replyslips::join('sei', 'replyslips.scholar_id', '=', 'sei.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->where('scholar_status_id', '=', 6) // Add your where condition here
+                ->get(); */
+            $seisterminated = DB::table('seis')
+                ->join('scholar_statuses', 'seis.scholar_status_id', '=', 'scholar_statuses.id')
+                ->select('seis.*', 'scholar_statuses.status_name')
+                ->where('seis.scholar_status_id', 6)
                 ->get();
-            return view('accesscontrol', compact('replyslipsjoinscholarterminated'));
+            return view('accesscontrol', compact('seisterminated'));
         } catch (\Exception $e) {
             flash()->addError('Empty Records');
             return redirect()->back();

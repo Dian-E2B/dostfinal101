@@ -53,7 +53,7 @@
                         <div class="col-6">{{-- Program Portion --}}
                             <div id="programportioncounter-container" class="card programportioncard w-100 p-1"
                                 style="">
-                                <canvas id="myPieChart" width="" height="90"></canvas>
+                                <canvas id="myPieChart" width="" style="height: 90px;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         </div>
                         <div class="col-6">{{-- Gender Portion --}}
                             <div class="card genderportioncard w-100 p-1" style="">
-                                <canvas id="myGenderPie" width="" height="90"></canvas>
+                                <canvas id="myGenderPie" width=""style="height: 90px;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -124,9 +124,8 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
+
         <div class="row gy-0">
             <div class="col-lg-12">
                 <div class="card" style="margin-top: 0px !important;">
@@ -134,14 +133,64 @@
                 </div>
             </div>
         </div>
-        <div class="row gy-0">
-            <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="">
+                    <div class="card">
+                        <div class="col-3">
+                            <div class="" style="display: flex; align-items: start; ">
+                                <button type="button" class="btn btn-light dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                                <div class="dropdown-menu ">
+                                    <div style="display: flex; max-width: 3.8cm; margin: auto;">
+                                        <form id="provinceyearform"
+                                            action="{{ route('getprovincechartyearfilter') }}">
+                                            @csrf
+                                            <div class="row g-2 selectportion">
+                                                <div class="col">
+                                                    <select name="startyearprovince" class="form-select">
+                                                        @foreach ($uniqueYears as $uyear)
+                                                            <option value="{{ $uyear }}">
+                                                                {{ $uyear }}-{{ $uyear + 1 }}
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <span style="padding: 10px;">
+                                                <button class="btn" type="submit">Filter</button>
+                                            </span>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <canvas style="" id="myProvincesChart" width="" height="200"></canvas>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="card coursecard">
-                    <canvas style="" id="myCoursesChart" width="" height="350"></canvas>
+                    <canvas style="" id="myMovementChart" width="500" height="200"></canvas>
                 </div>
             </div>
         </div>
-
+        <div class="row gy-0">
+            <div class="col-sm-12">
+                <div class="card coursecard">
+                    <canvas style="" id="mySchoolChart" width="500" height="200"></canvas>
+                </div>
+            </div>
+        </div>
 
 
     </div>

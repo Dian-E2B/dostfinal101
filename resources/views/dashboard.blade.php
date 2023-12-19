@@ -21,7 +21,7 @@
 
         body {
             font-family: "Calibri", sans-serif;
-            font-size: 12pt;
+            /*   font-size: 12pt; */
         }
 
         .sidebar {
@@ -66,33 +66,27 @@
 
     <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div class="wrapper">
-
-
             @include('layouts.sidebar') {{-- SIDEBAR START --}}
-
-
             <div class="main">
                 @include('layouts.header') {{-- HEADER START --}}
-
                 @include('dashboardbody')
             </div>
         </div>
     </body>
     {{-- CHART TOGGLING --}}
     <script src="{{ asset('js/all.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.1/chart.min.js"
+        integrity="sha512-2uu1jrAmW1A+SMwih5DAPqzFS2PI+OPw79OVLS4NJ6jGHQ/GmIVDDlWwz4KLO8DnoUmYdU8hTtFcp8je6zxbCg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"
-        integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g=="
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.js"
-        integrity="sha512-qeclqxc+2KW7GtbmHcj/Ev5eBoYpPnuAcPqusYRIfvaC9OWHlDwu1BrIVPYvfNDG+SRIRiPIokiSvhlLJXDqsw=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"></script>
 
 
     <script>
+        Chart.register(ChartDataLabels);
         var ongoingPROGRAM;
         var startYears;
         var scholarshipPrograms;
@@ -137,6 +131,16 @@
                 datasets: datasets,
             },
             options: {
+                animation: {
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 0.4,
+                        to: 0,
+                        loop: true
+                    }
+                },
+                responsive: true,
 
                 scales: {
                     x: {
@@ -145,11 +149,6 @@
                     },
                     y: {
                         beginAtZero: !0,
-                    },
-                },
-                elements: {
-                    line: {
-                        tension: 0.4,
                     },
                 },
                 legend: {
@@ -172,14 +171,15 @@
                         intersect: !1,
                     },
                     zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
                         zoom: {
-                            enabled: true,
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            },
                             mode: 'x',
-                        },
+                        }
                     },
                 },
             },
@@ -216,16 +216,17 @@
                 }]
             },
             options: {
+                maintainAspectRatio: false,
                 animation: {
-                    duration: 1500, // duration of the animation in milliseconds
-                    easing: 'easeOutQuart', // easing function to use
-                    loop: true,
+                    duration: 1500,
+                    easing: 'linear',
+
                 },
-                responsive: true,
-                legend: {
-                    position: 'left',
-                },
+
                 plugins: {
+                    legend: {
+                        position: 'left',
+                    },
                     datalabels: {
                         formatter: (value, ctxPROGRAMPIE) => {
                             let sum = 0;
@@ -233,10 +234,10 @@
                             dataArr.map(data => {
                                 sum += data;
                             });
-                            let percentage = (value * 100 / sum).toFixed() + "%";
+                            let percentage = (value * 100 / sum).toFixed(1) + "%";
                             return percentage;
                         },
-                        color: 'black', // change this to your preferred color
+                        color: 'green', // change this to your preferred color
                         font: {
                             weight: 'bold',
                             size: 11.5 // change this to your preferred font size
@@ -246,6 +247,7 @@
 
             },
         });
+
 
         /* Start GenderChart */
         ongoingGender = @json($ongoingGender);
@@ -284,9 +286,13 @@
             },
             options: {
                 animation: {
-                    duration: 1500, // duration of the animation in milliseconds
-                    easing: 'easeInOutBounce', // easing function to use
-
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 0.4,
+                        to: 0,
+                        loop: true
+                    }
                 },
 
                 scales: {
@@ -296,18 +302,6 @@
                     },
                     y: {
                         beginAtZero: !0,
-                    },
-                },
-                elements: {
-                    line: {
-                        tension: 0.4,
-                    },
-                },
-                legend: {
-                    display: !0,
-                    labels: {
-                        boxWidth: 20,
-                        usePointStyle: !0,
                     },
                 },
                 plugins: {
@@ -330,6 +324,13 @@
                         zoom: {
                             enabled: true,
                             mode: 'x',
+                        },
+                    },
+                    legend: {
+                        display: !0,
+                        labels: {
+                            boxWidth: 20,
+                            usePointStyle: !0,
                         },
                     },
                 },
@@ -363,24 +364,29 @@
                 }]
             },
             options: {
+
+
+                maintainAspectRatio: false,
                 animation: {
                     duration: 1500, // duration of the animation in milliseconds
-                    easing: 'easeInOutBounce', // easing function to use
+                    easing: 'linear', // easing function to use
 
                 },
                 responsive: true,
-                legend: {
-                    position: 'left',
-                },
+
                 plugins: {
+                    legend: {
+                        position: 'left',
+                    },
                     datalabels: {
+
                         formatter: (value, ctxgenderproportion) => {
                             let sum = 0;
                             let dataArr = ctxgenderproportion.chart.data.datasets[0].data;
                             dataArr.map(data => {
                                 sum += data;
                             });
-                            let percentage = (value * 100 / sum).toFixed() + "%";
+                            let percentage = (value * 100 / sum).toFixed(1) + "%";
                             return percentage;
                         },
                         color: 'black', // change this to your preferred color
@@ -392,13 +398,14 @@
             },
         });
 
+        /* Start Of Course Chart */
         var ctxcourse = document.getElementById('myCoursesChart').getContext('2d');
         var myCoursesChart = new Chart(ctxcourse, {
             type: 'bar',
             data: {
                 labels: @json($dataCourses['labelscourses']),
                 datasets: [{
-                    label: 'Scholarship Courses Availed',
+                    label: 'Scholarship Courses Currently Availed ',
                     data: @json($dataCourses['datascourses']),
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -406,10 +413,20 @@
                 }]
             },
             options: {
-                animation: {
-                    duration: 2000, // duration of the animation in milliseconds
-                    easing: 'easeInOutBounce', // easing function to use
+                onClick: function(event, elements) {
+                    // Check if a bar was clicked
+                    if (elements.length > 0) {
+                        // Access the clicked bar's data
+                        var clickedLabel = myCoursesChart.data.labels[elements[0].index];
+                        var clickedValue = myCoursesChart.data.datasets[0].data[elements[0].index];
 
+                        // Your custom logic when a bar is clicked
+                        console.log('Clicked:', clickedLabel, 'with value:', clickedValue);
+                    }
+                },
+                animation: {
+                    duration: 5000,
+                    easing: 'easeOutQuart',
                 },
                 legend: {
                     labels: {
@@ -421,8 +438,48 @@
             },
         });
 
+        /* ongoingProvinces chart */
+        var ctxprovinces = document.getElementById('myProvincesChart').getContext('2d');
+        var provincesColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)',
+            'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'
+        ]; // Add more colors as needed
+        window.myProvinceChart = new Chart(ctxprovinces, {
+            type: 'doughnut',
+            data: {
+                labels: @json($dataProvinces['labelsprovince']),
+                datasets: [{
+                    label: @json($dataProvinces['labelsprovince']),
+                    data: @json($dataProvinces['datasprovince']),
+                    backgroundColor: provincesColors,
+
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+                plugins: {
+                    datalabels: {
+                        color: 'black',
+                        formatter: (value) => {
+                            return value + '%';
+                        },
+                    },
+                    legend: {
+                        position: 'left',
+                    },
+                },
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 5000,
+                    easing: 'easeOutQuart',
+                },
+
+            },
+        });
+
+
         document.addEventListener("DOMContentLoaded", function(event) {
-            /* Filter Submit */
+            /* Filter Submit Program */
             $('#programyearform').on('submit', function(e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -487,6 +544,7 @@
                 });
             });
 
+            /* Filter Submit Gender */
             $('#genderyearform').on('submit', function(e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -529,7 +587,7 @@
                     }
 
                     if (window.myGenderPieChart) {
-                        myGenderChart.destroy();
+
                         var dataGender = response
                             .ongoingGendercounter; // Use dataGender instead of dataPROGRAM
                         var labelsGender = [];
@@ -550,6 +608,115 @@
                     console.error('Error fetching or processing data:', error);
                 });
             });
+
+
+
+            $('#provinceyearform').on('submit', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                $.ajax({
+                    url: $this.prop('action'),
+                    method: 'POST',
+                    data: $this.serialize(),
+                }).done(function(response) {
+                    /*  console.log(response); */
+                    //Destroy the existing chart
+                    if (window.myProvinceChart && response.dataProvinces.labelsprovince && response
+                        .dataProvinces.datasprovince) {
+                        // Update the chart data
+                        myProvinceChart.data.labels = response.dataProvinces.labelsprovince;
+                        myProvinceChart.data.datasets[0].data = response.dataProvinces
+                            .datasprovince;
+
+                        // Update the chart
+                        myProvinceChart.update();
+                    }
+
+
+
+                }).catch(error => {
+                    console.error('Error fetching or processing data:', error);
+                });
+            });
+
+        });
+
+
+
+        /* ongoingSchools */
+        var ctxschools = document.getElementById('mySchoolChart').getContext('2d');
+        /*  var schoolsColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)',
+             'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'
+         ]; // Add more colors as needed */
+        var mySchoolChart = new Chart(ctxschools, {
+            type: 'doughnut',
+            data: {
+                labels: @json($dataSchoool['labelsschool']),
+                datasets: [{
+                    label: @json($dataSchoool['labelsschool']),
+                    data: @json($dataSchoool['datasschool']),
+
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+                plugins: {
+                    datalabels: {
+                        color: 'black',
+                        formatter: (value) => {
+                            return value + '%';
+                        },
+                    },
+                    legend: {
+                        position: 'left',
+                    },
+                },
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 5000,
+                    easing: 'easeOutQuart',
+                },
+
+            },
+        });
+
+        /* ongoingMovement */
+        var ctxmovement = document.getElementById('myMovementChart').getContext('2d');
+        /*  var schoolsColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)',
+             'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'
+         ]; // Add more colors as needed */
+        var myMovementChart = new Chart(ctxmovement, {
+            type: 'doughnut',
+            data: {
+
+                labels: @json($dataMovements['labelsmovements']),
+                datasets: [{
+                    label: @json($dataMovements['labelsmovements']),
+                    data: @json($dataMovements['datasmovements']),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+                plugins: {
+                    datalabels: {
+                        color: 'black',
+                        formatter: (value) => {
+                            return value + '%';
+                        },
+                    },
+                    legend: {
+                        position: 'left',
+                    },
+                },
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 5000,
+                    easing: 'easeOutQuart',
+                },
+
+            },
         });
     </script>
 
