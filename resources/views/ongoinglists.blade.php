@@ -124,8 +124,8 @@
                                     style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>StartYear</th>
-                                            <th>EndYear</th>
+                                            <th>Startyear</th>
+                                            <th>Endyear</th>
                                             <th>Semester</th>
                                             <th>Total Records</th>
                                             <th class="viewth" style="align-items: center !important;">View</th>
@@ -182,7 +182,7 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{{ route('getongoinglistgroupsajax') }}', // Adjust this route to your actual route
-                    type: 'POST',
+                    type: 'GET',
                     columns: [{
                             data: 'startyear',
                             name: 'startyear',
@@ -228,6 +228,20 @@
                         }
 
                     ],
+                    columnDefs: [{
+                        targets: 2, // index of the 'semester' column
+                        render: function(data, type, row, meta) {
+                            // Map the semester value to the corresponding name
+                            var semesterNames = {
+                                1: '1st Semester',
+                                2: '2nd Semester',
+                                3: 'Summer'
+                            };
+
+                            // Check if the semester value is in the map, otherwise, use the original value
+                            return semesterNames[data] !== undefined ? semesterNames[data] : data;
+                        }
+                    }],
 
                     fixedHeader: {
                         header: true,

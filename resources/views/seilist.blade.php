@@ -9,9 +9,7 @@
         <link href="{{ asset('css/all.css') }}">
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <link
-            href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
-            rel="stylesheet">
+        <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <style>
             .form-control {
                 color: #000000 !important;
@@ -98,15 +96,44 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
+
+
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem; !important;">
                     <div style="background-color: #dddddd" class="container-fluid p-0">
 
-
                         <div class="card    ">
                             <div class="card-body">
+
+                                {{-- DROPDOWN FILTER --}}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-4">
+                                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-filter"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <div style="">
+                                                    <form id="yearForm" method="POST" action="{{ route('seilistviewajax') }}">
+                                                        @csrf
+                                                        <div class="row" style="max-width: 3.9cm; margin: auto;">
+                                                            <select style="" name="startYear" id="" class="form-select">
+                                                                @foreach ($years as $year)
+                                                                    <option style="" value=" {{ $year }}"> {{ $year }} &nbsp;- &nbsp;{{ $year + 1 }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                </div>
+                                                <button class="btn" type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
                                 {{-- TABLE --}}
-                                <table id="thisdatatable" cellspacing="0" class="table-striped display nowrap"
-                                    style="width:100%;">
+                                <table id="thisdatatable" cellspacing="0" class="table-striped display nowrap" style="width:100%;">
 
                                     <thead>
                                         <tr>
@@ -166,23 +193,19 @@
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="editModalLabel" style="font-weight: bold">Scholar Details
                             </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>ID: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField"
-                                        name="IdField" disabled></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField" name="IdField" disabled></div>
                                 <div class="col-2 customlabel"> <label>App ID: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField"
-                                        name="AppIDField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField" name="AppIDField"></div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Email: </label></div>
-                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField"
-                                        name="EmailField"></div>
+                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField" name="EmailField"></div>
                                 <div class="col-2 customlabel"> <label>Program: </label></div>
                                 <div class="col-4">
                                     <select name="ProgramField" id="ProgramField" class="form-control form-control-sm">
@@ -195,8 +218,7 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Surname: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField"
-                                        name="SurnameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField" name="SurnameField"></div>
                                 <div class="col-2 customlabel"> <label>Strand: </label></div>
                                 <div class="col-4">
                                     <select name="StrandField" id="StrandField" class="form-control form-control-sm">
@@ -209,20 +231,17 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Firstname: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField"
-                                        name="FirstnameField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField" name="FirstnameField"></div>
 
                                 <div class="col-2 customlabel"> <label>Contact: </label></div>
                                 <div class="col-4">
-                                    <input class=" form-control   form-control-sm" id="ContactField"
-                                        name="ContactField">
+                                    <input class=" form-control   form-control-sm" id="ContactField" name="ContactField">
                                 </div>
                             </div>
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Middlename: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm"
-                                        id="MiddlenameField" name="MiddlenameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="MiddlenameField" name="MiddlenameField"></div>
                                 <div class="col-2 customlabel"> <label>Gender: </label></div>
                                 <div class="col-4">
                                     <select name="GenderField" id="GenderField" class="form-control form-control-sm">
@@ -242,8 +261,7 @@
 
                             {{-- FOOTER --}}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" id="saveChangesBtn" class="btn btn-primary">Save
                                     changes</button>
                             </div>
@@ -255,14 +273,10 @@
             </div>
 
             <script src="{{ asset('js/all.js') }}"></script>
-            <script
-                src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
-            </script>
+            <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
             <script>
                 jQuery(document).ready(function($) {
-
                     var table = $('#thisdatatable').DataTable({
-
                         processing: true,
                         serverSide: true,
                         pageLength: 100,
@@ -536,6 +550,12 @@
 
                     });
 
+
+                    $('#yearForm').on('submit', function(e) {
+                        e.preventDefault();
+                        var startYear = $(this).find('select[name="startYear"]').val();
+                        table.ajax.url("seilistviewajax?startYear=" + startYear).load();
+                    });
 
 
                 });

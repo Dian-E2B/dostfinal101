@@ -1,6 +1,61 @@
 <main class="content" style="padding: 0.5rem 0.5rem 0.5rem;">
     <div class="container-fluid">
 
+
+        <div class="row gx-2">
+            <div class="col-1">
+                <div class="card">
+
+
+                    {{-- <div class="" style="display: flex; align-items: start; "> --}} {{-- FILTER ALL BUTTON --}}
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <div class="dropdown-menu ">
+                        <div style="display: flex; max-width: 3.9cm; margin: auto;">
+                            <form id="allfilterform" method="post" action="{{ route('getallyearfilter') }}">
+                                @csrf
+                                <div class="row g-2 selectportion">
+                                    <div class="col">
+                                        <select name="startyear" class="form-select">
+                                            @foreach (range(2020, date('Y')) as $uyear)
+                                                <option value="{{ $uyear }}">
+                                                    {{ $uyear }}-{{ $uyear + 1 }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col">
+                                        <select name="endyear" class="form-select">
+                                            @foreach (range(2020, date('Y')) as $uyear)
+                                                <option value="{{ $uyear }}">
+                                                    {{ $uyear }}-{{ $uyear + 1 }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <span style="padding: 10px;">
+                                    <button class="btn" type="submit">Filter</button>
+                                </span>
+                            </form>
+                        </div>
+                        {{--   </div> --}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-6 mt-3">
+                @if ($startYear)
+                    <h5>{{ $startYear }}-{{ $startYear + 1 }} to {{ $endYear }}- {{ $endYear + 1 }}</h5>
+                @endif
+            </div>
+        </div>
+
         {{-- PROGRAM CHART SECTION --}}
         <div class="row gx-2">
             <div class="col-sm-6 programcard">
@@ -120,7 +175,8 @@
                         </div>
                     </div>
                     <div>
-                        <canvas style="margin-left: 10px;" id="myGenderChart" width="" height="150"></canvas>
+                        <canvas style="margin-left: 10px;" id="myGenderChart" width=""
+                            height="150"></canvas>
                     </div>
                 </div>
             </div>
@@ -137,7 +193,7 @@
             <div class="col-lg-6">
                 <div class="">
                     <div class="card">
-                        <div class="col-3">
+                        {{--  <div class="col-3">
                             <div class="" style="display: flex; align-items: start; ">
                                 <button type="button" class="btn btn-light dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,7 +222,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-11">
                             <canvas style="" id="myProvincesChart" width="" height="200"></canvas>
 
@@ -179,14 +235,14 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card coursecard">
+                <div class="card ">
                     <canvas style="" id="myMovementChart" width="500" height="200"></canvas>
                 </div>
             </div>
         </div>
-        <div class="row gy-0">
+        <div class="row">
             <div class="col-sm-12">
-                <div class="card coursecard">
+                <div class="card">
                     <canvas style="" id="mySchoolChart" width="500" height="200"></canvas>
                 </div>
             </div>

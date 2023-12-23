@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
-    public function dashboardview()
+    public function dashboardview(Request $request)
     {
         if (empty($startYear) && empty($endYear)) {
+            $startYear = $request->input('startyear');
             /* ScholarshipProgram */
             $ongoingPROGRAM = DB::table('ongoing')
                 ->select('startyear', 'scholarshipprogram', DB::raw('COUNT(*) as scholarshipprogramcount'))
@@ -106,7 +107,124 @@ class DashboardController extends Controller
                 'dataProvinces',
                 'dataSchoool',
                 'dataMovements',
+                'startYear',
             ));
+        }
+    }
+
+
+    public function getallyearfilter(Request $request)
+    {
+        $startYear = $request->input('startyear');
+        $endYear = $request->input('endyear');
+
+        if ($startYear) {
+
+
+            $ongoingProvince = DB::table('seis')
+                ->select('PROVINCE', DB::raw('COUNT(*) as countProvince'))
+                ->groupBy('PROVINCE')
+                ->where('year', $startYear)
+                ->get();
+            $dataProvinces = [
+                'labelsprovince' => $ongoingProvince->pluck('PROVINCE'),
+                'datasprovince' => $ongoingProvince->pluck('countProvince'),
+            ];
+
+            $ongoingPROGRAM = DB::table('ongoing')
+                ->select('startyear', 'scholarshipprogram', DB::raw('COUNT(*) as scholarshipprogramcount'))
+                ->whereNotNull('scholarshipprogram')
+                ->whereBetween('startyear', [$startYear, $endYear])
+                ->groupBy('startyear', 'scholarshipprogram')
+                ->get();
+
+            $uniqueYears = $ongoingPROGRAM->pluck('startyear')->unique()->sort()->values(); /* For filter */
+
+            $ongoingPROGRAMcounter = DB::table('ongoing')
+                ->select('scholarshipprogram')
+                ->selectRaw('COUNT(*) as scholarshipprogramcount')
+                ->whereIn('scholarshipprogram', ['MERIT', 'RA 10612', 'RA 7687'])
+                ->whereBetween('startyear', [$startYear, $endYear])
+                ->groupBy('scholarshipprogram')
+                ->get();
+
+            $ongoingGender = DB::table('ongoing')
+                ->select('startyear', 'MF', DB::raw('COUNT(*) as MFcount'))
+                ->whereNotNull('MF')
+                ->whereBetween('startyear', [$startYear, $endYear])
+                ->groupBy('startyear', 'MF')
+                ->get();
+
+            $ongoingGendercounter = DB::table('ongoing')
+                ->select('MF')
+                ->selectRaw('COUNT(*) as MFcount')
+                ->whereIn('MF', ['F', 'M'])
+                ->whereBetween('startyear', [$startYear, $endYear])
+                ->groupBy('MF')
+                ->get();
+
+
+            $ongoingProvince = DB::table('seis')
+                ->select('PROVINCE', DB::raw('COUNT(*) as countProvince'))
+                ->groupBy('PROVINCE')
+                ->where('year', $startYear)
+                ->get();
+            $dataProvinces = [
+                'labelsprovince' => $ongoingProvince->pluck('PROVINCE'),
+                'datasprovince' => $ongoingProvince->pluck('countProvince'),
+            ];
+
+
+            $courses = Ongoing::select('course', DB::raw('count(*) as courseCount'))
+                ->whereNotNull('course')
+                ->where('course', '<>', '')
+                ->where('startyear', $startYear)
+                ->groupBy('course')
+                ->get();
+            $dataCourses = [
+                'labelscourses' => $courses->pluck('course'),
+                'datascourses' => $courses->pluck('courseCount'),
+            ];
+
+            $ongoingSchools = DB::table('ongoing')
+                ->select('school', DB::raw('count(*) as countSchool'))
+                ->where('startyear', $startYear)
+                ->groupBy('school')
+                ->get();
+            $dataSchoool = [
+                'labelsschool' => $ongoingSchools->pluck('school'),
+                'datasschool' => $ongoingSchools->pluck('countSchool'),
+            ];
+
+
+            $ongoingMovements = DB::table('seis')
+                ->join('scholar_statuses', 'seis.scholar_status_id', '=', 'scholar_statuses.id')
+                ->select('scholar_statuses.status_name', DB::raw('count(*) as countMovement'))
+                ->where('year', $startYear)
+                ->groupBy('scholar_statuses.status_name')
+                ->get();
+            $dataMovements  = [
+                'labelsmovements' => $ongoingMovements->pluck('status_name'),
+                'datasmovements' => $ongoingMovements->pluck('countMovement'),
+            ];
+
+            return view('dashboard', compact(
+                'ongoingPROGRAM',
+                'dataProvinces',
+                'uniqueYears',
+                'ongoingPROGRAMcounter',
+                'ongoingGender',
+                'ongoingGendercounter',
+                'dataCourses',
+                'dataProvinces',
+                'dataSchoool',
+                'dataMovements',
+                'startYear',
+                'endYear',
+            ));
+        } else {
+            // Debugbar::info($ongoingPROGRAMcounter);
+            return response()->json([]);
         }
     }
 

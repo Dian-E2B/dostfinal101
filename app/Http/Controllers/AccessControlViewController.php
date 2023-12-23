@@ -15,12 +15,17 @@ class AccessControlViewController extends Controller
     public function index()
     {
         try {
-            $replyslipsjoinscholar = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
+            /* $replyslipsjoinscholar = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
                 ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
+                ->get(); */
+
+            $seisallstatus = DB::table('seis')
+                ->join('scholar_statuses', 'seis.scholar_status_id', '=', 'scholar_statuses.id')
+                ->select('seis.*', 'scholar_statuses.status_name')
                 ->get();
 
-            return view('accesscontrol', compact('replyslipsjoinscholar'));
+            return view('accesscontrol', compact('seisallstatus'));
         } catch (\Exception $e) {
 
             // flash()->addError('Empty Records' . $e->getMessage());

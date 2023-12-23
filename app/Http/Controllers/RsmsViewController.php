@@ -47,7 +47,7 @@ class RsmsViewController extends Controller //OR ONGOING
 
     public function getongoinglistgroupsajax(Request $request)
     {
-        $results = DB::select("SELECT * FROM ongoing_monitoring ORDER BY startyear DESC;");
+        $results = DB::select("SELECT * FROM ongoing_monitoring ORDER BY startyear DESC, semester ASC;");
         return DataTables::of($results)->make(true);
     }
 

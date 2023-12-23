@@ -655,7 +655,6 @@
                 datasets: [{
                     label: @json($dataSchoool['labelsschool']),
                     data: @json($dataSchoool['datasschool']),
-
                     borderWidth: 2
                 }]
             },

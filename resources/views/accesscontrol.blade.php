@@ -77,44 +77,53 @@
 
                                             @if (request()->is('accesscontrol'))
 
-                                                @foreach ($replyslipsjoinscholar as $replyslipsjoinscholar1)
+                                                @foreach ($seisallstatus as $seisallstatus1)
                                                     <tr>
+                                                        <td>{{ $seisallstatus1->id }}</td>
+                                                        <td>{{ $seisallstatus1->year }}</td>
+                                                        <td>{{ $seisallstatus1->year }}</td>
+                                                        <td>{{ $seisallstatus1->lname }},
+                                                            {{ $seisallstatus1->fname }}
+                                                            {{ $seisallstatus1->mname }} </td>
+                                                        <td>
+                                                            @if ($seisallstatus1->gender_id == 1)
+                                                                F
+                                                            @else
+                                                                M
+                                                            @endif
+                                                            {{--  {{ $seisterminated1->gender_id }} --}}
+                                                        </td>
+                                                        <td class="">{{ $seisallstatus1->email }}</td>
 
-                                                        <td>{{ $replyslipsjoinscholar1->sei_id }}</td>
-                                                        <td>{{ $replyslipsjoinscholar1->lname }},
-                                                            {{ $replyslipsjoinscholar1->fname }}
-                                                            {{ $replyslipsjoinscholar1->mname }} </td>
-                                                        <td class="">{{ $replyslipsjoinscholar1->email }}</td>
-
-                                                        @if ($replyslipsjoinscholar1->scholar_status_id == 1)
+                                                        @if ($seisallstatus1->scholar_status_id == 1)
                                                             {{-- Pending --}}
                                                             <td style="color:blue">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
-                                                        @elseif ($replyslipsjoinscholar1->scholar_status_id == 2)
+                                                        @elseif ($seisallstatus1->scholar_status_id == 2)
                                                             {{-- Ongoing --}}
                                                             <td style="color:deepskyblue">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
-                                                        @elseif ($replyslipsjoinscholar1->scholar_status_id == 3)
+                                                        @elseif ($seisallstatus1->scholar_status_id == 3)
                                                             {{-- Enrolled --}}
                                                             <td style="color:green">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
-                                                        @elseif ($replyslipsjoinscholar1->scholar_status_id == 4)
+                                                        @elseif ($seisallstatus1->scholar_status_id == 4)
                                                             {{-- Deferred --}}
                                                             <td style="color:orange">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
-                                                        @elseif ($replyslipsjoinscholar1->scholar_status_id == 5)
+                                                        @elseif ($seisallstatus1->scholar_status_id == 5)
                                                             {{-- LOA --}}
                                                             <td style="color:red">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
-                                                        @elseif ($replyslipsjoinscholar1->scholar_status_id == 6)
+                                                        @elseif ($seisallstatus1->scholar_status_id == 6)
                                                             {{-- Terminate --}}
                                                             <td style="color:black">
-                                                                <strong>{{ $replyslipsjoinscholar1->status_name }}</strong>
+                                                                <strong>{{ $seisallstatus1->status_name }}</strong>
                                                             </td>
                                                         @endif
 

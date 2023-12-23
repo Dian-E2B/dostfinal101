@@ -21,23 +21,38 @@ class SeiViewController extends Controller
     //SEILIST1
     public function seiqualifierview()
     {
-        return view('seilist');
+        $years = Sei::groupBy('year')->pluck('year');
+        return view('seilist', compact('years'));
     }
 
-    public function seiqualifierviewajax()
+    public function seiqualifierviewajax(Request $request)
     {
-
-        $seis = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
-            ->join('genders', 'seis.gender_id', '=', 'genders.id')
-            ->where(function ($query) {
-                $query->whereNull('lacking')
-                    ->orWhere('lacking', '=', '');
-            })
-            ->select('seis.*', 'programs.progname', 'genders.gendername')
-            ->get();
-
-        Debugbar::info($seis);
-        return DataTables::of($seis)->make(true);
+        $startYear = $request->input('startYear');
+        if (empty($startYear)) {
+            $seis = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
+                ->join('genders', 'seis.gender_id', '=', 'genders.id')
+                ->where(function ($query) {
+                    $query->whereNull('lacking')
+                        ->orWhere('lacking', '=', '');
+                })
+                ->select('seis.*', 'programs.progname', 'genders.gendername')
+                ->get();
+            Debugbar::info($seis);
+            return DataTables::of($seis)->make(true);
+            // return response()->json(['seis' => $seis]);
+        } else {
+            $seis = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
+                ->join('genders', 'seis.gender_id', '=', 'genders.id')
+                ->where('year', $startYear)
+                ->where(function ($query) {
+                    $query->whereNull('lacking')
+                        ->orWhere('lacking', '=', '');
+                })
+                ->select('seis.*', 'programs.progname', 'genders.gendername')
+                ->get();
+            Debugbar::info($seis);
+            return DataTables::of($seis)->make(true);
+        }
     }
 
 
@@ -47,36 +62,26 @@ class SeiViewController extends Controller
         if (!$result) {
             return response()->json(['error' => 'Record not found'], 404);
         }
-
         return response()->json($result);
     }
 
     public function SaveChangesSeilist(Request $request, $number)
     {
-
         $record = Sei::where('id', $number)->first();
-
         if (!$record) {
             return response()->json(['error' => 'Record not found'], 404);
         }
-
-        // Update the record with the new data
-        $record->update($request->all());
-
-        // You can return a response if needed
-        return response()->json(['message' => 'Changes saved successfully']);
+        $record->update($request->all()); // Update the record with the new data
+        return response()->json(['message' => 'Changes saved successfully']); // You can return a response if needed
     }
-
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view(view: 'seilist');
     }
 
-
     public function store(Request $request)
     {
-
         try {
 
             Excel::import(new SeiImport(), $request->file(key: "excel_file"));
@@ -90,18 +95,14 @@ class SeiViewController extends Controller
         }
     }
 
-
     //SEILIST2
     public function seipotientalqualifierview()
     {
         return view('seilist2');
     }
 
-
     public function seilistviewajaxpotential()
     {
-
-
         $seis2 = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
             ->join('genders', 'seis.gender_id', '=', 'genders.id')
             ->where(function ($query) {
@@ -111,7 +112,8 @@ class SeiViewController extends Controller
             ->select('seis.*', 'programs.progname', 'genders.gendername', DB::raw('COALESCE(lacking, "") as lacking'))
             ->get();
         Debugbar::info($seis2);
-        return DataTables::of($seis2)->make(true);
+        return response()->json(['seis2' => $seis2]);
+        //  return DataTables::of($seis2)->make(true);
     }
 
     public function edit(Request $request)
@@ -124,7 +126,6 @@ class SeiViewController extends Controller
         $status = Scholar_status::all();
         $program = Program::all();
         $gender = Gender::all();
-
 
         return view('seilist2editpage', compact('scholar', 'sei', 'status', 'program', 'gender'));
     }
@@ -149,8 +150,6 @@ class SeiViewController extends Controller
                 'bday' => $request->input('schol_bday'),
                 'scholar_status_id' => $request->input('scholar_status_id'),
             ]);
-
-
 
             $sei->update([
                 'strand' => $request->input('sei_strand'),
