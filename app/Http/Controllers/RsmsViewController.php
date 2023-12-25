@@ -69,6 +69,7 @@ class RsmsViewController extends Controller //OR ONGOING
         $results = DB::select(
             "SELECT * FROM ongoing
             LEFT JOIN ongoingremarks ON ongoing.NUMBER  = ongoingremarks.scholar_id
+            LEFT JOIN ongoingregforms ON ongoing.NUMBER = ongoingregforms.scholar_id
             WHERE ongoing.startyear = ? AND ongoing.endyear = ? AND ongoing.semester = ?",
             [$startyear, $endyear, $semester]
         );
@@ -80,6 +81,50 @@ class RsmsViewController extends Controller //OR ONGOING
     }
 
 
+    public function SaveChangesOngoing(Request $request, $number)
+    {
+
+        /*  $record = Ongoing::where('NUMBER', $number)->first(); */
+        DB::table('ongoing')
+            ->where('NUMBER', $number)
+            ->update($request->only([
+                'NAME', 'MF', 'SCHOLARSHIPPROGRAM', 'SCHOOL', 'COURSE', 'GRADES', 'SummerREG',
+                'REGFORMS', 'STATUSENDORSEMENT', 'STATUSENDORSEMENT2', 'STATUS', 'NOTATIONS',
+                'SUMMER', 'FARELEASEDTUITION', 'FARELEASEDTUITIONBOOKSTIPEND', 'LVDCAccount', 'HVCNotes',
+            ]));
+
+        DB::table('ongoingremarks')->updateOrInsert(
+            ['scholar_id' => $number], // Update based on this condition
+            $request->only(['remarksDetails', 'semester', 'startyear', 'endyear'])
+        );
+
+        DB::table('ongoingregforms')->updateOrInsert(
+            ['scholar_id' => $number], // Update based on this condition
+            $request->only(['regformsDetails', 'semester', 'startyear', 'endyear'])
+        );
+
+        return response()->json(['message' => 'Changes saved successfully']);  // You can return a response if needed
+    }
+
+    public function getOngoingById($number)
+    {
+        $results = DB::select(
+            "SELECT ongoing.*, ongoingremarks.remarksDetails,ongoingregforms.regformsDetails
+            FROM ongoing
+            LEFT JOIN ongoingremarks ON ongoing.NUMBER = ongoingremarks.scholar_id
+            LEFT JOIN ongoingregforms ON ongoing.NUMBER = ongoingregforms.scholar_id
+            WHERE ongoing.NUMBER = :number",
+            ['number' => $number]
+        );
+        // Debugbar::info($results);
+        if (empty($results)) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        // return response()->json($ongoing);
+        return response()->json($results[0]);
+    }
+
     public function getOngoingData(Request $request)
     {
         $currentYear = Carbon::now()->year - 1;
@@ -89,29 +134,22 @@ class RsmsViewController extends Controller //OR ONGOING
 
     public function viewscholarrecordsview($number)
     {
-
         $results = Cog::select('startyear', DB::raw('COUNT(*) as row_count'))
             ->where('scholar_id', 1)
             ->groupBy('startyear')
             ->get();
-
         // Convert the Eloquent collection to an array
         $resultArrayyear = $results->pluck('startyear')->toArray();
-
         $resultArray = [];
-
-
-
-
         foreach ($resultArrayyear as $year) {
-            // Fetching data for consecutive semesters with the same year
-            for ($semester = 1; $semester <= 3; $semester++) {
+
+            for ($semester = 1; $semester <= 3; $semester++) { // Fetching data for consecutive semesters with the same year
                 $cogdata = Cog::with('cogdetails')
                     ->where('scholar_id', $number)
                     ->where('semester', $semester)
                     ->where('startyear', $year)
                     ->get();
-                //
+
                 // Store the data for the semester in the result array
                 $resultArray[$year][$semester] = $cogdata->toArray(); // Include all columns
 
@@ -125,8 +163,6 @@ class RsmsViewController extends Controller //OR ONGOING
         ]);
     }
 
-
-
     public function getscholargrades($number)
     {
         $cogdata = Cogdetails::find($number);
@@ -136,7 +172,6 @@ class RsmsViewController extends Controller //OR ONGOING
             return response()->json($cogdata);
         }
     }
-
 
     public function getdocumentsdata($number)
     {
@@ -221,71 +256,33 @@ class RsmsViewController extends Controller //OR ONGOING
     public function savescholarshipstatus(Request $request, $number)
     {
 
-        // Find the record based on the given number
-        $cogdata = Cog::where('id', $number)->first();
+        $cogdata = Cog::where('id', $number)->first();   // Find the record based on the given number
         // Debugbar::info($cogdata);
         if (!$cogdata) {
             return response()->json(['error' => 'Record not found'], 404);
         }
-
-        // Update the record with the new data
-        $cogdata->update(['scholarshipstatus' => $request->input('scholarshipstatus')]);
-
-        // You can return a response if needed
-        return response()->json(['message' => 'Changes saved successfully']);
+        $cogdata->update(['scholarshipstatus' => $request->input('scholarshipstatus')]);  // Update the record with the new data
+        return response()->json(['message' => 'Changes saved successfully']);   // You can return a response if needed
     }
 
     public function savecholargrades(Request $request, $number)
     {
-
-        // Find the record based on the given number
-        $cogdata = Cogdetails::where('id', $number)->first();
+        $cogdata = Cogdetails::where('id', $number)->first(); // Find the record based on the given number
 
         if (!$cogdata) {
             return response()->json(['error' => 'Record not found'], 404);
         }
 
-        // Update the record with the new data
-        $cogdata->update($request->all());
+        $cogdata->update($request->all()); // Update the record with the new data
 
-        // You can return a response if needed
-        return response()->json(['message' => 'Changes saved successfully']);
+        return response()->json(['message' => 'Changes saved successfully']);   // You can return a response if needed
     }
 
 
 
-    public function SaveChangesOngoing(Request $request, $number)
-    {
-        // Find the record based on the given number
-        /*  $record = Ongoing::where('NUMBER', $number)->first(); */
-        // Update both tables with the new data
-        DB::table('ongoing')
-            ->where('NUMBER', $number)
-            ->update($request->only([
-                'NAME', 'MF', 'SCHOLARSHIPPROGRAM', 'SCHOOL', 'COURSE', 'GRADES', 'SummerREG',
-                'REGFORMS', 'STATUSENDORSEMENT', 'STATUSENDORSEMENT2', 'STATUS', 'NOTATIONS',
-                'SUMMER', 'FARELEASEDTUITION', 'FARELEASEDTUITIONBOOKSTIPEND', 'LVDCAccount', 'HVCNotes',
-            ]));
-
-        // Update the ongoingremarks table with the new data
-        DB::table('ongoingremarks')
-            ->updateOrInsert(
-                ['scholar_id' => $number], // Update based on this condition
-                [
-                    'remarksDetails' => $request->input('remarksDetails'),
-                    'semester' => $request->input('semester'),
-                    'startyear' => $request->input('startyear'),
-                    'endyear' => $request->input('endyear'),
-                ]
-            );
 
 
 
-
-
-        // You can return a response if needed
-        return response()->json(['message' => 'Changes saved successfully']);
-    }
 
 
     public function getOngoingDataFiltered(Request $request)
@@ -294,9 +291,7 @@ class RsmsViewController extends Controller //OR ONGOING
         $startyear = session('startyear');
         $endyear = session('endyear');
         $semester = session('semester');
-
         $currentYear = Carbon::now()->year - 1;
-
         $ongoing = Ongoing::select('*')
             ->where('startyear', $startyear)
             ->where('endyear', $endyear)
@@ -305,30 +300,6 @@ class RsmsViewController extends Controller //OR ONGOING
 
         return DataTables::of($ongoing)->make(true);
     }
-
-
-
-    public function getOngoingById($number)
-    {
-        // $ongoing = Ongoing::where('number', $number)->first();
-        $results = DB::select(
-            "SELECT ongoing.*, ongoingremarks.remarksDetails
-            FROM ongoing
-            LEFT JOIN ongoingremarks ON ongoing.NUMBER = ongoingremarks.scholar_id
-            WHERE ongoing.NUMBER = :number",
-            ['number' => $number]
-        );
-
-        Debugbar::info($results);
-
-        if (empty($results)) {
-            return response()->json(['error' => 'Record not found'], 404);
-        }
-
-        // return response()->json($ongoing);
-        return response()->json($results[0]);
-    }
-
 
     public function saveOngoingById($number)
     {

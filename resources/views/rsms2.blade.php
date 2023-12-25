@@ -492,7 +492,7 @@
 
                         },
                         {
-                            data: 'REGFORMS',
+                            data: 'regformsDetails',
 
                         },
                         {
@@ -640,8 +640,8 @@
                             $('#editModal #courseField').val(data.COURSE);
                             $('#editModal #gradesField').val(data.GRADES);
                             $('#editModal #summerRegField').val(data.SummerREG);
-                            $('#editModal #regFormsField').val(data.REGFORMS);
-                            $('#editModal #remarksField').val(data.remarksDetails);
+                            $('#editModal #regFormsField').val(data.regformsDetails); //ongoingregforms table
+                            $('#editModal #remarksField').val(data.remarksDetails); //ongoingremarks table
                             $('#editModal #statusEndorsementField').val(data.STATUSENDORSEMENT);
                             $('#editModal #statusEndorsement2Field').val(data.STATUSENDORSEMENT2);
                             $('#editModal #statusField').val(data.STATUS);
@@ -676,7 +676,7 @@
                             COURSE: $('#editModal #courseField').val(),
                             GRADES: $('#editModal #gradesField').val(),
                             SummerREG: $('#editModal #summerRegField').val(),
-                            REGFORMS: $('#editModal #regFormsField').val(),
+                            regformsDetails: $('#editModal #regFormsField').val(), //ongoingregforms table
                             STATUSENDORSEMENT: $('#editModal #statusEndorsementField').val(),
                             STATUSENDORSEMENT2: $('#editModal #statusEndorsement2Field').val(),
                             STATUS: $('#editModal #statusField').val(),
@@ -862,10 +862,10 @@
                                         customHeaderName = 'Grades';
                                         break;
                                     case 8:
-                                        customHeaderName = 'Summer REG';
+                                        customHeaderName = 'Summer\nREG';
                                         break;
                                     case 9:
-                                        customHeaderName = 'REG FORM';
+                                        customHeaderName = 'REG\nFORMS';
                                         break;
                                     case 10:
                                         customHeaderName = 'REMARKS';
