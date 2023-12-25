@@ -6,14 +6,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <!-- Include DataTables CSS -->
-        <link
-            href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
-            rel="stylesheet">
+        <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script
-            src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
-        </script>
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
 
         <link href="{{ asset('css/all.css') }}">
 
@@ -135,9 +131,7 @@
                                 @endphp
                             @endif
                         </h3>
-                        <input hidden id=startyear value="{{ $startyear }}">
-                        <input hidden id=endyear value="{{ $endyear }}">
-                        <input hidden id=semester value="{{ $semester }}">
+
 
                         {{-- <form method="POST" action="/upload" enctype="multipart/form-data">
                             @csrf
@@ -148,8 +142,7 @@
                         <div class="">
                             <img id="logo" src="{{ asset('icons/DOSTlogoONGOING.jpg') }}" style="display: none;">
                             <div class="">
-                                <table id="yourDataTable" class="display nowrap compact table-striped"
-                                    style="width:100%">
+                                <table id="yourDataTable" class="display nowrap compact table-striped" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Action</th>
@@ -158,8 +151,7 @@
                                             <th>Name</th>
                                             <th style="width:100px !important;"><span style="" hidden>MF</span>
                                             </th>
-                                            <th style="width:100px !important;"><span style=""
-                                                    hidden>Program</span></th>
+                                            <th style="width:100px !important;"><span style="" hidden>Program</span></th>
                                             <th>School</th>
                                             <th>Course</th>
                                             <th>
@@ -229,7 +221,7 @@
                                             <th>HVCNotes</th>
                                             <th>startyear</th>
                                             <th>endyear</th>
-                                            <th>semester</th>
+                                            {{-- <th>semester</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -248,13 +240,10 @@
 
 
                         {{-- OFF-CANVAS --}}
-                        <div class="offcanvas offcanvas-end" id="editModal" data-bs-scroll="true"
-                            data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
-                            aria-labelledby="offcanvasScrollingLabel">
+                        <div class="offcanvas offcanvas-end" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasScrollingLabel">EDIT SCHOLAR DETAILS</h5>
-                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
                                 <table class="canvastable" style="width: 100%">
@@ -262,8 +251,7 @@
                                     <tr>
                                         <th class="canvasth"><strong>ID:</strong></th>
                                         <td class="canvastable">
-                                            <input disabled class="form-control form-control-sm" id="idField"
-                                                name="idField" placeholder="">
+                                            <input disabled class="form-control form-control-sm" id="idField" name="idField" placeholder="">
                                         </td>
                                     </tr>
                                     <tr>
@@ -275,50 +263,43 @@
                                     <tr>
                                         <th class="canvasth"><strong>Gender:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="genderField"
-                                                name="genderField">
+                                            <input class="form-control form-control-sm" id="genderField" name="genderField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>Program:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="programField"
-                                                name="programField">
+                                            <input class="form-control form-control-sm" id="programField" name="programField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>School:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="schoolField"
-                                                name="schoolField">
+                                            <input class="form-control form-control-sm" id="schoolField" name="schoolField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>Course:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="courseField"
-                                                name="courseField">
+                                            <input class="form-control form-control-sm" id="courseField" name="courseField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>GRADES:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="gradesField"
-                                                name="gradesField">
+                                            <input class="form-control form-control-sm" id="gradesField" name="gradesField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>SummerREG:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="summerRegField"
-                                                name="summerRegField">
+                                            <input class="form-control form-control-sm" id="summerRegField" name="summerRegField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>REGFORMS:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="regFormsField"
-                                                name="regFormsField">
+                                            <input class="form-control form-control-sm" id="regFormsField" name="regFormsField">
                                         </td>
                                     </tr>
                                     <tr>
@@ -330,22 +311,19 @@
                                     <tr>
                                         <th class="canvasth"><strong>STATUSENDORSEMENT :</strong></th>
                                         <td style="" class="canvastable">
-                                            <input class="form-control form-control-sm" id="statusEndorsementField"
-                                                name="statusEndorsementField">
+                                            <input class="form-control form-control-sm" id="statusEndorsementField" name="statusEndorsementField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>STATUSENDORSEMENT2 :</strong></th>
                                         <td style="" class="canvastable">
-                                            <input class="form-control form-control-sm" id="statusEndorsement2Field"
-                                                name="statusEndorsement2Field">
+                                            <input class="form-control form-control-sm" id="statusEndorsement2Field" name="statusEndorsement2Field">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>STATUS :</strong></th>
                                         <td style="" class="canvastable">
-                                            <input class="form-control form-control-sm" id="statusField"
-                                                name="statusField">
+                                            <input class="form-control form-control-sm" id="statusField" name="statusField">
                                         </td>
                                     </tr>
                                     <tr>
@@ -357,211 +335,55 @@
                                     <tr>
                                         <th class="canvasth"><strong>SUMMER :</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="summerField"
-                                                name="summerField">
+                                            <input class="form-control form-control-sm" id="summerField" name="summerField">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="canvasth"><strong>FARELEASEDTUITION :</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="faReleaseTuitionField"
-                                                name="faReleaseTuitionField">
+                                            <input class="form-control form-control-sm" id="faReleaseTuitionField" name="faReleaseTuitionField">
                                         </td>
                                     </tr>
                                     <tr style="">
                                         <th class="canvasth"> <strong>FARELEASEDTUITION BOOKSTIPEND:</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm"
-                                                id="faReleaseTuitionBookStipendField"
-                                                name="faReleaseTuitionBookStipendField">
+                                            <input class="form-control form-control-sm" id="faReleaseTuitionBookStipendField" name="faReleaseTuitionBookStipendField">
                                         </td>
                                     </tr>
                                     <tr style="">
                                         <th class="canvasth"> <strong>LVDCAccount :</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="lvdCAccountField"
-                                                name="lvdCAccountField">
+                                            <input class="form-control form-control-sm" id="lvdCAccountField" name="lvdCAccountField">
                                         </td>
                                     </tr>
                                     <tr style="">
                                         <th class="canvasth"> <strong>HVCNotes :</strong></th>
                                         <td class="canvastable">
-                                            <input class="form-control form-control-sm" id="hvcNotesField"
-                                                name="hvcNotesField">
+                                            <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
                                         </td>
                                     </tr>
+                                    <tr style="display:none">
+                                        <th class="canvasth"> <strong>SEMESTER :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="semesterField" name="semesterField">
+                                        </td>
+                                    </tr>
+                                    <tr style="display:none">
+                                        <th class="canvasth"> <strong>STARTYEAR :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="startyearField" name="startyearField">
+                                        </td>
+                                    </tr>
+                                    <tr style="display:none">
+                                        <th class="canvasth"> <strong>ENDYEAR :</strong></th>
+                                        <td class="canvastable">
+                                            <input class="form-control form-control-sm" id="endyearField" name="endyearField">
+                                        </td>
+                                    </tr>
+                                    <input hidden class="getimpinput" name="startyear" id=startyear value="{{ $startyear }}">
+                                    <input hidden class="getimpinput" name="endyear" id=endyear value="{{ $endyear }}">
+                                    <input hidden class="getimpinput" name="semester" id=semester value="{{ $semester }}">
                                 </table>
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-3   custom-font-size">
-                                        <strong>ID:</strong>
-                                    </div>
-                                    <div class="col-6">
-                                        <input disabled class="form-control form-control-sm" id="idField" name="idField" placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>Name:</strong>
-                                    </div>
-                                    <div class="col-9 custom-font-size ">
-                                        <input class="form-control form-control-sm" id="nameField" name="nameField">
-                                    </div>
-                                </div>
-
-                                <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>Gender:</strong>
-                                    </div>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" id="genderField" name="genderField">
-                                    </div>
-                                </div>
-
-                                <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>Program:</strong>
-                                    </div>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" id="programField" name="programField">
-                                    </div>
-                                </div>
-
-                                <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>School:</strong>
-                                    </div>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" id="schoolField" name="schoolField">
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>Course:</strong>
-                                    </div>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" id="courseField" name="courseField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-3 custom-font-size ">
-                                        <strong>GRADES:</strong>
-                                    </div>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" id="gradesField" name="gradesField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-4 custom-font-size ">
-                                        <strong>SummerREG:</strong>
-                                    </div>
-                                    <div class="col-8">
-                                        <input class="form-control form-control-sm" id="summerRegField" name="summerRegField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row">
-                                    <div class="col-4 custom-font-size ">
-                                        <strong class="custom-font-size">REGFORMS</strong>
-                                    </div>
-                                    <div class="col-8">
-                                        <input class="form-control form-control-sm" id="regFormsField" name="regFormsField">
-                                    </div>
-                                </div> --}}
-                                {{--
-                                <div class="row align-items-center">
-                                    <div class="custom-font-size ">
-                                        <strong>REMARKS:</strong>
-                                    </div>
-                                    <div class="">
-                                        <textarea class="form-control form-control-sm" id="remarksField" name="remarksField"></textarea>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>STATUSENDORSEMENT:</strong>
-                                    </div>
-                                    <div class="col-7">
-                                        <input class="form-control form-control-sm" id="statusEndorsementField" name="statusEndorsementField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>STATUSENDORSEMENT2:</strong>
-                                    </div>
-                                    <div class="col-7 custom-font-size ">
-                                        <input class="form-control form-control-sm" id="statusEndorsement2Field" name="statusEndorsement2Field">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>STATUS:</strong>
-                                    </div>
-                                    <div class="col-7 custom-font-size ">
-                                        <input class="form-control form-control-sm" id="statusField" name="statusField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="custom-font-size ">
-                                        <strong>NOTATIONS:</strong>
-                                    </div>
-                                    <div class="">
-                                        <textarea class="form-control form-control-sm" id="notationsField" name="notationsField"></textarea>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>SUMMER:</strong>
-                                    </div>
-                                    <div class="col-7">
-                                        <input class="form-control form-control-sm" id="summerField" name="summerField">
-                                    </div>
-                                </div> --}}
-
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>FARELEASEDTUITION:</strong>
-                                    </div>
-                                    <div class="col-7">
-                                        <input class="form-control form-control-sm" id="faReleaseTuitionField" name="faReleaseTuitionField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>FARELEASEDTUITION<br>BOOKSTIPEND:</strong>
-                                    </div>
-                                    <div class="col-7">
-                                        <input class="form-control form-control-sm" id="faReleaseTuitionBookStipendField" name="faReleaseTuitionBookStipendField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>LVDCAccount:</strong>
-                                    </div>
-                                    <div class="col-7">
-                                        <input class="form-control form-control-sm" id="lvdCAccountField" name="lvdCAccountField">
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="row align-items-center mb-1">
-                                    <div class="col-5 custom-font-size ">
-                                        <strong>HVCNotes:</strong>
-                                    </div>
-                                    <div class="col-7 ">
-                                        <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
-                                    </div>
-                                </div> --}}
-
                                 <button type="button" class="btn btn-primary mt-1" id="saveChangesBtn">Save
                                     Changes</button>
                             </div>
@@ -674,7 +496,7 @@
 
                         },
                         {
-                            data: 'REMARKS',
+                            data: 'remarksDetails',
 
                         },
                         {
@@ -721,10 +543,10 @@
                             data: 'endyear',
 
                         },
-                        {
-                            data: 'semester',
+                        // {
+                        //     data: 'semester',
 
-                        }
+                        // }
 
 
 
@@ -819,33 +641,34 @@
                             $('#editModal #gradesField').val(data.GRADES);
                             $('#editModal #summerRegField').val(data.SummerREG);
                             $('#editModal #regFormsField').val(data.REGFORMS);
-                            $('#editModal #remarksField').val(data.REMARKS);
+                            $('#editModal #remarksField').val(data.remarksDetails);
                             $('#editModal #statusEndorsementField').val(data.STATUSENDORSEMENT);
                             $('#editModal #statusEndorsement2Field').val(data.STATUSENDORSEMENT2);
                             $('#editModal #statusField').val(data.STATUS);
                             $('#editModal #notationsField').val(data.NOTATIONS);
                             $('#editModal #summerField').val(data.SUMMER);
                             $('#editModal #faReleaseTuitionField').val(data.FARELEASEDTUITION);
-                            $('#editModal #faReleaseTuitionBookStipendField').val(data
-                                .FARELEASEDTUITIONBOOKSTIPEND);
+                            $('#editModal #faReleaseTuitionBookStipendField').val(data.FARELEASEDTUITIONBOOKSTIPEND);
                             $('#editModal #lvdCAccountField').val(data.LVDCAccount);
                             $('#editModal #hvcNotesField').val(data.HVCNotes);
-                            // alert(data.NAME);
+                            $('#editModal #startyearField').val(data.startyear);
+                            $('#editModal #endyearField').val(data.endyear);
+                            $('#editModal #semesterField').val(data.semester);
+                            /*  alert(data.startyear); */
                             $('#editModal').offcanvas('show');
-                            data.semester = $('#semesterFilter').val();
-                            data.start_year = $('#startYearFilter').val();
-                            data.end_year = $('#endYearFilter').val();
+
                         },
                         error: function(error) {
                             console.error('Error fetching data for editing:', error);
                         }
                     });
 
-
+                    /* Save Changes Button */
+                    //TODO
                     $('#saveChangesBtn').off('click').click(function() {
                         // Gather the updated data from the modal fields
                         var updatedData = {
-                            // NUMBER: $('#editModal #idField').val(),
+                            NUMBER: $('#editModal #idField').val(),
                             NAME: $('#editModal #nameField').val(),
                             MF: $('#editModal #genderField').val(),
                             SCHOLARSHIPPROGRAM: $('#editModal #programField').val(),
@@ -854,18 +677,22 @@
                             GRADES: $('#editModal #gradesField').val(),
                             SummerREG: $('#editModal #summerRegField').val(),
                             REGFORMS: $('#editModal #regFormsField').val(),
-                            REMARKS: $('#editModal #remarksField').val(),
                             STATUSENDORSEMENT: $('#editModal #statusEndorsementField').val(),
                             STATUSENDORSEMENT2: $('#editModal #statusEndorsement2Field').val(),
                             STATUS: $('#editModal #statusField').val(),
                             NOTATIONS: $('#editModal #notationsField').val(),
                             SUMMER: $('#editModal #summerField').val(),
                             FARELEASEDTUITION: $('#editModal #faReleaseTuitionField').val(),
-                            FARELEASEDTUITIONBOOKSTIPEND: $(
-                                '#editModal #faReleaseTuitionBookStipendField').val(),
+                            FARELEASEDTUITIONBOOKSTIPEND: $('#editModal #faReleaseTuitionBookStipendField').val(),
                             LVDCAccount: $('#editModal #lvdCAccountField').val(),
                             HVCNotes: $('#editModal #lvdCAccountField').val(),
+                            HVCNotes: $('#editModal #lvdCAccountField').val(),
+                            semester: $('#editModal #semesterField').val(),
+                            startyear: $('#editModal #startyearField').val(),
+                            endyear: $('#editModal #endyearField').val(),
+                            remarksDetails: $('#editModal #remarksField').val(), //ongoingremarks table
                         };
+
 
                         // Send the updated data to the server using AJAX
                         $.ajax({
@@ -878,7 +705,7 @@
                             },
                             success: function(response) {
                                 // Handle success, e.g., close the modal or show a success message
-                                console.log('Changes saved successfully:', response);
+
                                 notyf.success({
                                     message: 'Record has been edited.',
                                     duration: 3000,
@@ -887,6 +714,7 @@
                                         y: 'top',
                                     },
                                 })
+
 
 
                                 // Redraw the DataTable

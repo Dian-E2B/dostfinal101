@@ -37,6 +37,14 @@
             text-align: center;
         }
 
+        body {
+            background-color: #dddddd;
+            font-family: "Calibri", sans-serif;
+        }
+
+        .sidebar {
+            font-size: 12pt;
+        }
 
 
         /* Add more styles as needed */
@@ -118,8 +126,7 @@
                                                                                     <td>{{ $record['cogdetails']['subjectname'] ?? 'N/A' }}</td>
                                                                                     <td>{{ $record['cogdetails']['grade'] ?? 'N/A' }}</td>
                                                                                     <td>{{ $record['cogdetails']['unit'] ?? 'N/A' }}</td>
-                                                                                    <td> <a href="#" class="edit-btn" data-number="{{ $record['cogdetails']['id'] ?? 'N/A' }}"><i class="fad fa-pencil"
-                                                                                                style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>
+                                                                                    <td> <a href="#" class="edit-btn" data-number="{{ $record['cogdetails']['id'] ?? 'N/A' }}"><i class="fad fa-pencil" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>
                                                                                 </tr>
 
                                                                                 {{-- Add other columns from "CogDetails" as needed --}}
@@ -131,8 +138,7 @@
                                                                                         {{ $record['scholarshipstatus'] }}
                                                                                     @endif
                                                                                 </td>
-                                                                                <td><a href="#" class="edit-scholarshipstatusbtn" data-cognumber="{{ $record['id'] }}"><i class="fad fa-pencil"
-                                                                                            style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></i></a></td>
+                                                                                <td><a href="#" class="edit-scholarshipstatusbtn" data-cognumber="{{ $record['id'] }}"><i class="fad fa-pencil" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></i></a></td>
                                                                             </tr>
                                                                         @endforeach
                                                                         {{-- @php
@@ -144,8 +150,7 @@
                                                         @endforeach
                                                     </div>
                                                 @endforeach
-                                                <button class="print-button btn " style="background-color: rgb(240, 240, 240)"><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fad fa-print"
-                                                        style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></button>
+                                                <button class="print-button btn " style="background-color: rgb(240, 240, 240)"><input hidden type="text" class="print-btn" id="print-btn" value="{{ $number }}" /><i class="fad fa-print" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></button>
 
                                                 {{-- START OFFCANVAS --}}
                                                 <div class="offcanvas offcanvas-start" id="editModal" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">

@@ -66,9 +66,15 @@ class RsmsViewController extends Controller //OR ONGOING
         $startyear = session('startyear');
         $endyear = session('endyear');
         $semester = session('semester');
-
-        $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
-        Debugbar::info($startyear, $endyear, $semester);
+        $results = DB::select(
+            "SELECT * FROM ongoing
+            LEFT JOIN ongoingremarks ON ongoing.NUMBER  = ongoingremarks.scholar_id
+            WHERE ongoing.startyear = ? AND ongoing.endyear = ? AND ongoing.semester = ?",
+            [$startyear, $endyear, $semester]
+        );
+        // $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
+        // Debugbar::info($results);
+        // Debugbar::info($startyear, $endyear, $semester);
 
         return DataTables::of($results)->make(true);
     }
@@ -217,7 +223,7 @@ class RsmsViewController extends Controller //OR ONGOING
 
         // Find the record based on the given number
         $cogdata = Cog::where('id', $number)->first();
-        Debugbar::info($cogdata);
+        // Debugbar::info($cogdata);
         if (!$cogdata) {
             return response()->json(['error' => 'Record not found'], 404);
         }
@@ -250,16 +256,32 @@ class RsmsViewController extends Controller //OR ONGOING
 
     public function SaveChangesOngoing(Request $request, $number)
     {
-
         // Find the record based on the given number
-        $record = Ongoing::where('NUMBER', $number)->first();
+        /*  $record = Ongoing::where('NUMBER', $number)->first(); */
+        // Update both tables with the new data
+        DB::table('ongoing')
+            ->where('NUMBER', $number)
+            ->update($request->only([
+                'NAME', 'MF', 'SCHOLARSHIPPROGRAM', 'SCHOOL', 'COURSE', 'GRADES', 'SummerREG',
+                'REGFORMS', 'STATUSENDORSEMENT', 'STATUSENDORSEMENT2', 'STATUS', 'NOTATIONS',
+                'SUMMER', 'FARELEASEDTUITION', 'FARELEASEDTUITIONBOOKSTIPEND', 'LVDCAccount', 'HVCNotes',
+            ]));
 
-        if (!$record) {
-            return response()->json(['error' => 'Record not found'], 404);
-        }
+        // Update the ongoingremarks table with the new data
+        DB::table('ongoingremarks')
+            ->updateOrInsert(
+                ['scholar_id' => $number], // Update based on this condition
+                [
+                    'remarksDetails' => $request->input('remarksDetails'),
+                    'semester' => $request->input('semester'),
+                    'startyear' => $request->input('startyear'),
+                    'endyear' => $request->input('endyear'),
+                ]
+            );
 
-        // Update the record with the new data
-        $record->update($request->all());
+
+
+
 
         // You can return a response if needed
         return response()->json(['message' => 'Changes saved successfully']);
@@ -288,12 +310,23 @@ class RsmsViewController extends Controller //OR ONGOING
 
     public function getOngoingById($number)
     {
-        $ongoing = Ongoing::where('number', $number)->first();
-        if (!$ongoing) {
+        // $ongoing = Ongoing::where('number', $number)->first();
+        $results = DB::select(
+            "SELECT ongoing.*, ongoingremarks.remarksDetails
+            FROM ongoing
+            LEFT JOIN ongoingremarks ON ongoing.NUMBER = ongoingremarks.scholar_id
+            WHERE ongoing.NUMBER = :number",
+            ['number' => $number]
+        );
+
+        Debugbar::info($results);
+
+        if (empty($results)) {
             return response()->json(['error' => 'Record not found'], 404);
         }
 
-        return response()->json($ongoing);
+        // return response()->json($ongoing);
+        return response()->json($results[0]);
     }
 
 
