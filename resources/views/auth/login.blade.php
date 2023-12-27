@@ -3,6 +3,7 @@
 
     <head>
         <title>DOST XI</title>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <link href="{{ asset('css/all.css') }}">
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 

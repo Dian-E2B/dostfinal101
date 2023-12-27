@@ -67,7 +67,7 @@ class GenerateRandomValue extends Command
                 $lname = $faker->lastName;
                 $mname = $faker->firstNameFemale;
                 $YEAR = $faker->randomElement($year);;
-                $FULLNAME = $lname . ' ' .  $fname . ' ' . $mname;
+                $FULLNAME = $lname . ', ' .  $fname . ' ' . $mname;
                 $SCHOOL2 = $school1;
                 $COURSE2 = $course1;
                 $selectedGender = $faker->randomElement(array_keys($genders));

@@ -27,7 +27,7 @@ use App\Http\Controllers\WordController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -127,8 +127,6 @@ require __DIR__ . '/studentauth.php';
 Route::get('student/dashboard', [StudentViewController::class, 'index'])
     ->middleware(['auth:student', 'verified'])->name('student.dashboard');
 
-
-
 Route::get('student/replyslipview', [StudentViewController::class, 'replyslipview'])
     ->middleware(['auth:student', 'verified'])->name('student.replyslipview');
 Route::get('student/requestclearanceview', [StudentViewController::class, 'requestclearanceview'])
@@ -144,7 +142,6 @@ Route::get('/downloadpdfclearance/{filename}', [\App\Http\Controllers\StudentVie
     ->middleware(['auth:student', 'verified'])->name('downloadpdfclearance');
 Route::POST('/savepdfclearance', [\App\Http\Controllers\StudentViewController::class, 'savepdfclearance'])
     ->middleware(['auth:student', 'verified'])->name('savepdfclearance');
-
 
 
 
