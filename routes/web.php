@@ -52,6 +52,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
 
     //EMAILS
+    //EMAILS
+    Route::get('/emails', [EmailViewController::class, 'emailstatusview'])->name('emails');
     Route::get('/emails', [EmailViewController::class, 'emailstatusview'])->name('emails');
     Route::get('sendmail', [SendMailController::class, 'index'])->name('sendmail');
     Route::get('/emaileditor', [EmailViewController::class, 'emaileditorview'])->name('emaileditor');
