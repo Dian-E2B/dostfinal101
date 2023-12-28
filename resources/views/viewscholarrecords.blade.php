@@ -2,16 +2,8 @@
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @include('layouts.head')
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <title>DOST</title>
-        <link href="{{ asset('css/all.css') }}">
-        <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
-        <script src="{{ asset('js/all.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
     </head>
     <style>
         .customtable,
@@ -35,15 +27,6 @@
             margin: 0 !important;
             border-collapse: collapse !important;
             text-align: center;
-        }
-
-        body {
-            background-color: #dddddd;
-            font-family: "Calibri", sans-serif;
-        }
-
-        .sidebar {
-            font-size: 12pt;
         }
 
 
@@ -76,7 +59,7 @@
                                     <div class="tab">
 
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item"><a class="nav-link tablinks" href="#tab-4" data-bs-toggle="tab" role="tab">Grading</a></li>
+                                            <li class="nav-item"><a class="nav-link tablinks" href="{{ url()->previous() }}"><i class="fas fa-arrow-square-left"></i></a></li>
                                             <li class="nav-item"><a class="nav-link tablinks active" href="#tab-1" data-bs-toggle="tab" role="tab">Grading</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks" id="tab2" href="#tab-2" data-bs-toggle="tab" role="tab">COR</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks" id="tab3" href="#tab-3" data-bs-toggle="tab" role="tab">Documents</a></li>
