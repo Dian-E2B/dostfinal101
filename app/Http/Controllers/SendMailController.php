@@ -19,56 +19,47 @@ use App\Models\Sei;
 
 class SendMailController extends Controller
 {
-    //
-
-
     public function index()
     {
 
-
-        /* CREATE VIEW emailsmerit AS
-        SELECT email
-        FROM seis
-        WHERE program_id = 201
-        AND (email IS NOT NULL OR email != '')
-        AND (lacking IS NULL OR lacking = '')
-        GROUP BY email; */
-
-
-
-        /*   $emailsmerit = Sei::select('email')
-            ->where('program_id', 201)
-            ->where('scholar_status_id', '=', 0)
+        $emailsra7687 = DB::table('seis')
+            ->where('program_id', 101)
+            ->where('scholar_status_id', 0)
             ->whereNotNull('email')
-            ->where(function ($query) {
-                $query->whereNotNull('lacking')
-                    ->where('lacking', '!=', ''); // Add condition for 'lacking' not being an empty string
-            })
+            ->where('email', '<>', '')
+            ->whereNull('lacking')
+            ->orWhere('lacking', '')
+            ->groupBy('email')
+            ->pluck('email')
+            ->toArray();
+
+        $emailsmerit = DB::table('seis')
+            ->where('program_id', 201)
+            ->where('scholar_status_id', 0)
+            ->whereNotNull('email')
+            ->where('email', '<>', '')
+            ->whereNull('lacking')
+            ->orWhere('lacking', '')
+            ->groupBy('email')
+            ->pluck('email')
+            ->toArray();
+
+        $emailsra10612 = DB::table('seis')
+            ->where('program_id', 301)
+            ->where('scholar_status_id', 0)
+            ->whereNotNull('email')
+            ->where('email', '<>', '')
+            ->whereNull('lacking')
+            ->orWhere('lacking', '')
             ->groupBy('email')
             ->pluck('email')
             ->toArray();
 
 
-        $emailsra10612 = Sei::select('email')
-            ->where('program_id', 301)
-            ->where('scholar_status_id', '=', 0)
-            ->whereNotNull('email')
-            ->where(function ($query) {
-                $query->whereNotNull('lacking')
-                    ->where('lacking', '!=', ''); // Add condition for 'lacking' not being an empty string
-            })
-            ->groupBy('email')
-            ->pluck('email')
-            ->toArray(); */
-
-        $emailsra7687 = email_ra7687::pluck('email')->toArray();
-        $emailsmerit = email_merit::pluck('email')->toArray();
-        $emailsra10612 = email_ra10612::pluck('email')->toArray();
-
         $content = EmailContent::first();
 
-
         if (!empty($emailsra7687)) {
+
             foreach ($emailsra7687 as $email2) {
                 $mailData = [
                     'title' => '<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">RA 7687</strong>.</span></h2> ',
