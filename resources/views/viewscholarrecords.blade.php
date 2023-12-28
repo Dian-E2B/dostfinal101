@@ -76,6 +76,7 @@
                                     <div class="tab">
 
                                         <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item"><a class="nav-link tablinks" href="#tab-4" data-bs-toggle="tab" role="tab">Grading</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks active" href="#tab-1" data-bs-toggle="tab" role="tab">Grading</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks" id="tab2" href="#tab-2" data-bs-toggle="tab" role="tab">COR</a></li>
                                             <li class="nav-item"><a class="nav-link tablinks" id="tab3" href="#tab-3" data-bs-toggle="tab" role="tab">Documents</a></li>

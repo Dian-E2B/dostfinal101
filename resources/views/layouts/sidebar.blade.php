@@ -17,21 +17,6 @@
             <li class="sidebar-header">
                 Main Pages
             </li>
-            {{-- <li id="dashboard1" class="sidebar-item ">
-                <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
-                </a>
-                <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                    <li id="dashboard2" class="sidebar-item "><a class='sidebar-link'
-                            href='{{ route('home') }}'>Analytics</a>
-                    </li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-ecommerce'>E-Commerce <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-crypto'>Crypto <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                </ul>
-            </li> --}}
-
             <li class="{{ request()->is('dashboard') ? 'sidebar-item active' : 'sidebar-item' }}">
                 <a class='sidebar-link' href='{{ route('dashboard') }}'>
                     <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
@@ -64,7 +49,7 @@
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">Academic
                         Monitoring</span>
                 </a>
-                <ul id="rsms1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') ? 'show' : '' }}" data-bs-parent="#sidebar">
+                <ul id="rsms1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') || request()->is('rsms2*') || request()->is('ongoinglistsview1*') ? 'show' : '' }}" data-bs-parent="#sidebar">
                     <li class="sidebar-item {{ request()->is('ongoinglistsview1') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('ongoinglistsview1') }}'>On-Going</a>
                     </li>
 
@@ -90,18 +75,11 @@
 
             {{--                ACCESS CONTROL TAB --}}
 
-            <li
-                class="{{ request()->is('accesscontrol') || request()->is('accesscontrolongoing') || request()->is('accesscontrolpending') || request()->is('accesscontrolenrolled') || request()->is('accesscontroldeferred') || request()->is('accesscontrolLOA') || request()->is('accesscontrolterminated')
-                    ? 'sidebar-item active'
-                    : 'sidebar-item' }}">
+            <li class="{{ request()->is('accesscontrol') || request()->is('accesscontrolongoing') || request()->is('accesscontrolpending') || request()->is('accesscontrolenrolled') || request()->is('accesscontroldeferred') || request()->is('accesscontrolLOA') || request()->is('accesscontrolterminated') ? 'sidebar-item active' : 'sidebar-item' }}">
                 <a data-bs-target="#accesscont1" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="lock"></i><span class="align-middle">Access Control</span>
                 </a>
-                <ul id="accesscont1"
-                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('accesscontrol') || request()->is('accesscontrolongoing') || request()->is('accesscontrolpending') || request()->is('accesscontrolenrolled') || request()->is('accesscontroldeferred') || request()->is('accesscontrolLOA') || request()->is('accesscontrolterminated')
-                        ? 'show'
-                        : ' ' }}"
-                    data-bs-parent="#sidebar">
+                <ul id="accesscont1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('accesscontrol') || request()->is('accesscontrolongoing') || request()->is('accesscontrolpending') || request()->is('accesscontrolenrolled') || request()->is('accesscontroldeferred') || request()->is('accesscontrolLOA') || request()->is('accesscontrolterminated') ? 'show' : ' ' }}" data-bs-parent="#sidebar">
 
                     <li class="sidebar-item {{ request()->is('accesscontrol') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{ route('accesscontrol') }}'>Show All</a></li>
                     <li class="sidebar-item {{ request()->is('accesscontrolpending') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{ route('accesscontrolpending') }}'>Pending </a></li>
