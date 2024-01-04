@@ -1,6 +1,6 @@
 /.phpunit.cache
 /node_modules
-/vendor
+/vendor/laravel/pint/builds/pint
 .env.backup
 .env.production
 .phpunit.result.cache
