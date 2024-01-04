@@ -32,7 +32,7 @@
             display: none;
         }
     </style>
-   
+
     <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div data-bs-theme="dark" class="wrapper">
             <div class="main">
