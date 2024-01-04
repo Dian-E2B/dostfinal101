@@ -39,6 +39,7 @@
                                                             Qualifier's Signature:
                                                         </div>
                                                         <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipsignature) }}" alt="none">
+
                                                     </div>
                                                     <div style="margin-top: 10px">
                                                         <div>

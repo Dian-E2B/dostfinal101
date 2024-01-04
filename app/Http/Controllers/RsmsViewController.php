@@ -36,13 +36,12 @@ class RsmsViewController extends Controller //OR ONGOING
         return view('rsms', compact('startyears', 'endyears', 'semesters'));
     }
 
-    public function ongoinglistsview1(Request $request)
+    public function ongoinglist(Request $request)
     {
-        $startyear = $request->input('startyear');
-        $endyear = $request->input('endyear');
-        $semester = $request->input('semester');
-
-        return view('ongoinglists');
+        $resultsongoinglist = DB::select("SELECT * FROM ongoing_monitoring ORDER BY startyear DESC, semester ASC;");
+        return view('ongoinglists', [
+            'results' => $resultsongoinglist,
+        ]);
     }
 
     public function getongoinglistgroupsajax(Request $request)
@@ -54,28 +53,35 @@ class RsmsViewController extends Controller //OR ONGOING
     //FILTERED OR IF VIEW IS CLICKED FROM ONGOING
     public function rsmsview2($startyear, $endyear, $semester)
     {
-        session(['startyear' => $startyear, 'endyear' => $endyear, 'semester' => $semester]);
+
+
+        // Session(['startyear' => $startyear, 'endyear' => $endyear, 'semester1' => $semester]);
+        Session::put(['startyear' => $startyear, 'endyear' => $endyear, 'semester1' => $semester]);
+        /*   dd($semester); */
+
         return view('rsms2', compact('startyear', 'endyear', 'semester'));
     }
 
 
     //RETRIEVE DATA ON RSMS2 PAGE
     public function getongoinglistgroupsajaxviewclicked(Request $request)
+
     {
-        // Retrieve values from the session
-        $startyear = session('startyear');
-        $endyear = session('endyear');
-        $semester = session('semester');
+        $startyear = $request->input('startyear');
+        $endyear = $request->input('endyear');
+        $semester = $request->input('semester');
+
+        /*   dd($startyear, $endyear, $semester1); */
+
         $results = DB::select(
             "SELECT * FROM ongoing
-            LEFT JOIN ongoingremarks ON ongoing.NUMBER  = ongoingremarks.scholar_id
-            LEFT JOIN ongoingregforms ON ongoing.NUMBER = ongoingregforms.scholar_id
-            WHERE ongoing.startyear = ? AND ongoing.endyear = ? AND ongoing.semester = ?",
+        LEFT JOIN ongoingremarks ON ongoing.NUMBER  = ongoingremarks.scholar_id
+        LEFT JOIN ongoingregforms ON ongoing.NUMBER = ongoingregforms.scholar_id
+        WHERE ongoing.startyear = ?
+        AND ongoing.endyear = ?
+        AND ongoing.semester = ?", // Change $semester1 to $semester
             [$startyear, $endyear, $semester]
         );
-        // $results = DB::select("SELECT * FROM ongoing WHERE startyear = ? AND endyear = ? AND semester = ?", [$startyear, $endyear, $semester]);
-        // Debugbar::info($results);
-        // Debugbar::info($startyear, $endyear, $semester);
 
         return DataTables::of($results)->make(true);
     }

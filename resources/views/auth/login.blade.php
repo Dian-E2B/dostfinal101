@@ -15,12 +15,27 @@
                 opacity: 9 !important;
             }
 
-            .logo {
+            body {
+                background-color: #ffffff;
 
-                shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-                transform: translatey(0px);
-                animation: float 2s ease-in-out infinite;
+                background-image: url('{{ asset('icons/Office_bluebackground.jpeg') }}');
+                background-repeat: no-repeat;
+                background-size: 100% 60%;
 
+
+                /* Adjust the width as needed */
+                font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                font-weight: 500;
+
+
+                /* Set the body height to the full viewport height */
+            }
+
+            main {}
+
+
+            .card {
+                box-shadow: 1px 20px 30px 5px rgba(0, 0, 0, 0.6) !important;
             }
 
             /* overflow: hidden; */
@@ -31,13 +46,13 @@
             /* margin: -100px -300px; */
             .dostbrand {
                 position: ;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
                 font-weight: bold;
                 font-size: 1.5rem;
                 /* margin: 0.5rem; */
             }
 
-            @keyframes float {
+            /*  @keyframes float {
                 0% {
                     shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
 
@@ -53,7 +68,7 @@
                     shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
                     transform: translatey(0px);
                 }
-            }
+            } */
         </style>
     </head>
 
@@ -76,18 +91,10 @@
                                 <div class="container">
 
 
-                                    <div class="row justify-content-center mt-5">
-                                        <div class="col-4 justify-content-end text-end">
-                                            <img class="logo lead" src="{{ asset('icons/DOSTLOGOsmall.png') }}" alt="" width="100" height="100">
+                                    <div style="margin: auto" class="row justify-content-center mt-5">
 
-                                        </div>
-                                        <div class="dostbrand col-4 justify-content-start">
+                                        <img class="logo lead" src="{{ asset('icons/DOST_MAIN.png') }}" alt="" width="20" height="80">
 
-                                            DOST REGION XI
-                                            <br>
-                                            {{-- SCHOLAR MONITORING
-                                            <br>SYSTEM --}}
-                                        </div>
                                     </div>
                                     {{-- <div class="row justify-content-center text-center mt-1 ">
                                         <div>Welcome!</div>
@@ -111,8 +118,9 @@
 
                                         <form method="POST" action="{{ route('login') }}">
                                             @csrf
+                                            <div class="mb-2 opacitytext" style="font-size: 20px">Log in</div>
                                             <div class="mb-3">
-                                                <label for="email" class="form-label opacitytext">Email</label>
+
                                                 <input id="email" class="opacitytext form-control form-control-lg @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autocomplete="email" autofocus />
 
                                                 @error('email')

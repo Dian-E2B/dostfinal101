@@ -44,13 +44,13 @@
 
 
 
-            <li class="sidebar-item {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('viewscholarrecords*') || request()->is('ongoinglistsview1*') || request()->is('rsms2*') ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('viewscholarrecords*') || request()->is('ongoinglist*') || request()->is('rsms2*') ? 'active' : '' }}">
                 <a data-bs-target="#rsms1" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">Academic
                         Monitoring</span>
                 </a>
                 <ul id="rsms1" class="sidebar-dropdown list-unstyled collapse {{ request()->is('rsms') || request()->is('rsmslistra7687') || request()->is('rsmslistra10612') || request()->is('rsmslistmerit') || request()->is('rsms2*') || request()->is('ongoinglistsview1*') ? 'show' : '' }}" data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ request()->is('ongoinglistsview1') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('ongoinglistsview1') }}'>On-Going</a>
+                    <li class="sidebar-item {{ request()->is('ongoinglist') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('ongoinglist') }}'>On-Going</a>
                     </li>
 
                     <li class="sidebar-item {{ request()->is('rsmslistra7687') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('rsmslistra7687') }}'>List RA7687 </a></li>

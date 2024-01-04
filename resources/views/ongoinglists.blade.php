@@ -5,16 +5,13 @@
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <!-- Include DataTables CSS -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link
-            href="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
-            rel="stylesheet">
-        <!-- Include jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+        <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
 
 
         <link href="{{ asset('css/all.css') }}">
 
+        <!-- Include jQuery -->
 
 
 
@@ -120,8 +117,7 @@
                             <div class="">
 
 
-                                <table id="yourDataTable" class="display nowrap compact table-striped"
-                                    style="width:100%">
+                                <table id="yourDataTable" class="display nowrap compact table-striped" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Startyear</th>
@@ -132,9 +128,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <!-- DataTable content will be dynamically added here -->
-                                        </tr>
+
+                                        @foreach ($results as $result)
+                                            <tr>
+                                                <td>{{ $result->endyear }}</td>
+                                                <td>{{ $result->startyear }}</td>
+                                                <td>{{ $result->semester }}</td>
+                                                <td>{{ $result->group_year }}</td>
+                                                <td style="width: 40px !important; text-align: center"><a class="view-btn" data-startyear="{{ $result->startyear }}" data-endyear="{{ $result->endyear }}" data-semester="{{ $result->semester }}"><i class=" fas fa-eye"></i></a></td>
+                                                <!-- Add other columns as needed -->
+                                            </tr>
+                                        @endforeach
+
                                     </tbody>
 
                                 </table>
@@ -171,118 +176,37 @@
 
 
         <script src="{{ asset('js/all.js') }}"></script>
+
         <!-- Include DataTables JS -->
-        <script
-            src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
-        </script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $.noConflict();
+            jQuery(document).ready(function($) {
+                jQuery.noConflict();
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
-                    serverSide: true,
-                    ajax: '{{ route('getongoinglistgroupsajax') }}', // Adjust this route to your actual route
-                    type: 'GET',
-                    columns: [{
-                            data: 'startyear',
-                            name: 'startyear',
-                            type: 'num' // change this to 'date' if 'startyear' is a date
-                        },
-                        {
-                            data: 'endyear',
-                            name: 'endyear'
-                        },
-                        {
-                            data: 'semester',
-                            name: 'semester'
-                        },
-                        {
-                            data: 'group_year',
-                            name: 'Records'
-                        },
-                        {
-                            data: null,
-                            orderable: false,
-                            searchable: false,
-                            className: 'viewtd',
-
-                            render: function(data, type, row) {
-                                var startyear = row.startyear;
-                                var endyear = row.endyear;
-                                var semester = row.semester;
-
-                                // Assuming 'rsms2' is the route name
-                                var url =
-                                    '{{ route('rsms2', [':startyear', ':endyear', ':semester']) }}';
-
-                                // Replace placeholders with actual values
-                                url = url.replace(':startyear', startyear)
-                                    .replace(':endyear', endyear)
-                                    .replace(':semester', semester);
-
-                                return '<td class="text-center" style="display: flex; justify-content: center; align-items: center;">' +
-                                    '<a href="' + url +
-                                    '" class="edit-btn" style="display: block; margin: auto;"><i class="fad fa-eye" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i></a></td>';
-                            }
-
-                        }
-
-                    ],
-                    columnDefs: [{
-                        targets: 2, // index of the 'semester' column
-                        render: function(data, type, row, meta) {
-                            // Map the semester value to the corresponding name
-                            var semesterNames = {
-                                1: '1st Semester',
-                                2: '2nd Semester',
-                                3: 'Summer'
-                            };
-
-                            // Check if the semester value is in the map, otherwise, use the original value
-                            return semesterNames[data] !== undefined ? semesterNames[data] : data;
-                        }
-                    }],
-
                     fixedHeader: {
                         header: true,
                         footer: true
                     },
                     scrollX: true,
                     "order": [],
-                    rowCallback: function(row, data) {
-                        $(row).on('click', '.edit-btn', function() {
-                            // Extract the values from the clicked row
-                            var startyear = data.startyear;
-                            var endyear = data.endyear;
-                            var semester = data.semester;
-
-                            // Make an Ajax request to the server
-                            $.ajax({
-                                url: 'ONGOINGLISTVIEW2',
-                                type: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content')
-                                },
-                                data: {
-                                    startyear: startyear,
-                                    endyear: endyear,
-                                    semester: semester
-                                },
-                                success: function(response) {
-                                    // Assuming the server returns a success message
-                                    console.log(response);
-
-                                    // No client-side redirection
-                                },
-                                error: function(error) {
-                                    console.error(error);
-                                }
-                            });
-
-                        });
-                    }
+                    "columnDefs": [{
+                        "targets": 4, // Index of the 5th column (zero-based index)
+                        "orderable": false // Disable sorting for this column
+                    }]
                 });
+                console.log('Document is ready!');
+
+            });
+
+            $(document).on('click', '.view-btn', function() {
+                var startyear = $(this).data('startyear');
+                var endyear = $(this).data('endyear');
+                var semester = $(this).data('semester');
+
+                var url = '{{ url('/rsms2/') }}' + '/' + startyear + '/' + endyear + '/' + semester;
+                window.location.href = url;
             });
         </script>
 

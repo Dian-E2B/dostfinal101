@@ -15,7 +15,6 @@
     },
     "dependencies": {
         "build": "^0.1.4",
-        "remixicon": "^3.5.0",
         "watch": "^0.13.0"
     }
 }

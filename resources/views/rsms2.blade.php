@@ -5,15 +5,13 @@
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
         <!-- Include DataTables CSS -->
         <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
-        <!-- Include jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+
 
         <link href="{{ asset('css/all.css') }}">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <style>
             th {
                 padding-left: 8px;
@@ -117,18 +115,21 @@
 
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem">
                     <div class="">
+                        <input hidden id="semester" value="{{ $semester }}">
+                        <input hidden id="startyear" value="{{ $startyear }}">
+                        <input hidden id="endyear" value="{{ $endyear }}">
                         <h3>
                             @if ($semester == 1)
                                 @php
-                                    echo $semester . 'ST SEM ' . $startyear . '-' . $endyear;
+                                    echo $semester . 'ST SEM ' . $startyear . '-' . $startyear + 1;
                                 @endphp
                             @elseif ($semester == 2)
                                 @php
-                                    echo $semester . 'ND SEM ' . $startyear . '-' . $endyear;
+                                    echo $semester . 'ND SEM ' . $startyear . '-' . $startyear + 1;
                                 @endphp
                             @else
                                 @php
-                                    echo 'SUMMER ' . $startyear . '-' . $endyear;
+                                    echo 'SUMMER ' . $startyear . '-' . $startyear + 1;
                                 @endphp
                             @endif
                         </h3>
@@ -363,7 +364,7 @@
                                             <input class="form-control form-control-sm" id="hvcNotesField" name="hvcNotesField">
                                         </td>
                                     </tr>
-                                    <tr style="display:none">
+                                    <tr style="">
                                         <th class="canvasth"> <strong>SEMESTER :</strong></th>
                                         <td class="canvastable">
                                             <input class="form-control form-control-sm" id="semesterField" name="semesterField">
@@ -381,9 +382,8 @@
                                             <input class="form-control form-control-sm" id="endyearField" name="endyearField">
                                         </td>
                                     </tr>
-                                    <input hidden class="getimpinput" name="startyear" id=startyear value="{{ $startyear }}">
-                                    <input hidden class="getimpinput" name="endyear" id=endyear value="{{ $endyear }}">
-                                    <input hidden class="getimpinput" name="semester" id=semester value="{{ $semester }}">
+
+
                                 </table>
                                 <button type="button" class="btn btn-primary mt-1" id="saveChangesBtn">Save
                                     Changes</button>
@@ -401,13 +401,16 @@
 
         <script src="{{ asset('js/all.js') }}"></script>
         <!-- Include DataTables JS -->
-
+        <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
             jQuery(document).ready(function($) {
                 jQuery.noConflict();
                 var startyearValue = $('#startyear').val();
                 var endyearValue = $('#endyear').val();
                 var semesterValue = $('#semester').val();
+                alert(startyearValue);
                 var semesterValue2;
 
                 if (semesterValue == 1) {
@@ -419,13 +422,21 @@
                 }
 
 
+
+                var url = '{{ route('getongoinglistgroupsajaxviewclicked') }}';
                 var table = $('#yourDataTable').DataTable({
                     processing: true,
                     serverSide: true,
 
-                    // pageLength: 20, // Set the default page length to 10 rows
-                    ajax: '{{ route('getongoinglistgroupsajaxviewclicked') }}', // Adjust this route to your actual route
-                    type: 'POST',
+                    ajax: {
+                        url: url,
+                        type: 'GET',
+                        data: {
+                            startyear: startyearValue,
+                            endyear: endyearValue,
+                            semester: semesterValue
+                        },
+                    },
                     columns: [{
                             data: null,
                             orderable: false,

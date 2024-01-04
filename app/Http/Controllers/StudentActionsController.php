@@ -24,8 +24,8 @@ class StudentActionsController extends Controller
         $lname = Sei::where('id', $scholarid)->value('lname');
 
         $checkreplyslipstatus = Replyslips::where('scholar_id', $scholarid)->value('replyslip_status_id');
-        $customstudentsignaturefilename = $scholarid . $fname . $lname . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
-        $customparentsignaturefilename = $scholarid . $fname . $lname . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
+        $customstudentsignaturefilename = $scholarid . 'signatures' . time() . '.' . $request->file('signaturestudent')->getClientOriginalExtension();
+        $customparentsignaturefilename = $scholarid . 'signatureparent' . time() . '.' . $request->file('signatureparent')->getClientOriginalExtension();
         if ($checkreplyslipstatus == 1) {
             $request->file('signaturestudent')->storeAs('public/signatures', $customstudentsignaturefilename);
             $request->file('signatureparent')->storeAs('public/signatures', $customparentsignaturefilename);
@@ -91,8 +91,6 @@ class StudentActionsController extends Controller
         $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
         //         dd($customstudentprospectusfilename);
 
-
-
         $cog = Cog::create([
             'scholar_id' => $scholarid,
             'semester' => $semesterinput,
@@ -104,13 +102,20 @@ class StudentActionsController extends Controller
             'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
         ]);
 
-        foreach ($data['subjectnames'] as $index => $subject) {
-            $cog->cogdetails()->create([
-                'subjectname' => $subject['name'],
-                'grade' => $data['grades'][$index]['grade'],
-                'unit' => $data['units'][$index]['unit'],
-            ]);
+        if ($semesterinput  == 3) {
+        } else {
+            foreach ($data['subjectnames'] as $index => $subject) {
+                $cog->cogdetails()->create([
+                    'subjectname' => $subject['name'],
+                    'grade' => $data['grades'][$index]['grade'],
+                    'unit' => $data['units'][$index]['unit'],
+                ]);
+            }
         }
+
+
+
+
         notyf()
             ->position('x', 'center')
             ->position('y', 'top')
