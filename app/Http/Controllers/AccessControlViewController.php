@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ongoing;
 use App\Models\Replyslips;
 use App\Models\Sei;
+use Barryvdh\Debugbar\Facades\Debugbar as Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\alert;
@@ -20,11 +21,10 @@ class AccessControlViewController extends Controller
                 ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
                 ->get(); */
 
-            $seisallstatus = DB::table('seis')
-                ->join('scholar_statuses', 'seis.scholar_status_id', '=', 'scholar_statuses.id')
-                ->select('seis.*', 'scholar_statuses.status_name')
+            $seisallstatus = Sei::join('replyslips', 'seis.id', '=', 'replyslips.scholar_id')
+                ->select('seis.id as sei_id', 'replyslips.id as replyslip_id', 'replyslips.*', 'seis.*')
                 ->get();
-
+            Debugbar::info($seisallstatus);
             return view('accesscontrol', compact('seisallstatus'));
         } catch (\Exception $e) {
 
@@ -38,14 +38,12 @@ class AccessControlViewController extends Controller
     public function accesscontrolpendingview()
     {
         try {
-
-
             $replyslipsandscholarjoinpending = Sei::join('replyslips', 'seis.id', '=', 'replyslips.scholar_id')
                 ->select('seis.id as sei_id', 'replyslips.id as replyslip_id', 'replyslips.*', 'seis.*')
-                ->where('replyslips.replyslip_status_id', 2)
+                ->where('replyslips.replyslip_status_id', 1)
                 ->get();
 
-            // dd($$$$$);
+            Debugbar::info($replyslipsandscholarjoinpending);
             return view('accesscontrol', compact('replyslipsandscholarjoinpending'));
         } catch (\Exception $e) {
             flash()->addError('Empty Records');
@@ -55,14 +53,11 @@ class AccessControlViewController extends Controller
 
     public function accesscontrolongoingview()
     {
-
         $replyslipsjoinscholarongoing = Replyslips::join('scholars', 'replyslips.scholar_id', '=', 'scholars.id')
             ->join('scholar_status', 'scholars.scholar_status_id', '=', 'scholar_status.id')
             ->select('replyslips.*', 'scholars.*', 'scholar_status.*')
             ->where('scholar_status_id', '=', 2) // Add your where condition here
             ->get();
-
-
         return view('accesscontrol', compact('replyslipsjoinscholarongoing'));
     }
 
@@ -137,8 +132,6 @@ class AccessControlViewController extends Controller
     public function enrollscholartoongoing(Request $request, $id)
     {
         $seisourcerecord = Sei::find($id);
-
-
         // Check if the record exists
         if ($seisourcerecord) {
             // Access the value of the 'year' column
@@ -158,7 +151,7 @@ class AccessControlViewController extends Controller
             $destinationRecord->NUMBER = $seisourcerecord->id; // Replace with actual column names
             $destinationRecord->NAME = $seisourcerecord->lname . ", " . $seisourcerecord->fname . " " . $seisourcerecord->mname;
             $destinationRecord->MF =  $genderValue;
-            $destinationRecord->SCHOLARSHIPPROGRAM = null;
+            $destinationRecord->SCHOLARSHIPPROGRAM = "";
             $destinationRecord->SCHOOL = null;
             $destinationRecord->COURSE = null;
             $destinationRecord->GRADES = null;
@@ -181,7 +174,7 @@ class AccessControlViewController extends Controller
             try {
                 $destinationRecord->save();
                 if ($destinationRecord) {
-                    notyf()->addSuccess('Your application has been received.');
+                    notyf()->addSuccess('Scholar application has been received.');
 
                     Replyslips::where('scholar_id', $id)->update(['replyslip_status_id' => 5]);
                     Sei::where('id', $id)->update(['scholar_status_id' => 3]);

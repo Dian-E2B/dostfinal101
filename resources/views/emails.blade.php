@@ -140,7 +140,7 @@
                                                                                             Name
                                                                                             and Signature</p>
                                                                                         <img style="max-height: 350px; max-width:350px; " src="{{ $replyslipsandscholarjoinaccepted1->signature }}" alt="blank">
-                                                                                        @dd($replyslipsandscholarjoinaccepted1->signature);
+
                                                                                     </div>
                                                                                     <div class="col-md-6" style="margin-top: 15px;">
                                                                                         <p class="mb-0">
