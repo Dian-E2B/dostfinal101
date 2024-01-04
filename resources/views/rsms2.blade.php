@@ -410,7 +410,7 @@
                 var startyearValue = $('#startyear').val();
                 var endyearValue = $('#endyear').val();
                 var semesterValue = $('#semester').val();
-                alert(startyearValue);
+
                 var semesterValue2;
 
                 if (semesterValue == 1) {
@@ -712,9 +712,6 @@
                                 number, // Replace with your server endpoint
                             method: 'POST', // You can use POST or PUT based on your server-side implementation
                             data: updatedData,
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             success: function(response) {
                                 // Handle success, e.g., close the modal or show a success message
 
@@ -788,7 +785,9 @@
             $.extend(true, $.fn.dataTable.defaults, {
                 dom: 'flrtipB',
                 buttons: [{
-                        extend: 'print',
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
                         text: '<i class="fas fa-print"></i>',
                         title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
                         exportOptions: {
