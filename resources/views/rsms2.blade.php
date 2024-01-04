@@ -785,7 +785,7 @@
             $.extend(true, $.fn.dataTable.defaults, {
                 dom: 'flrtipB',
                 buttons: [{
-                        extend: 'pdf',
+                        extend: 'print',
                         orientation: 'landscape',
                         pageSize: 'A4',
                         text: '<i class="fas fa-print"></i>',

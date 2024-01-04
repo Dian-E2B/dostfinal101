@@ -141,7 +141,7 @@ class RsmsViewController extends Controller //OR ONGOING
     public function viewscholarrecordsview($number)
     {
         $results = Cog::select('startyear', DB::raw('COUNT(*) as row_count'))
-            ->where('scholar_id', 2003)
+            ->where('scholar_id', $number)
             ->groupBy('startyear')
             ->get();
         // Convert the Eloquent collection to an array
@@ -151,7 +151,7 @@ class RsmsViewController extends Controller //OR ONGOING
 
             for ($semester = 1; $semester <= 3; $semester++) { // Fetching data for consecutive semesters with the same year
                 $cogdata = Cog::with('cogdetails')
-                    ->where('scholar_id', 2003)
+                    ->where('scholar_id', $number)
                     ->where('semester', $semester)
                     ->where('startyear', $year)
                     ->get();
