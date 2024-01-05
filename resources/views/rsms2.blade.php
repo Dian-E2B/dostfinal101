@@ -403,9 +403,12 @@
         <!-- Include DataTables JS -->
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
         <script>
             jQuery(document).ready(function($) {
+
                 jQuery.noConflict();
                 var startyearValue = $('#startyear').val();
                 var endyearValue = $('#endyear').val();
@@ -754,7 +757,7 @@
 
 
             function customExportAction(e, dt, button, config) {
-                var self = this;
+
                 var oldStart = dt.settings()[0]._iDisplayStart;
                 dt.one('preXhr', function(e, s, data) {
                     // Just this once, load all data from the server...
@@ -762,9 +765,7 @@
                     data.length = 2147483647;
                     dt.one('preDraw', function(e, settings) {
                         // Call the original action function
-                        if (button[0].className.indexOf('buttons-print') >= 0) {
-                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-                        }
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
                         dt.one('preXhr', function(e, s, data) {
                             // DataTables thinks the first item displayed is index 0, but we're not drawing that.
                             // Set the property to what it was before exporting.
@@ -777,15 +778,19 @@
                         return false;
                     });
                 });
+
                 // Requery the server with the new one-time export settings
                 dt.ajax.reload();
+
             }
 
 
             $.extend(true, $.fn.dataTable.defaults, {
+
                 dom: 'flrtipB',
                 buttons: [{
                         extend: 'print',
+                        autoPrint: true,
                         orientation: 'landscape',
                         pageSize: 'A4',
                         text: '<i class="fas fa-print"></i>',
@@ -837,7 +842,6 @@
 
 
                             $(win.document.body).find('table td, table th').css({
-
                                 'padding-left': '0.5rem',
                                 'padding-right': '0.5rem'
                             });
@@ -898,7 +902,8 @@
                                 $(this).css({
                                     'font-size': '40pt',
                                     'white-space': 'pre-wrap',
-                                    'border': '2px solid black' // Add border to the header
+                                    'border': '2px solid black', // Add border to the header
+                                    'width': '100%', // Corrected syntax for the width property
                                 });
                             });
 
@@ -907,9 +912,16 @@
                                 // Set the content of each cell in the second column to be the index + 1
                                 $(this).text(index + 1); //modified dec 18 2023
                             });
-                            $(win.document.body).find('table').addClass('compact');
+
+
                             $(win.document.body).find('table').removeClass('table-striped');
 
+                            var style = '@page { margin: 1cm; } @media print { body { margin: 1cm; } table { width: 100%; } }';
+                            var head = win.document.head || win.document.getElementsByTagName('head')[0];
+                            var link = document.createElement('style');
+                            link.type = 'text/css';
+                            link.appendChild(document.createTextNode(style));
+                            head.appendChild(link);
                         },
 
                     },
@@ -934,6 +946,18 @@
                                 search: 'none'
                             }
                         },
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="fas fa-file-csv"></i>',
+                        title: 'ON-GOING SCHOLARS MONITORING CHECKLIST {{ session('semester') }} AY {{ session('startyear') }}-{{ session('endyear') }}',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14],
+                            modifier: {
+                                search: 'none'
+                            }
+                        },
+
                     }
                 ]
             });

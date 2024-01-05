@@ -131,9 +131,27 @@
 
                                         @foreach ($results as $result)
                                             <tr>
-                                                <td>{{ $result->endyear }}</td>
                                                 <td>{{ $result->startyear }}</td>
-                                                <td>{{ $result->semester }}</td>
+                                                <td>{{ $result->endyear }}</td>
+
+                                                <td>
+                                                    @switch($result->semester)
+                                                        @case(1)
+                                                            1st Semester
+                                                        @break
+
+                                                        @case(2)
+                                                            2nd Semester
+                                                        @break
+
+                                                        @case(3)
+                                                            Summer
+                                                        @break
+
+                                                        @default
+                                                            Unknown
+                                                    @endswitch
+                                                </td>
                                                 <td>{{ $result->group_year }}</td>
                                                 <td style="width: 40px !important; text-align: center"><a class="view-btn" data-startyear="{{ $result->startyear }}" data-endyear="{{ $result->endyear }}" data-semester="{{ $result->semester }}"><i class=" fas fa-eye"></i></a></td>
                                                 <!-- Add other columns as needed -->

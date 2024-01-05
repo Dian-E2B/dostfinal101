@@ -62,6 +62,7 @@ class SeiViewController extends Controller
         if (!$result) {
             return response()->json(['error' => 'Record not found'], 404);
         }
+        Debugbar::info($result);
         return response()->json($result);
     }
 
@@ -103,17 +104,18 @@ class SeiViewController extends Controller
 
     public function seilistviewajaxpotential()
     {
-        $seis2 = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
+        $seis2 = DB::table('seis')
+            ->join('programs', 'seis.program_id', '=', 'programs.id')
             ->join('genders', 'seis.gender_id', '=', 'genders.id')
             ->where(function ($query) {
-                $query->whereNotNull('lacking')
-                    ->orWhere('lacking', '<>', '');
+                $query->where('lacking', '<>', NULL)
+                    ->where('lacking', '<>', "");
             })
-            ->select('seis.*', 'programs.progname', 'genders.gendername', DB::raw('COALESCE(lacking, "") as lacking'))
+            ->select('seis.*', 'programs.progname', 'genders.gendername', DB::raw('COALESCE(lacking, "") as lacking'), 'seis.id as seis_id')
             ->get();
         Debugbar::info($seis2);
-        return response()->json(['seis2' => $seis2]);
-        //  return DataTables::of($seis2)->make(true);
+
+        return DataTables::of($seis2)->make(true);
     }
 
     public function edit(Request $request)

@@ -6,9 +6,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <link
-            href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.css"
-            rel="stylesheet">
+        <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <link href="{{ asset('css/all.css') }}" rel="stylesheet">
         <style>
             .form-control {
@@ -51,6 +49,7 @@
             body {
                 background-color: #dddddd;
                 font-family: "Calibri", sans-serif;
+                font-size: 12pt;
             }
 
             .sidebar {
@@ -85,8 +84,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <table id="thisdatatable" class="hover table-striped table-hover compact nowrap"
-                                    style="width:100%;">
+                                <table id="thisdatatable" class="hover table-striped table-hover compact nowrap" style="width:100%;">
 
                                     <thead>
                                         <tr>
@@ -125,6 +123,7 @@
                                             <th>HSname</th>
                                             <th>Lacking</th>
                                             <th>Remarks</th>
+                                            <th>ID</th>
                                             <th>Action</th>
 
                                         </tr>
@@ -151,23 +150,19 @@
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="editModalLabel" style="font-weight: bold">Scholar Details
                             </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>ID: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField"
-                                        name="IdField" disabled></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="IdField" name="IdField" disabled></div>
                                 <div class="col-2 customlabel"> <label>App ID: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField"
-                                        name="AppIDField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="AppIDField" name="AppIDField"></div>
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Email: </label></div>
-                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField"
-                                        name="EmailField"></div>
+                                <div class="col-4"> <input class=" form-control   form-control-sm" id="EmailField" name="EmailField"></div>
                                 <div class="col-2 customlabel"> <label>Program: </label></div>
                                 <div class="col-4">
                                     <select name="ProgramField" id="ProgramField" class="form-control form-control-sm">
@@ -180,8 +175,7 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Surname: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField"
-                                        name="SurnameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="SurnameField" name="SurnameField"></div>
                                 <div class="col-2 customlabel"> <label>Strand: </label></div>
                                 <div class="col-4">
                                     <select name="StrandField" id="StrandField" class="form-control form-control-sm">
@@ -194,20 +188,17 @@
                             </div>
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Firstname: </label></div>
-                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField"
-                                        name="FirstnameField"></div>
+                                <div class="col-4"><input class=" form-control  form-control-sm" id="FirstnameField" name="FirstnameField"></div>
 
                                 <div class="col-2 customlabel"> <label>Contact: </label></div>
                                 <div class="col-4">
-                                    <input class=" form-control   form-control-sm" id="ContactField"
-                                        name="ContactField">
+                                    <input class=" form-control   form-control-sm" id="ContactField" name="ContactField">
                                 </div>
                             </div>
 
                             <div class="row align-items-center mb-1">
                                 <div class="col-2 customlabel"> <label>Middlename: </label></div>
-                                <div class="col-4 "> <input class="  form-control  form-control-sm"
-                                        id="MiddlenameField" name="MiddlenameField"></div>
+                                <div class="col-4 "> <input class="  form-control  form-control-sm" id="MiddlenameField" name="MiddlenameField"></div>
                                 <div class="col-2 customlabel"> <label>Gender: </label></div>
                                 <div class="col-4">
                                     <select name="GenderField" id="GenderField" class="form-control form-control-sm">
@@ -233,8 +224,7 @@
 
                             {{-- FOOTER --}}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" id="saveChangesBtn" class="btn btn-primary">Save
                                     changes</button>
                             </div>
@@ -249,9 +239,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="{{ asset('js/all.js') }}"></script>
 
-        <script
-            src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js">
-        </script>
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.2.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
 
         <script>
             jQuery(document).ready(function($) {
@@ -337,6 +325,9 @@
                         },
                         {
                             data: 'remarks',
+                        },
+                        {
+                            data: 'id',
                         },
 
                         {
@@ -432,6 +423,7 @@
                         url: '{{ url('/get-seilistrecord/') }}' + '/' + number,
                         method: 'GET',
                         success: function(data) {
+
                             $('#editModal #IdField').val(data.id);
                             $('#editModal #AppIDField').val(data.app_id);
                             $('#editModal #EmailField').val(data.email);
@@ -445,6 +437,7 @@
                             $('#editModal #LackingField').val(data.lacking);
                         },
                         error: function(error) {
+
                             console.error('Error fetching data for editing:', error);
                         }
                     });

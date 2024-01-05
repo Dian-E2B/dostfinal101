@@ -11,15 +11,11 @@
 <style>
     body {
         background-color: #dddddd !important;
-        font-family: "Calibri", sans-serif !important;
-        font-size: 12pt !important;
+
+
     }
 
-    .sidebar {
-        font-size: 12pt !important;
-    }
+    .sidebar {}
 
-    .dropdown-item {
-        font-size: 12pt !important;
-    }
+    .dropdown-item {}
 </style>

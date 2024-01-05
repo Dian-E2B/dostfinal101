@@ -3,6 +3,8 @@
 
     <head>
         @include('layouts.head')
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <style>
             .form-control {
@@ -41,8 +43,8 @@
                 color: #000000
             }
 
-            /*
-            body {} */
+
+            body {}
 
             .action-column {
                 text-align: center !important;
@@ -66,7 +68,7 @@
         </style>
     </head>
 
-    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div class="wrapper">
 
             {{-- SIDEBAR START --}}

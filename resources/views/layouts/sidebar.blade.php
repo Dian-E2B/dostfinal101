@@ -1,9 +1,14 @@
+<style>
+    #sidebarimagelogo {
+        filter: drop-shadow(5px 2px 2px rgba(73, 196, 211, 0.5));
+    }
+</style>
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class='sidebar-brand'>
             <div class="row">
                 <span class="sidebar-brand-text align-items-center col-4">
-                    <img style="max-width: 70px; max-height: 70px;" src="{{ asset('icons/dost_seal.png') }}" alt="Image Description">
+                    <img style="max-width: 70px; max-height: 70px;" id="sidebarimagelogo" src="{{ asset('icons/dost_seal.png') }}" alt="Image Description">
                 </span>
                 <div style="margin-top: 5px" class="col-6">DOST REGION XI</div>
 

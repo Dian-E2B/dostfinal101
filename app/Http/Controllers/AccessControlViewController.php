@@ -40,7 +40,7 @@ class AccessControlViewController extends Controller
         try {
             $replyslipsandscholarjoinpending = Sei::join('replyslips', 'seis.id', '=', 'replyslips.scholar_id')
                 ->select('seis.id as sei_id', 'replyslips.id as replyslip_id', 'replyslips.*', 'seis.*')
-                ->where('replyslips.replyslip_status_id', 1)
+                ->where('replyslips.replyslip_status_id', 2)
                 ->get();
 
             Debugbar::info($replyslipsandscholarjoinpending);

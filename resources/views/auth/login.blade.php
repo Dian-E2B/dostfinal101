@@ -5,6 +5,7 @@
         <title>DOST XI</title>
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <link href="{{ asset('css/all.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
         <script src="{{ asset('js/all.js') }}"></script>
@@ -16,9 +17,9 @@
             }
 
             body {
-                background-color: #ffffff;
+                background-color: #f0efef;
 
-                background-image: url('{{ asset('icons/Office_bluebackground.jpeg') }}');
+                /*   background-image: url('{{ asset('icons/Office_bluebackground.jpeg') }}'); */
                 background-repeat: no-repeat;
                 background-size: 100% 60%;
 
@@ -36,6 +37,7 @@
 
             .card {
                 box-shadow: 1px 20px 30px 5px rgba(0, 0, 0, 0.6) !important;
+                /*  background-color: #daf3f6; */
             }
 
             /* overflow: hidden; */
