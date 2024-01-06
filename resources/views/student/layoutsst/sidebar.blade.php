@@ -1,91 +1,118 @@
+<style>
+    #sidebarimagelogo {
+        filter: drop-shadow(-1px -2px 10px rgba(73, 196, 211, 0.9));
+    }
+</style>
 <nav id="sidebar" class="sidebar js-sidebar">
-    <div class="sidebar-content js-simplebar">
-        <a class='sidebar-brand' href='/'>
-            <span class="sidebar-brand-text align-middle">
-                [LOGO]
 
-            </span>
-            <svg class="sidebar-brand-icon align-middle" width="32px" height="32px" viewBox="0 0 24 24" fill="none"
-                stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" color="#FFFFFF"
-                style="margin-left: -3px">
-                <path d="M12 4L20 8.00004L12 12L4 8.00004L12 4Z"></path>
-                <path d="M20 12L12 16L4 12"></path>
-                <path d="M20 16L12 20L4 16"></path>
-            </svg>
+    <div class="sidebar-content js-simplebar">
+
+        <a class='sidebar-brand'>
+            <div class="row">
+                <span class="sidebar-brand-text align-items-center col-4">
+                    <img style="max-width: 70px; max-height: 70px;" id="sidebarimagelogo" src="{{ asset('icons/DOST_scholar_logo.svg') }}" alt="Image Description">
+                </span>
+                <div style="margin-top: 5px" class="col-6">DOST REGION XI</div>
+            </div>
+
         </a>
 
+
+        <div class="d-flex justify-content-center">
+
+            @php
+                $scholarstatusidresult = DB::select('SELECT scholar_status_id FROM seis WHERE id = ?', [$scholarId]);
+                $statusExists = isset($scholarstatusidresult[0]);
+            @endphp
+            <div class="sidebar-user-subtitle" style="font-size: 20px">
+                @if ($statusExists)
+                    @switch($scholarstatusidresult[0]->scholar_status_id)
+                        @case(2)
+                            <span class="badge bg-info">Pending</span>
+                        @break
+
+                        @case(3)
+                            <span class="badge bg-success">Enrolled</span>
+                        @break
+
+                        @case(4)
+                            <span class="badge bg-warning">Deffered</span>
+                        @break
+
+                        @case(5)
+                            <span class="badge bg-warning">LOA</span>
+                        @break
+
+                        @case(6)
+                            <span class="badge bg-danger">Terminated</span>
+                        @break
+                    @endswitch
+                @endif
+            </div>
+
+
+        </div>
 
 
         <ul class="sidebar-nav">
             <li class="sidebar-header">
-                Main Pages
+                Pages
             </li>
-            {{-- <li id="dashboard1" class="sidebar-item ">
+            @if (request()->is('student/dashboard'))
+                <li class="sidebar-item active">
+            @endif
+            <a class='sidebar-link' href='/pages-profile'>
+                <i class="align-middle" data-feather="user"></i> <span class="align-middle">PROFILE</span>
+            </a>
+            </li>
+
+
+
+            <li class="sidebar-item">
                 <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">DASHBOARD</span>
                 </a>
                 <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                    <li id="dashboard2" class="sidebar-item "><a class='sidebar-link'
-                            href='{{ route('home') }}'>Analytics</a>
-                    </li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-ecommerce'>E-Commerce <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-crypto'>Crypto <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                </ul>
-            </li> --}}
-
-            <li class="{{ request()->is('home') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('home') }}'>
-                    <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-
-
-            {{-- <li id="seilist1" class="{{ request()->is('seilist') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('seilist') }}'>
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">SEI</span>
-                </a>
-            </li> --}}
-
-             <li id="seilist1" class="{{ request()->is('seilist') || request()->is('seilist2') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a data-bs-target="#charts" data-bs-toggle="collapse"  class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">SEI</span>
-                </a>
-                <ul id="charts" class="sidebar-dropdown list-unstyled collapse {{ request()->is('seilist') || request()->is('seilist2')  ? 'show' : ' ' }}" data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ request()->is('seilist') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{route('seilist')}}'>Qualifiers</a></li>
-                    <li class="sidebar-item {{ request()->is('seilist2') ? 'active' : ' ' }}"><a class='sidebar-link' href='{{ route('seilist2')}}'>Potential Qualifiers </a></li>
+                    <li class="sidebar-item active"><a class='sidebar-link' href='/'>Analytics</a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-ecommerce'>E-Commerce <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-crypto'>Crypto <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
 
-            <li id="" class="{{ request()->is('emails') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('emails') }}'>
-                    <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Email Status</span>
+            <li class="sidebar-item">
+                <a data-bs-target="#requirements" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">SUBMIT REQ</span>
                 </a>
+                <ul id="requirements" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class='sidebar-link' href='/'>Periodic</a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-ecommerce'>Thesis<span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-crypto'>PTP <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                </ul>
             </li>
 
-            <li id="" class="{{ request()->is('emaileditor') ? 'sidebar-item active' : 'sidebar-item' }}">
-                <a class='sidebar-link' href='{{ route('emaileditor') }}'>
-                    <i class="align-middle" data-feather="edit"></i> <span class="align-middle">Email Edit</span>
+            <li class="sidebar-item">
+                <a data-bs-target="#request" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="arrow-down"></i> <span class="align-middle">REQUEST</span>
                 </a>
+                <ul id="request" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class='sidebar-link' href='/'>Shift</a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/'>Transfer</a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-ecommerce'>LOA<span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/dashboard-crypto'>Clearance <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                </ul>
             </li>
 
-            {{-- <li id="" class="sidebar-item">
+            <li class="sidebar-item">
                 <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Pages</span>
                 </a>
                 <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/pages-settings'>Settings</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-projects'>Projects <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-clients'>Clients <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-orders'>Orders <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-pricing'>Pricing <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-chat'>Chat <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-projects'>Projects <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-clients'>Clients <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-orders'>Orders <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-pricing'>Pricing <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-chat'>Chat <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/pages-blank'>Blank Page</a></li>
                 </ul>
             </li>
@@ -123,12 +150,9 @@
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/pages-sign-in'>Sign In</a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/pages-sign-up'>Sign Up</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-reset-password'>Reset Password
-                            <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-404'>404 Page <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-500'>500 Page <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-reset-password'>Reset Password <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-404'>404 Page <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/pages-500'>500 Page <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
 
@@ -137,24 +161,18 @@
             </li>
             <li class="sidebar-item">
                 <a data-bs-target="#ui" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">UI
-                        Elements</span>
+                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">UI Elements</span>
                 </a>
                 <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-alerts'>Alerts <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-alerts'>Alerts <span class="sidebar-badge badge bg-primary">Pro</span></a></a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/ui-buttons'>Buttons</a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/ui-cards'>Cards</a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/ui-general'>General</a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/ui-grid'>Grid</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-modals'>Modals <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-offcanvas'>Offcanvas <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-placeholders'>Placeholders <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-tabs'>Tabs <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-modals'>Modals <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-offcanvas'>Offcanvas <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-placeholders'>Placeholders <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/ui-tabs'>Tabs <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                     <li class="sidebar-item"><a class='sidebar-link' href='/ui-typography'>Typography</a></li>
                 </ul>
             </li>
@@ -165,8 +183,7 @@
                 </a>
                 <ul id="icons" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/icons-feather'>Feather</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/icons-font-awesome'>Font Awesome <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/icons-font-awesome'>Font Awesome <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -175,10 +192,8 @@
                 </a>
                 <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/forms-basic-inputs'>Basic Inputs</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-layouts'>Form Layouts <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-input-groups'>Input Groups <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-layouts'>Form Layouts <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-input-groups'>Input Groups <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -192,16 +207,12 @@
             </li>
             <li class="sidebar-item">
                 <a data-bs-target="#form-plugins" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Form
-                        Plugins</span>
+                    <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Form Plugins</span>
                 </a>
                 <ul id="form-plugins" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-advanced-inputs'>Advanced Inputs
-                            <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-editors'>Editors <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-validation'>Validation <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-advanced-inputs'>Advanced Inputs <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-editors'>Editors <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/forms-validation'>Validation <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -209,18 +220,12 @@
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">DataTables</span>
                 </a>
                 <ul id="datatables" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-responsive'>Responsive
-                            Table <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-buttons'>Table with
-                            Buttons <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-column-search'>Column
-                            Search <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-fixed-header'>Fixed
-                            Header <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-multi'>Multi Selection
-                            <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-ajax'>Ajax Sourced Data
-                            <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-responsive'>Responsive Table <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-buttons'>Table with Buttons <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-column-search'>Column Search <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-fixed-header'>Fixed Header <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-multi'>Multi Selection <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/tables-datatables-ajax'>Ajax Sourced Data <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -229,8 +234,7 @@
                 </a>
                 <ul id="charts" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/charts-chartjs'>Chart.js</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/charts-apexcharts'>ApexCharts <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/charts-apexcharts'>ApexCharts <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -245,20 +249,17 @@
                 </a>
                 <ul id="maps" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class='sidebar-link' href='/maps-google'>Google Maps</a></li>
-                    <li class="sidebar-item"><a class='sidebar-link' href='/maps-vector'>Vector Maps <span
-                                class="sidebar-badge badge bg-primary">Pro</span></a></li>
+                    <li class="sidebar-item"><a class='sidebar-link' href='/maps-vector'>Vector Maps <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
                 </ul>
             </li>
 
             <li class="sidebar-item">
                 <a data-bs-target="#multi" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="corner-right-down"></i> <span class="align-middle">Multi
-                        Level</span>
+                    <i class="align-middle" data-feather="corner-right-down"></i> <span class="align-middle">Multi Level</span>
                 </a>
                 <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a data-bs-target="#multi-2" data-bs-toggle="collapse" class="sidebar-link collapsed">Two
-                            Levels</a>
+                        <a data-bs-target="#multi-2" data-bs-toggle="collapse" class="sidebar-link collapsed">Two Levels</a>
                         <ul id="multi-2" class="sidebar-dropdown list-unstyled collapse">
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="#">Item 1</a>
@@ -269,12 +270,10 @@
                         </ul>
                     </li>
                     <li class="sidebar-item">
-                        <a data-bs-target="#multi-3" data-bs-toggle="collapse" class="sidebar-link collapsed">Three
-                            Levels</a>
+                        <a data-bs-target="#multi-3" data-bs-toggle="collapse" class="sidebar-link collapsed">Three Levels</a>
                         <ul id="multi-3" class="sidebar-dropdown list-unstyled collapse">
                             <li class="sidebar-item">
-                                <a data-bs-target="#multi-3-1" data-bs-toggle="collapse"
-                                    class="sidebar-link collapsed">Item 1</a>
+                                <a data-bs-target="#multi-3-1" data-bs-toggle="collapse" class="sidebar-link collapsed">Item 1</a>
                                 <ul id="multi-3-1" class="sidebar-dropdown list-unstyled collapse">
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="#">Item 1</a>
@@ -290,10 +289,10 @@
                         </ul>
                     </li>
                 </ul>
-            </li> --}}
+            </li>
         </ul>
 
-        {{-- <div class="sidebar-cta">
+        <div class="sidebar-cta">
             <div class="sidebar-cta-content">
                 <strong class="d-inline-block mb-2">Weekly Sales Report</strong>
                 <div class="mb-3 text-sm">
@@ -304,6 +303,6 @@
                     <a href="https://adminkit.io/" class="btn btn-outline-primary" target="_blank">Download</a>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 </nav>
