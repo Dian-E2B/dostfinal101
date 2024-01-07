@@ -7,18 +7,29 @@
 
     <div class="sidebar-content js-simplebar">
 
-        <a class='sidebar-brand'>
+        <a class=''>
             <div class="row">
-                <span class="sidebar-brand-text align-items-center col-4">
+                <span style="margin-top:10px;" class="sidebar-brand-text d-flex justify-content-center">
                     <img style="max-width: 70px; max-height: 70px;" id="sidebarimagelogo" src="{{ asset('icons/DOST_scholar_logo.svg') }}" alt="Image Description">
                 </span>
-                <div style="margin-top: 5px" class="col-6">DOST REGION XI</div>
+                @php
+                    $scholarinfo = DB::select('SELECT fname,lname  FROM seis WHERE id = ?', [Auth::user()->scholar_id]);
+                @endphp
+                @if (!empty($scholarinfo))
+
+                    @foreach ($scholarinfo as $info)
+                        <div class="d-flex justify-content-center mt-2" style="">
+                            <div style="font-weight:800; color: white">{{ $info->fname }} {{ $info->lname }}</div>
+                        </div>
+                    @endforeach
+                @endif
+
             </div>
 
         </a>
 
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-2">
 
             @php
                 $scholarstatusidresult = DB::select('SELECT scholar_status_id FROM seis WHERE id = ?', [$scholarId]);

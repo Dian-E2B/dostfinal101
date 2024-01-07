@@ -25,7 +25,9 @@
 
             }
 
-            @keyframes float {
+            .card {}
+
+            /*   @keyframes float {
                 0% {
                     shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
 
@@ -41,7 +43,7 @@
                     shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
                     transform: translatey(0px);
                 }
-            }
+            } */
         </style>
     </head>
 
@@ -53,67 +55,67 @@
 
                         <div class="d-table-cell align-middle">
 
-                            <div style=" " class="introheader text-center mt-4">
-                                <img src="{{ asset('icons/DOSTLOGOstudent.png') }}" width="700" height="700">
 
-                            </div>
 
-                            <div class="card" style="margin-top: 40px">
-                                <div class="card-body">
-                                    <div class="m-sm-100">
+                            <div class="">
 
-                                        <section style="color:black; background-color: white; padding: 0px 0px; border-radius: 15px; opacity: 0.99; text-align: center !important;">
-                                            <h1 style="" class="h2">Welcome, Scholar!
-                                            </h1>
-                                            <p class="lead">
-                                                Please enter your credentials.
-                                            </p>
-                                        </section>
-                                        <form method="POST" action="{{ route('student.login') }}">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autocomplete="email" autofocus />
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
+                                <div class="card" style="margin-top: 40px">
+                                    <img style="position: absolute;z-index:1; transform: rotate(-35deg); top: 175px; left: 292px; max-width: 150px; max-height: 150px;" src="{{ asset('icons/scholar_hat.svg') }}">
+                                    <div class="card-body">
+                                        <div class="m-sm-100">
 
-                                            <div class="mb-1 mt-3">
-                                                <div class="input-group">
-                                                    <input id="password" type="password" class="form-control form-control-lg" placeholder="Enter your password" name="password" aria-label="Username" aria-describedby="addon-wrapping">
-                                                    <span class="input-group-text" id="addon-wrapping" style="cursor: pointer" onclick="togglePassword()">
-                                                        <i id="eye-icon" class="far fa-eye"></i>
-                                                    </span>
+                                            <section style="color:black; background-color: white; padding: 0px 0px; border-radius: 15px; opacity: 0.99; text-align: center !important;">
+                                                <h1 style="" class="h2">Welcome, Scholar!
+                                                </h1>
+                                                <p class="lead">
+                                                    Please enter your credentials.
+                                                </p>
+                                            </section>
+                                            <form method="POST" action="{{ route('student.login') }}">
+                                                @csrf
+                                                <div class="mb-3">
+
+                                                    <input id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autocomplete="email" autofocus />
+                                                    @error('email')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
                                                 </div>
-                                                {{-- <label class="form-label">Password</label>
+
+                                                <div class="mb-1 mt-3">
+                                                    <div class="input-group">
+                                                        <input id="password" type="password" class="form-control form-control-lg" placeholder="Enter your password" name="password" aria-label="Username" aria-describedby="addon-wrapping">
+                                                        <span class="input-group-text" id="addon-wrapping" style="cursor: pointer" onclick="togglePassword()">
+                                                            <i id="eye-icon" class="far fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                    {{-- <label class="form-label">Password</label>
                                                 <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" /> --}}
 
-                                                {{-- @if (Route::has('password.request'))
+                                                    {{-- @if (Route::has('password.request'))
                                                 <small>
                                                     <a href="{{ route('password.request') }}">Forgot password?</a>
                                                 </small>
                                             @endif --}}
-                                            </div>
-                                            <div>
-
-                                                <div class="form-check align-items-center">
-                                                    <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
-                                                    <label class="form-check-label text-small" for="customControlInline">Remember me</label>
                                                 </div>
-                                            </div>
-                                            <div class="d-grid gap-2 mt-3">
-                                                <button type="submit" class='btn btn-lg btn-primary' href='/'>Sign
-                                                    in</button>
+                                                <div>
 
-                                            </div>
-                                        </form>
+                                                    <div class="form-check align-items-center">
+                                                        <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+                                                        <label class="form-check-label text-small" for="customControlInline">Remember me</label>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid gap-2 mt-3">
+                                                    <button type="submit" class='btn btn-lg btn-primary' href='/'>Sign
+                                                        in</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             @if (Route::has('register'))
                                 <div style="display: none;" class="text-center mb-3">
                                     Don't have an account? <a href='{{ route('register') }}'>Sign up</a>
