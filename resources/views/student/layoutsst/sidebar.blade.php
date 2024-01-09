@@ -7,26 +7,24 @@
 
     <div class="sidebar-content js-simplebar">
 
-        <a class=''>
-            <div class="row">
-                <span style="margin-top:10px;" class="sidebar-brand-text d-flex justify-content-center">
-                    <img style="max-width: 70px; max-height: 70px;" id="sidebarimagelogo" src="{{ asset('icons/DOST_scholar_logo.svg') }}" alt="Image Description">
-                </span>
-                @php
-                    $scholarinfo = DB::select('SELECT fname,lname  FROM seis WHERE id = ?', [Auth::user()->scholar_id]);
-                @endphp
-                @if (!empty($scholarinfo))
 
-                    @foreach ($scholarinfo as $info)
-                        <div class="d-flex justify-content-center mt-2" style="">
-                            <div style="font-weight:800; color: white">{{ $info->fname }} {{ $info->lname }}</div>
-                        </div>
-                    @endforeach
-                @endif
+        <div class="row">
+            <span style="margin-top:10px;" class="sidebar-brand-text d-flex justify-content-center">
+                <img style="max-width: 90px; max-height: 90px;" id="sidebarimagelogo" src="{{ asset('icons/DOST_scholar_logo.svg') }}" alt="Image Description">
+            </span>
+            @php
+                $scholarinfo = DB::select('SELECT fname,lname  FROM seis WHERE id = ?', [Auth::user()->scholar_id]);
+            @endphp
+            @if (!empty($scholarinfo))
+                @foreach ($scholarinfo as $info)
+                    <div class="d-flex justify-content-center mt-3" style="">
+                        <div style="font-weight:600; color: rgb(43, 41, 41)">{{ $info->fname }} {{ $info->lname }}</div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
 
-            </div>
 
-        </a>
 
 
         <div class="d-flex justify-content-center mt-2">

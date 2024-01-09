@@ -5,6 +5,7 @@
         <title>DOST XI</title>
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <link href="{{ asset('css/all.css') }}">
+        <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 

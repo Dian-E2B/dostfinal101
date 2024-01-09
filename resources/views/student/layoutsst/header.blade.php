@@ -4,20 +4,11 @@
     </a>
 
     {{-- REQUEST  DROPDOWN BUTTON --}}
-    @php
-        $scholarinfo = DB::select('SELECT fname,lname  FROM seis WHERE id = ?', [Auth::user()->scholar_id]);
-    @endphp
-    @if (!empty($scholarinfo))
-
-        @foreach ($scholarinfo as $info)
-            {{ $info->fname }} {{ $info->lname }}<br>
-        @endforeach
-    @endif
     <ul class="navbar-nav d-none d-lg-flex">
 
         <li class="nav-item dropdown">
 
-            <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Request
             </a>
             <div class="dropdown-menu" aria-labelledby="requestDropdown">

@@ -4,10 +4,24 @@
     <head>
         <title>DOST XI</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
         <link href="{{ asset('css/all.css') }}">
+
+
+        <style>
+            body[data-theme=light] .sidebar-item.active .sidebar-link:hover,
+            body[data-theme=light] .sidebar-item.active>.sidebar-link {
+                background: #48c4d361;
+            }
+
+            body[data-theme=light] .sidebar-item.active .sidebar-link:hover,
+            body[data-theme=light] .sidebar-item.active>.sidebar-link {
+                color: #0758cd;
+            }
+        </style>
     </head>
 
-    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div class="wrapper">
 
             @include('student.layoutsst.sidebar')

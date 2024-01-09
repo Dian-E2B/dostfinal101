@@ -8,17 +8,13 @@
         <style>
             body {
                 background-color: #dddddd;
-                font-family: "Calibri", sans-serif;
-                /*  font-size: 12pt; */
-            }
 
-            .sidebar {
-                font-size: 12pt;
+                /*  font-size: 12pt; */
             }
         </style>
     </head>
 
-    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div class="wrapper">
 
             {{-- SIDEBAR START --}}

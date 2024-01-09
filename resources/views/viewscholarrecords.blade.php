@@ -33,7 +33,7 @@
         /* Add more styles as needed */
     </style>
 
-    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div data-bs-theme="dark" class="wrapper">
 
 

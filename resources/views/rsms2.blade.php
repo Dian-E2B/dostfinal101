@@ -105,7 +105,7 @@
         </style>
     </head>
 
-    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
         <div data-bs-theme="dark" class="wrapper">
             {{-- SIDEBAR START --}}
             @include('layouts.sidebar')
@@ -154,8 +154,8 @@
                                             <th style="width:100px !important;"><span style="" hidden>MF</span>
                                             </th>
                                             <th style="width:100px !important;"><span style="" hidden>Program</span></th>
-                                            <th>School</th>
-                                            <th>Course</th>
+                                            <th style="width:150px !important;"><span style="" hidden>School</span></th>
+                                            <th style="width:150px !important;"><span style="" hidden>Course</span></th>
                                             <th>
                                                 @if ($semester == 1)
                                                     {{-- 1ST SEM --}}
@@ -484,7 +484,7 @@
                             data: 'SCHOLARSHIPPROGRAM',
                             render: function(data, type, row) {
                                 // Apply custom styles to the email address
-                                var styledgender = '<span style="padding-right: 90px;">' + data +
+                                var styledgender = '<span style="padding-right: 50px;">' + data +
                                     '</span>';
                                 return styledgender;
                             }
@@ -492,10 +492,21 @@
                         },
                         {
                             data: 'SCHOOL',
-
+                            render: function(data, type, row) {
+                                // Apply custom styles to the email address
+                                var styledschool = '<span style="padding-right: 30px;">' + data +
+                                    '</span>';
+                                return styledschool;
+                            }
                         },
                         {
                             data: 'COURSE',
+                            render: function(data, type, row) {
+                                // Apply custom styles to the email address
+                                var stylecourse = '<span style="padding-right: 30px;">' + data +
+                                    '</span>';
+                                return stylecourse;
+                            }
 
                         },
                         {
@@ -576,7 +587,7 @@
                             searchable: false,
                         },
                         {
-                            targets: [0, 3, 5, 19, 4],
+                            targets: [0, 3, 5, 6, 7, 19, 4],
                             orderable: false,
                         },
 
@@ -598,7 +609,7 @@
 
 
                     initComplete: function() {
-                        this.api().columns([5, 4]).every(function(d) {
+                        this.api().columns([5, 4, 6, 7]).every(function(d) {
                             var column = this;
                             var select = $(
                                     "<select style=\"padding-top:1px !important; padding-bottom:1px !important;\" class=\"form-control\"><option value=\"\">" +
