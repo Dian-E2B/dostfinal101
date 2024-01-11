@@ -61,11 +61,14 @@ class SendMailController extends Controller
         if (!empty($emailsra7687)) {
 
             foreach ($emailsra7687 as $email2) {
+
                 $mailData = [
                     'title' => '<h2><span contenteditable="false">Congratulations for qualifying for the 2022 DOST-SEI S&T Undergraduate Scholarships under <strong style="color: red">RA 7687</strong>.</span></h2> ',
                     'message' => $content->content,
                 ];
 
+
+                /* dd($date, $venue, $time); */
                 $sei = Sei::where('email', $email2)->first();
                 $id = $sei->id;
                 $birthday = $sei->bday;

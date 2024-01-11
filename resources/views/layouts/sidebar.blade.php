@@ -37,6 +37,7 @@
                     <li class="sidebar-item {{ request()->is('seilist') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('seilist') }}'>Qualifiers</a>
                     </li>
                     <li class="sidebar-item {{ request()->is('seilist2') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('seilist2') }}'>Potential Qualifiers </a></li>
+                    <li class="sidebar-item {{ request()->is('seilist2') ? 'active' : '' }}"><a class='sidebar-link' href='{{ route('seilist2') }}'>Endorsed </a></li>
                 </ul>
             </li>
 

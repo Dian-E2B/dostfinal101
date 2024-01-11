@@ -722,9 +722,8 @@
 
                         // Send the updated data to the server using AJAX
                         $.ajax({
-                            url: '{{ url('/savechangesongongoing/') }}' + '/' +
-                                number, // Replace with your server endpoint
-                            method: 'POST', // You can use POST or PUT based on your server-side implementation
+                            url: '{{ url('/savechangesongongoing/') }}' + '/' + number, // Replace with your server endpoint
+                            method: 'post', // You can use POST or PUT based on your server-side implementation
                             data: updatedData,
                             success: function(response) {
                                 // Handle success, e.g., close the modal or show a success message

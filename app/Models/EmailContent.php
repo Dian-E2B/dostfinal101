@@ -11,9 +11,5 @@ class EmailContent extends Model
 
     protected $table = 'emailcontent';
 
-    protected $fillable = ['id','content','updated_at'];
-
-
-
-
+    protected $fillable = ['id', 'content', 'updated_at', 'venue', 'time', 'thisdate'];
 }
