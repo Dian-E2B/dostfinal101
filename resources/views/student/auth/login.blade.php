@@ -3,6 +3,7 @@
 
     <head>
         <title>DOST XI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{-- <link rel="stylesheet" href="{{ asset('css/kitlight.css') }}"> --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
@@ -19,10 +20,10 @@
                 transform: translatey(0px);
                 animation: float 6s ease-in-out infinite;
                 z-index: -1;
-                position: absolute;
+                position: inherit;
                 align-items: center;
                 justify-content: center;
-                margin: -250px -350px;
+                margin: auto;
 
             }
 
@@ -53,66 +54,63 @@
             <div class="container d-flex flex-column">
                 <div class="row vh-100">
                     <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
-
                         <div class="d-table-cell align-middle">
-
-
-
-                            <div class="">
+                            <div>
 
                                 <div class="card" style="margin-top: 40px">
-                                    <img style="position: absolute;z-index:1; transform: rotate(-35deg); top: 175px; left: 292px; max-width: 150px; max-height: 150px;" src="{{ asset('icons/scholar_hat.svg') }}">
-                                    <div class="card-body">
-                                        <div class="m-sm-100">
+                                    <div class="card">
+                                        <img style="z-index:0;   max-width: 150px; max-height: 150px;" src="{{ asset('icons/DOST_scholar_logo.svg') }}">
+                                        <div class="card-body">
 
-                                            <section style="color:black; background-color: white; padding: 0px 0px; border-radius: 15px; opacity: 0.99; text-align: center !important;">
-                                                <h1 style="" class="h2">Welcome, Scholar!
-                                                </h1>
-                                                <p class="lead">
-                                                    Please enter your credentials.
-                                                </p>
-                                            </section>
-                                            <form method="POST" action="{{ route('student.login') }}">
-                                                @csrf
-                                                <div class="mb-3">
+                                            <div class="">
+                                                <section style="color:black; background-color: white; padding: 0px 0px; text-align: center !important;">
+                                                    <h2>Welcome, Scholar!</h2>
+                                                    <p class="lead">
+                                                        Please enter your credentials.
+                                                    </p>
+                                                </section>
+                                                <form method="POST" action="{{ route('student.login') }}">
+                                                    @csrf
+                                                    <div class="mb-3">
 
-                                                    <input id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autocomplete="email" autofocus />
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="mb-1 mt-3">
-                                                    <div class="input-group">
-                                                        <input id="password" type="password" class="form-control form-control-lg" placeholder="Enter your password" name="password" aria-label="Username" aria-describedby="addon-wrapping">
-                                                        <span class="input-group-text" id="addon-wrapping" style="cursor: pointer" onclick="togglePassword()">
-                                                            <i id="eye-icon" class="far fa-eye"></i>
-                                                        </span>
+                                                        <input id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autocomplete="email" autofocus />
+                                                        @error('email')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
-                                                    {{-- <label class="form-label">Password</label>
+
+                                                    <div class="mb-1 mt-3">
+                                                        <div class="input-group">
+                                                            <input id="password" type="password" class="form-control form-control-lg" placeholder="Enter your password" name="password" aria-label="Username" aria-describedby="addon-wrapping">
+                                                            <span class="input-group-text" id="addon-wrapping" style="cursor: pointer" onclick="togglePassword()">
+                                                                <i id="eye-icon" class="far fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                        {{-- <label class="form-label">Password</label>
                                                 <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" /> --}}
 
-                                                    {{-- @if (Route::has('password.request'))
+                                                        {{-- @if (Route::has('password.request'))
                                                 <small>
                                                     <a href="{{ route('password.request') }}">Forgot password?</a>
                                                 </small>
                                             @endif --}}
-                                                </div>
-                                                <div>
-
-                                                    <div class="form-check align-items-center">
-                                                        <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
-                                                        <label class="form-check-label text-small" for="customControlInline">Remember me</label>
                                                     </div>
-                                                </div>
-                                                <div class="d-grid gap-2 mt-3">
-                                                    <button type="submit" class='btn btn-lg btn-primary' href='/'>Sign
-                                                        in</button>
+                                                    <div>
 
-                                                </div>
-                                            </form>
+                                                        <div class="form-check align-items-center">
+                                                            <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+                                                            <label class="form-check-label text-small" for="customControlInline">Remember me</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid gap-2 mt-3">
+                                                        <button type="submit" class='btn btn-lg btn-primary' href='/'>Sign
+                                                            in</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -88,10 +88,6 @@
                                                     </div>
                                                 @endif
 
-
-
-
-
                                                 <label>
                                                     <input name="scholarid" style="display: none;" value="{{ $replyslip->scholar_id }}">
                                                 </label>

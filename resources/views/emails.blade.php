@@ -30,10 +30,10 @@
                         <div class="col-lg-12 col-lg-6">
                             <div class="tab">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item"><a id="thistab1" class="nav-link active" href="#tab-1" data-bs-toggle="tab" role="tab">Pending</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab">Accepted</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#tab-3" data-bs-toggle="tab" role="tab">Rejected</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#tab-4" data-bs-toggle="tab" role="tab">Deferred</a></li>
+                                    <li class="nav-item"><a id="thistab1" class="nav-link active d-flex align-items-center" href="#tab-1" data-bs-toggle="tab" role="tab"><i class="fas fa-comment-alt-exclamation"></i>&nbsp;Notified</a></li>
+                                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="#tab-2" data-bs-toggle="tab" role="tab"><i class="fas fa-check-square"></i>&nbsp;Availed</a></li>
+                                    <li class="nav-item"><a class="nav-link d-flex align-items-center" href="#tab-3" data-bs-toggle="tab" role="tab"><i class="fas fa-times-circle"></i>&nbsp;Not Availed</a></li>
+                                    <li class="nav-item"><a class="nav-link d-flex align-items-center " href="#tab-4" data-bs-toggle="tab" role="tab"><i style="margin-bottom: 2px;" class="fas fa-clipboard-user"></i>&nbsp;Attendance</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-1" role="tabpanel">
