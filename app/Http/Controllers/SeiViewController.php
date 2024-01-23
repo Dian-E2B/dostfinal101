@@ -37,7 +37,7 @@ class SeiViewController extends Controller
                 })
                 ->select('seis.*', 'programs.progname', 'genders.gendername')
                 ->get();
-            Debugbar::info($seis);
+            // Debugbar::info($seis);
             return DataTables::of($seis)->make(true);
             // return response()->json(['seis' => $seis]);
         } else {
@@ -50,7 +50,7 @@ class SeiViewController extends Controller
                 })
                 ->select('seis.*', 'programs.progname', 'genders.gendername')
                 ->get();
-            Debugbar::info($seis);
+            // Debugbar::info($seis);
             return DataTables::of($seis)->make(true);
         }
     }
@@ -58,11 +58,11 @@ class SeiViewController extends Controller
 
     public function getOngoingSeilistById($number)
     {
+
         $result = Sei::where('id', $number)->first();
         if (!$result) {
             return response()->json(['error' => 'Record not found'], 404);
         }
-        Debugbar::info($result);
         return response()->json($result);
     }
 
@@ -83,16 +83,24 @@ class SeiViewController extends Controller
 
     public function store(Request $request)
     {
-        try {
-
-            Excel::import(new SeiImport(), $request->file(key: "excel_file"));
+        $firstRow = Excel::toArray(new SeiImport(), $request->file('excel_file')->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX)[0][0];
+        if ($firstRow !== ['SPAS NO.', 'AppID', 'STRAND', 'program', 'last name', 'first name', 'middle name', 'suffix', 'sex', 'birthday', 'email address', 'contact number', 'house number', 'street', 'village', 'barangay', 'municipality', 'province', 'zipcode', 'district', 'region', 'hsname', 'lacking', 'remarks']) {
+            // Redirect back with an error message
+            session()->flash('error', 'A column has been deleted or added. Please check the file');
             return redirect()->back();
-        } catch (\Exception $e) {
-            // Handle the error
-            // You can log the error, display a user-friendly message, or take other actions
-            $errorMessage = $e->getMessage();
-            // flash()->addError('There is a problem during upload ');
-            echo 'An error occurred: ' . $errorMessage;
+        } else {
+            try {
+
+                Excel::import(new SeiImport(), $request->file(key: "excel_file"));
+                flash()->addSuccess('Records successfully Imported');
+                return redirect()->back();
+            } catch (\Exception $e) {
+                // Handle the error
+                // You can log the error, display a user-friendly message, or take other actions
+                $errorMessage = $e->getMessage();
+                // flash()->addError('There is a problem during upload ');
+                echo 'An error occurred: ' . $errorMessage;
+            }
         }
     }
 
@@ -104,16 +112,16 @@ class SeiViewController extends Controller
 
     public function seilistviewajaxpotential()
     {
-        $seis2 = DB::table('seis')
-            ->join('programs', 'seis.program_id', '=', 'programs.id')
+
+        $seis2 = Sei::join('programs', 'seis.program_id', '=', 'programs.id')
             ->join('genders', 'seis.gender_id', '=', 'genders.id')
             ->where(function ($query) {
-                $query->where('lacking', '<>', NULL)
-                    ->where('lacking', '<>', "");
+                $query->whereNotNull('lacking')
+                    ->orWhere('lacking', '<>', '');
             })
-            ->select('seis.*', 'programs.progname', 'genders.gendername', DB::raw('COALESCE(lacking, "") as lacking'), 'seis.id as seis_id')
+            ->select('seis.*', 'programs.progname', 'genders.gendername', DB::raw('COALESCE(lacking, "") as lacking'))
             ->get();
-        Debugbar::info($seis2);
+        /*  Debugbar::info($seis2); */
 
         return DataTables::of($seis2)->make(true);
     }

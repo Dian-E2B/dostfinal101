@@ -35,7 +35,6 @@
             body {
                 background-color: rgb(255, 255, 255);
                 background-color: #dddddd;
-                font-family: "Calibri", sans-serif;
             }
 
             .content {
@@ -97,10 +96,6 @@
 
             .view-btn {
                 padding-left: 6px;
-            }
-
-            .sidebar {
-                font-size: 12pt;
             }
         </style>
     </head>
