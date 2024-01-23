@@ -9,6 +9,7 @@ use App\Models\Scholars;
 use App\Models\Sei;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class StudentViewController extends Controller
@@ -64,6 +65,26 @@ class StudentViewController extends Controller
             // Handle the case where the authenticated user's ID doesn't have a matching scholar_id
             return view('student.replyslipview');
         }
+    }
+
+    public function viewsubmittedgrade()
+    {
+        $userId = auth()->id();
+        $studentuser = Student::where('id', $userId)->first();
+        $scholarId = $studentuser->scholar_id;
+        $cogs = DB::table('cogs')
+            ->join('cogdetails', 'cogs.id', '=', 'cogdetails.cog_id')
+            ->where('cogs.scholar_id', $scholarId)
+            ->select(
+                'cogs.startyear',
+                'cogs.semester',
+                DB::raw('GROUP_CONCAT(cogdetails.subjectname) AS Subjectname'),
+                DB::raw('GROUP_CONCAT(cogdetails.grade) AS Grade'),
+                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units')
+            )
+            ->groupBy('cogs.startyear', 'cogs.semester')
+            ->get();
+        return view('student.viewsubmittedgrade', compact('cogs'));
     }
 
     public function requestclearanceview()

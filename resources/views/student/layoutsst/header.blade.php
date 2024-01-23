@@ -5,18 +5,16 @@
 
     {{-- REQUEST  DROPDOWN BUTTON --}}
     <ul class="navbar-nav d-none d-lg-flex">
-
         <li class="nav-item dropdown">
-
-            <a class="nav-link dropdown-toggle" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Request
+            <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Request/Submit
             </a>
             <div class="dropdown-menu" aria-labelledby="requestDropdown">
                 <a class="dropdown-item" href="{{ route('student.requestclearance') }}"><i class="align-middle me-1" data-feather="home"></i>
                     Request/Upload Documents</a>
-                {{-- <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i class="align-middle me-1" data-feather="book-open"></i>
-                    Documentation</a> --}}
+
                 <a class="dropdown-item" href="{{ route('student/gradeinput') }}"><i class="align-middle me-1 fas fa-file-certificate"></i> Submit Grades</a>
+                <a class="dropdown-item" href="{{ route('student.viewsubmittedgrade') }}"><i class="align-middle me-1 fas fa-stamp"></i> View Grades</a>
             </div>
         </li>
     </ul>

@@ -144,14 +144,15 @@
                         beginAtZero: !0,
                     },
                 },
-                legend: {
-                    display: !0,
-                    labels: {
-                        boxWidth: 20,
-                        usePointStyle: !0,
-                    },
-                },
+
                 plugins: {
+                    legend: {
+                        labels: {
+
+                            color: 'black', // Set the legend label color here
+
+                        },
+                    },
                     datalabels: {
                         color: 'black', // change this to your preferred color
                         font: {
@@ -180,7 +181,7 @@
 
         /* ProgramChart Part */
         function getPredefinedColor(index) {
-            var predefinedColors = ['#3498db', '#000000', '#49C4D3'];
+            var predefinedColors = ['#ff3333', '#cccc00', '#ff00cc'];
             return predefinedColors[index % predefinedColors.length];
         }
 
@@ -202,9 +203,9 @@
                 datasets: [{
                     data: countsPROGRAM, // Use countsPROGRAM
                     backgroundColor: [
-                        '#3498db',
-                        '#000000',
-                        '#49C4D3',
+                        '#ff3333',
+                        '#cccc00',
+                        '#ff00cc',
                     ],
                 }]
             },
@@ -218,6 +219,9 @@
 
                 plugins: {
                     legend: {
+                        labels: {
+                            color: 'black' // Set the legend label color here
+                        },
                         position: 'left',
                     },
                     datalabels: {
@@ -230,10 +234,10 @@
                             let percentage = (value * 100 / sum).toFixed(1) + "%";
                             return percentage;
                         },
-                        color: 'green', // change this to your preferred color
+                        color: 'black', // change this to your preferred color
                         font: {
                             weight: 'bold',
-                            size: 11.5 // change this to your preferred font size
+                            size: 12.5 // change this to your preferred font size
                         },
                     }
                 },
@@ -302,7 +306,7 @@
                         color: 'black', // change this to your preferred color
                         font: {
                             weight: 'bold',
-                            size: 11.5 // change this to your preferred font size
+                            size: 12.5 // change this to your preferred font size
                         },
                     },
                     tooltip: {
@@ -324,6 +328,9 @@
                         labels: {
                             boxWidth: 20,
                             usePointStyle: !0,
+
+                            color: 'black',
+
                         },
                     },
                 },
@@ -332,7 +339,7 @@
 
         /* Gender Chart Colors */
         function getPredefinedColorGender(index) {
-            var predefinedColors = ['#FFC0CB', '#A52A2A'];
+            var predefinedColors = ['#FFC0CB', '#33ff33'];
             return predefinedColors[index % predefinedColors.length];
         }
 
@@ -353,7 +360,7 @@
                 labels: labelsgender,
                 datasets: [{
                     data: countsgender,
-                    backgroundColor: ['#FFC0CB', '#A52A2A', ],
+                    backgroundColor: ['#FFC0CB', '#33ff33', ],
                 }]
             },
             options: {
@@ -370,6 +377,10 @@
                 plugins: {
                     legend: {
                         position: 'left',
+                        labels: {
+                            color: 'black' // Set the legend label color here
+                        }
+
                     },
                     datalabels: {
 
@@ -421,13 +432,15 @@
                     duration: 5000,
                     easing: 'easeOutQuart',
                 },
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        fontColor: 'black',
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'black',
 
-                    }
-                },
+                        }
+                    },
+                }
+
             },
         });
 
@@ -452,6 +465,10 @@
 
                 plugins: {
                     datalabels: {
+                        font: {
+                            weight: 'bold',
+                            size: 14,
+                        },
                         color: 'black',
                         formatter: (value) => {
                             return value + '%';
@@ -459,6 +476,9 @@
                     },
                     legend: {
                         position: 'left',
+                        labels: {
+                            color: "black",
+                        },
                     },
                 },
                 maintainAspectRatio: false,
@@ -638,23 +658,42 @@
 
         /* ongoingSchools */
         var ctxschools = document.getElementById('mySchoolChart').getContext('2d');
-        /*  var schoolsColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)',
-             'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'
-         ]; // Add more colors as needed */
+
+        // Function to generate a random color in hexadecimal format
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Get the data from your PHP variables
+        var labelsSchool = @json($dataSchoool['labelsschool']);
+        var dataSchool = @json($dataSchoool['datasschool']);
+
+        // Generate random colors for each data point
+        var backgroundColorsSchool = dataSchool.map(() => getRandomColor());
+
         var mySchoolChart = new Chart(ctxschools, {
             type: 'doughnut',
             data: {
-                labels: @json($dataSchoool['labelsschool']),
+                labels: labelsSchool,
                 datasets: [{
-                    label: @json($dataSchoool['labelsschool']),
-                    data: @json($dataSchoool['datasschool']),
-                    borderWidth: 2
+                    label: labelsSchool,
+                    data: dataSchool,
+                    borderWidth: 2,
+                    backgroundColor: backgroundColorsSchool, // Set random colors here
                 }]
             },
             options: {
-
                 plugins: {
                     datalabels: {
+                        font: {
+                            weight: 'bold',
+                            size: 14,
+                        },
                         color: 'black',
                         formatter: (value) => {
                             return value + '%';
@@ -662,6 +701,10 @@
                     },
                     legend: {
                         position: 'left',
+                        labels: {
+                            color: "black",
+
+                        },
                     },
                 },
                 maintainAspectRatio: false,
@@ -669,30 +712,47 @@
                     duration: 5000,
                     easing: 'easeOutQuart',
                 },
-
             },
         });
 
         /* ongoingMovement */
         var ctxmovement = document.getElementById('myMovementChart').getContext('2d');
-        /*  var schoolsColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)',
-             'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'
-         ]; // Add more colors as needed */
+
+        // Function to generate a random color in hexadecimal format
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Get the data from your PHP variables
+        var labels = @json($dataMovements['labelsmovements']);
+        var data = @json($dataMovements['datasmovements']);
+
+        // Generate random colors for each data point
+        var backgroundColors = data.map(() => getRandomColor());
+
         var myMovementChart = new Chart(ctxmovement, {
             type: 'doughnut',
             data: {
-
-                labels: @json($dataMovements['labelsmovements']),
+                labels: labels,
                 datasets: [{
-                    label: @json($dataMovements['labelsmovements']),
-                    data: @json($dataMovements['datasmovements']),
-                    borderWidth: 2
+                    label: labels,
+                    data: data,
+                    borderWidth: 2,
+                    backgroundColor: backgroundColors, // Set random colors here
                 }]
             },
             options: {
-
                 plugins: {
                     datalabels: {
+                        font: {
+                            weight: 'bold',
+                            size: 14,
+                        },
                         color: 'black',
                         formatter: (value) => {
                             return value + '%';
@@ -707,10 +767,10 @@
                     duration: 5000,
                     easing: 'easeOutQuart',
                 },
-
             },
         });
     </script>
+
 
 
 </html>

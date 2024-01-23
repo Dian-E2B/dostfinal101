@@ -74,24 +74,25 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/enrollscholartoongoing/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'enrollscholartoongoing'])->name('enrollscholartoongoing');
 
 
-    //MONITORING
-    Route::get('/rsms', [\App\Http\Controllers\RsmsViewController::class, 'rsmsview'])->name('rsms');
-    Route::get('/rsms2/{startyear}/{endyear}/{semester}', [RsmsViewController::class, 'rsmsview2'])->name('rsms2');
-    Route::get('/rsmslistra7687', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
-    Route::get('/rsmslistra10612', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistra10612view'])->name('rsmslistra10612');
-    Route::get('/rsmslistmerit', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
-    Route::get('/rsmslistnoncompliance', [\App\Http\Controllers\RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
-    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboardview'])->name('dashboard');
-    Route::get('datatable/data', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingData'])->name('datatable.data');
-    Route::get('/get-ongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingById']);
-    Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
-    // Route::get('/getongoingfiltered/{startyear}/{endyear}/{semester}', 'YourController@getongoingfiltered')->name('getongoingfiltered');
-    Route::get('/getongoingfiltered', [\App\Http\Controllers\RsmsViewController::class, 'getOngoingDataFiltered'])->name('getongoingfiltered');
+    //ONGOINGLIST
     Route::get('/ongoinglist', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglist'])->name('ongoinglist');
-    Route::POST('/ONGOINGLISTVIEW2', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglistsview2'])->name('ONGOINGLISTVIEW2'); //if view button is clicked
-    Route::get('/getongoinglistgroupsajax', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajax'])->name('getongoinglistgroupsajax');
-    Route::get('/getongoinglistgroupsajaxviewclicked', [\App\Http\Controllers\RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'])->name('getongoinglistgroupsajaxviewclicked');
-    Route::post('/savechangesongongoing/{number}', [\App\Http\Controllers\RsmsViewController::class, 'SaveChangesOngoing']);
+    Route::get('dashboard', [DashboardController::class, 'dashboardview'])->name('dashboard');
+    Route::get('datatable/data', [RsmsViewController::class, 'getOngoingData'])->name('datatable.data');
+    Route::get('/export-to-excel', 'RsmsActionController@exportToExcel');
+    Route::get('/getongoingfiltered', [RsmsViewController::class, 'getOngoingDataFiltered'])->name('getongoingfiltered');
+    Route::get('/getongoinglistgroupsajax', [RsmsViewController::class, 'getongoinglistgroupsajax'])->name('getongoinglistgroupsajax');
+    Route::get('/getongoinglistgroupsajaxviewclicked', [RsmsViewController::class, 'getongoinglistgroupsajaxviewclicked'])->name('getongoinglistgroupsajaxviewclicked');
+
+
+    //RSMS
+    Route::get('/rsms', [RsmsViewController::class, 'rsmsview'])->name('rsms');
+    Route::GET('/get-ongoing/{number}', [RsmsViewController::class, 'getOngoingById']);
+    Route::get('/rsms2/{startyear}/{endyear}/{semester}', [RsmsViewController::class, 'rsmsview2'])->name('rsms2');
+    Route::get('/rsmslistra7687', [RsmsViewController::class, 'rsmslistra7687view'])->name('rsmslistra7687');
+    Route::get('/rsmslistra10612', [RsmsViewController::class, 'rsmslistra10612view'])->name('rsmslistra10612');
+    Route::get('/rsmslistmerit', [RsmsViewController::class, 'rsmslistmeritview'])->name('rsmsmerit');
+    Route::get('/rsmslistnoncompliance', [RsmsViewController::class, 'rsmslistnoncomplianceview'])->name('rsmsnoncompliance');
+    Route::POST('/savechangesongongoing/{number}', [RsmsViewController::class, 'SaveChangesOngoing'])->name('savechangesongongoing');
     Route::get('/viewscholarrecords/{number}', [RsmsViewController::class, 'viewscholarrecordsview'])->name('viewscholarrecords');
     Route::get('/getscholargrades/{number}', [RsmsViewController::class, 'getscholargrades'])->name('getscholargrades');
     Route::post('/savecholargrades/{number}', [RsmsViewController::class, 'savecholargrades'])->name('savecholargrades');
@@ -101,7 +102,6 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/getscholarshipstatus/{number}', [RsmsViewController::class, 'getscholarshipstatus'])->name('getscholarshipstatus');
     Route::post('/savescholarshipstatus/{number}', [RsmsViewController::class, 'savescholarshipstatus'])->name('savescholarshipstatus');
     Route::get('/getdocumentsdata/{number}', [RsmsViewController::class, 'getdocumentsdata'])->name('getdocumentsdata');
-
 
     Route::get('/getprogramchartyearfilter/{year}', 'YourController@getProgramChartData');
     //ANONUNCEMENT
@@ -128,7 +128,8 @@ require __DIR__ . '/studentauth.php';
 
 Route::get('student/dashboard', [StudentViewController::class, 'index'])
     ->middleware(['auth:student', 'verified'])->name('student.dashboard');
-
+Route::get('student/viewsubmittedgrade', [StudentViewController::class, 'viewsubmittedgrade'])
+    ->middleware(['auth:student', 'verified'])->name('student.viewsubmittedgrade');
 Route::get('student/replyslipview', [StudentViewController::class, 'replyslipview'])
     ->middleware(['auth:student', 'verified'])->name('student.replyslipview');
 Route::get('student/requestclearanceview', [StudentViewController::class, 'requestclearanceview'])
@@ -148,5 +149,6 @@ Route::POST('/savepdfclearance', [\App\Http\Controllers\StudentViewController::c
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::post('/admin/dashboardadmin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboardadmin');
+    Route::get('/admin/dashboardadmin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboardadmin');
+    Route::get('/admin/approval', [\App\Http\Controllers\AdminController::class, 'indexadminapproval'])->name('adminapproval');
 });
