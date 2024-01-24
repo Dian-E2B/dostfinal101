@@ -42,20 +42,18 @@
 
             <div class="main">
                 {{-- HEADER START --}}
-
-
-
                 @include('student.layoutsst.header')
                 {{-- HEADER END --}}
                 <main class="content" style="padding: 1rem 1rem 1rem !important;">
                     <div class="container-fluid p-0">
 
-                        <h1 class="h3 mb-1">Grades</h1>
+
                         <form id="input-form" method="POST" action="{{ route('submitgrades') }}" enctype="multipart/form-data">
                             @csrf
-
-                            <div class="row d-flex align-items-center">
-                                <div class="">
+                            <input type="hidden" name="is_draft" id="is_draft" value="0">
+                            <div class="">
+                                <div class="row d-flex justify-content-center">
+                                    <h1 class="h3 mb-1">Grades</h1>
                                     <div class="col-10">
                                         <div class="card">
                                             <div class="card-header">
@@ -72,97 +70,89 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row d-flex justify-content-center">
 
-                                <div class="col-10">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="account" role="tabpanel">
+                                    <div class="col-10">
 
-                                            <div class="card">
-                                                <div class="card-header mb-0">
+                                        <div class="card">
+                                            <div class="card-header mb-0">
 
-                                                    <h5 class="card-title mb-0">Grades Input</h5>
-                                                </div>
-                                                <div class="card-body">
+                                                <h5 class="card-title mb-0">Grades Input</h5>
+                                            </div>
+                                            <div class="card-body">
 
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="mb-4">
-                                                                <label>
-                                                                    <select id="semesterSelect" name="semester" class="form-control" required>
-                                                                        <option value="">Choose Semester:
-                                                                        </option>{{-- 0-Summer | 1-First Sem | 2-Second Sem | 3-Third Sem --}}
-                                                                        <option value="1">1st Semester</option>
-                                                                        <option value="2">2nd Semester</option>
-                                                                        <option value="3">Summer</option>
-                                                                    </select>
-                                                                </label>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-12 mb-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <label for="inputSchoolyear" class="me-2">School Year:</label>
-                                                                <input style="max-width: 80px;" required type="text" name="startyear" placeholder="yyyy" class="numeric-input form-control me-2">
-                                                                <span class="me-2">-</span>
-                                                                <input style="max-width: 80px;" required type="text" name="endyear" placeholder="yyyy" class=" numeric-input form-control">
-                                                            </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="mb-4">
+                                                            <label>
+                                                                <select id="semesterSelect" name="semester" class="form-control" required>
+                                                                    <option value="">Choose Semester:
+                                                                    </option>{{-- 0-Summer | 1-First Sem | 2-Second Sem | 3-Third Sem --}}
+                                                                    <option value="1">1st Semester</option>
+                                                                    <option value="2">2nd Semester</option>
+                                                                    <option value="3">Summer</option>
+                                                                </select>
+                                                            </label>
                                                         </div>
 
-                                                        <div class="d-flex align-items-center mt-1">
-                                                            <div class="me-2">
-                                                                <label>Subject Name:</label>
-                                                                <input name="subjectnames[0][name]" type="text" class="form-control" required>
-                                                            </div>
-                                                            <div class="me-2">
-                                                                <label>Grade:</label>
-                                                                <input id="grade1" type="number" name="grades[0][grade]" class="form-control numeric-input">
-                                                            </div>
-                                                            <div class="me-2">
-                                                                <label>Units:</label>
-                                                                <input id="unit1" name="units[0][unit]" type="number" class="form-control numeric-input">
-                                                            </div>
-                                                            <div class="">
-                                                                <br>
-                                                                <button name="add" id="add" type="button" class="btn btn-success">Add Row
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="table">
-
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <label for="inputSchoolyear" class="me-2">School Year:</label>
+                                                            <input style="max-width: 80px;" required type="text" name="startyear" placeholder="yyyy" class="numeric-input form-control me-2">
+                                                            <span class="me-2">-</span>
+                                                            <input style="max-width: 80px;" required type="text" name="endyear" placeholder="yyyy" class=" numeric-input form-control">
                                                         </div>
                                                     </div>
 
-                                                    <label>
-                                                        <input id="scholaridinput" name="scholarid" style="display: none;" value="{{ $scholarId }}">
-                                                    </label>
+                                                    <div class="d-flex align-items-center mt-1">
+                                                        <div class="me-2">
+                                                            <label>Subject Name:</label>
+                                                            <input name="subjectnames[0][name]" type="text" class="form-control" required>
+                                                        </div>
+                                                        <div class="me-2">
+                                                            <label>Grade:</label>
+                                                            <input id="grade1" type="number" name="grades[0][grade]" class="form-control numeric-input">
+                                                        </div>
+                                                        <div class="me-2">
+                                                            <label>Units:</label>
+                                                            <input id="unit1" name="units[0][unit]" type="number" class="form-control numeric-input">
+                                                        </div>
+                                                        <div class="">
+                                                            <br>
+                                                            <button name="add" id="add" type="button" class="btn btn-success">Add Row
+                                                            </button>
+                                                        </div>
+                                                    </div>
 
-                                                    <div class="mt-3">
-                                                        <button type="submit" class="btn btn-pill btn-primary">Submit All</button>
+                                                    <div id="table">
+
                                                     </div>
                                                 </div>
 
+                                                <label>
+                                                    <input id="scholaridinput" name="scholarid" style="display: none;" value="{{ $scholarId }}">
+                                                </label>
+
+                                                <div class="mt-3">
+                                                    <button type="submit" class="btn btn-pill btn-primary">Submit All</button>
+                                                    <button type="button" class="btn btn-pill btn-secondary" onclick="document.getElementById('is_draft').value = '1'; document.getElementById('input-form').submit();">Submit as Draft</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
 
+
+                </main>
             </div>
-
         </div>
 
-        </div>
-
-        </div>
-
-
-
-        </div>
-
-        </div>
-        </main>
-
-        </div>
-        </div>
     </body>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -88,6 +88,10 @@
                                                     </div>
                                                 @endif
 
+
+
+
+
                                                 <label>
                                                     <input name="scholarid" style="display: none;" value="{{ $replyslip->scholar_id }}">
                                                 </label>
@@ -126,9 +130,15 @@
 
                                                     <strong><label>Qualifier Printed Name with Signature:</label></strong>
                                                     <input style="margin-top: 10px;" required type="file" name="signaturestudent" id="signature" accept="image/png, image/jpeg">
+                                                    <div id="previewLink" style="display: none;">
+                                                        <a href="#" target="_blank" id="filePreviewLinkImage">Review Signature</a>
+                                                    </div>
 
                                                     <strong><label style="">Parent/Legal Guardian Name with Signature:</label></strong>
                                                     <input style="margin-top: 15px;" class="form-group" required type="file" name="signatureparent" id="signatures" accept="image/*">
+                                                    <div id="previewLink2" style="display: none;">
+                                                        <a href="#" target="_blank" id="filePreviewLink2">Review Signature</a>
+                                                    </div>
 
                                                     <button onclick="return confirm('Confirm? Please note that submission is final and non-editable.')" style="margin-top: 15px;" type="submit" class="btn btn-success"><i data-feather="check"></i> Save</button>
                                                 @endforeach
@@ -153,6 +163,27 @@
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="{{ asset('js/notyf.min.js') }}"></script>
     <script>
+        function setupFilePreview(inputId, previewLinkId, filePreviewLinkId) {
+            var fileInput = document.getElementById(inputId);
+
+            fileInput.addEventListener('change', function() {
+                var selectedFile = fileInput.files[0];
+
+                if (selectedFile) {
+                    document.getElementById(previewLinkId).style.display = 'block';
+
+                    var fileURL = URL.createObjectURL(selectedFile);
+                    document.getElementById(filePreviewLinkId).href = fileURL;
+                }
+            });
+        }
+
+        // Set up file preview for the first file input
+        setupFilePreview('signature', 'previewLink', 'filePreviewLinkImage');
+
+        // Set up file preview for the second file input
+        setupFilePreview('signatures', 'previewLink2', 'filePreviewLink2');
+
         const checkbox1 = document.getElementById('checkbox1');
         const checkboxes = document.querySelectorAll('.option-checkbox');
         const textarea1 = document.getElementById('textarea1');

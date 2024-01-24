@@ -140,6 +140,7 @@ class RsmsViewController extends Controller //OR ONGOING
     {
         $results = Cog::select('startyear', DB::raw('COUNT(*) as row_count'))
             ->where('scholar_id', $number)
+            ->where('draft', '=', 0)
             ->groupBy('startyear')
             ->get();
         // Convert the Eloquent collection to an array
@@ -152,6 +153,7 @@ class RsmsViewController extends Controller //OR ONGOING
                     ->where('scholar_id', $number)
                     ->where('semester', $semester)
                     ->where('startyear', $year)
+
                     ->get();
 
                 // Store the data for the semester in the result array

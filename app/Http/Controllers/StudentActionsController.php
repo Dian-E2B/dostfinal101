@@ -77,11 +77,6 @@ class StudentActionsController extends Controller
     {
 
         if ($request->is_draft == 1) {
-            // Save the record as a draft
-            // Update the existing record
-
-            // Publish the record
-            // Create a new record
             $data = $request->validate([
                 'subjectnames.*.name' => 'required',
                 'grades.*.grade' => 'required',
@@ -111,17 +106,22 @@ class StudentActionsController extends Controller
                 'draft' => 1,
             ]);
 
-            if ($semesterinput  == 3) {
-            } else {
-                foreach ($data['subjectnames'] as $index => $subject) {
-                    $cog->cogdetails()->create([
-                        'subjectname' => $subject['name'],
-                        'grade' => $data['grades'][$index]['grade'],
-                        'unit' => $data['units'][$index]['unit'],
-                    ]);
-                }
+
+
+
+            foreach ($data['subjectnames'] as $index => $subject) {
+                $cog->cogdetails()->create([
+                    'subjectname' => $subject['name'],
+                    'grade' => $data['grades'][$index]['grade'],
+                    'unit' => $data['units'][$index]['unit'],
+                ]);
             }
-        } elseif ($request->is_delete == 1) {
+
+            notyf()
+                ->position('x', 'center')
+                ->position('y', 'top')
+                ->duration(2000) // 2 seconds
+                ->addSuccess('Grades has been Saved as Draft');
         } else {
             // Publish the record
             // Create a new record
@@ -163,26 +163,22 @@ class StudentActionsController extends Controller
                     ]);
                 }
             }
+            notyf()
+                ->position('x', 'center')
+                ->position('y', 'top')
+                ->duration(2000) // 2 seconds
+                ->addSuccess('Grades has been Saved');
         }
 
-
-
-
-
-
-        notyf()
-            ->position('x', 'center')
-            ->position('y', 'top')
-            ->duration(2000) // 2 seconds
-            ->addSuccess('Grades has been Saved');
         return back();
     }
 
     public function saveDraft(Request $request)
     {
 
-        $cog_id = $request->input('cog_id');
+
         if ($request->is_delete == 1) {
+            $cog_id = $request->input('cog_id');
             $cog = Cog::find($cog_id);
 
             $cog->update([
@@ -191,10 +187,8 @@ class StudentActionsController extends Controller
 
             return redirect()->back()->with('success', 'Draft DELETED successfully');
         } else {
-
-
+            $cog_id = $request->input('cog_id');
             $cog = Cog::find($cog_id);
-
             if ($cog) {
                 // Update the draft column to 0
                 $cog->update([

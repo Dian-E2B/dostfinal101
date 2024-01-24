@@ -70,7 +70,7 @@
                                                     <div class="row">
                                                         <div style="text-align: center">SCHOOL YEAR {{ $year }} - {{ $year + 1 }}</div>
                                                         @foreach ($semesters as $semester => $data)
-                                                            <div class="col">
+                                                            <div class="col-6">
                                                                 <div style="text-align: center">
                                                                     @if ($semester == 1)
                                                                         1ST SEMESTER

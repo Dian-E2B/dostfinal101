@@ -121,6 +121,7 @@
                                             <tbody>
                                                 @foreach ($cogsdraft as $cogsdraft1)
                                                     <input type="hidden" name="is_delete" id="is_delete" value="0">
+
                                                     @php
                                                         $ids1 = explode(',', $cogsdraft1->id);
                                                         $subjects1 = explode(',', $cogsdraft1->Subjectname);
@@ -128,6 +129,7 @@
                                                         $units = explode(',', $cogsdraft1->Units);
                                                         $completed = explode(',', $cogsdraft1->Completed);
                                                     @endphp
+                                                    <input type="hidden" name="cog_id" value="{{ $cogsdraft1->id }}">
                                                     @for ($i = 0; $i < count($subjects1); $i++)
                                                         <tr>
                                                             {{--    <td>{{ $ids[$i] }}</td> --}}
@@ -139,7 +141,7 @@
                                                             <td>{{ $subjects1[$i] }}</td>
 
                                                             @if ($completed[$i] == 0)
-                                                                <td> </td>
+                                                                <td> {{ $grades[$i] }}</td>
                                                             @else
                                                                 <td style="background-color: rgb(238, 238, 238)"> </td>
                                                             @endif
