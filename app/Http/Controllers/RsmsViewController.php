@@ -14,7 +14,6 @@ use App\Models\Sei;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -122,7 +121,6 @@ class RsmsViewController extends Controller //OR ONGOING
             WHERE ongoing.NUMBER = :number",
             ['number' => $number]
         );
-        // Debugbar::info($results);
         if (empty($results)) {
             return response()->json(['error' => 'Record not found'], 404);
         }
@@ -172,7 +170,7 @@ class RsmsViewController extends Controller //OR ONGOING
     public function getscholargrades($number)
     {
         $cogdata = Cogdetails::find($number);
-        Debugbar::info($number);
+
 
         if ($cogdata) {
             return response()->json($cogdata);
@@ -182,8 +180,7 @@ class RsmsViewController extends Controller //OR ONGOING
     public function getdocumentsdata($number)
     {
         $Requestdocs = Requestdocs::where('scholar_id', $number)->get();
-        Debugbar::info($number);
-        Debugbar::info($Requestdocs);
+
 
         if ($Requestdocs) {
             return DataTables::of($Requestdocs)->make(true);
@@ -252,7 +249,6 @@ class RsmsViewController extends Controller //OR ONGOING
     public function getscholarshipstatus($number)
     {
         $cogdata = Cog::find($number);
-        // Debugbar::info($number);
 
         if ($cogdata) {
             return response()->json($cogdata);
@@ -263,7 +259,7 @@ class RsmsViewController extends Controller //OR ONGOING
     {
 
         $cogdata = Cog::where('id', $number)->first();   // Find the record based on the given number
-        // Debugbar::info($cogdata);
+
         if (!$cogdata) {
             return response()->json(['error' => 'Record not found'], 404);
         }
@@ -282,6 +278,23 @@ class RsmsViewController extends Controller //OR ONGOING
         $cogdata->update($request->all()); // Update the record with the new data
 
         return response()->json(['message' => 'Changes saved successfully']);   // You can return a response if needed
+    }
+
+
+    public function completescholargrades($number)
+    {
+        $cogdata = Cogdetails::where('id', $number)->first(); // Find the record based on the given number
+
+
+        if (!$cogdata) {
+            return response()->json(['error' => 'Record not found'], 404);
+        } else {
+            $cogdata->update(['completed' => 1]);
+        }
+
+        // $cogdata->update($request->all()); // Update the record with the new data
+
+        return response()->json(['message' => 'Records Completed successfully']);   // You can return a response if needed
     }
 
 

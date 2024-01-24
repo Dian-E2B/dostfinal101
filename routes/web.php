@@ -96,6 +96,7 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/viewscholarrecords/{number}', [RsmsViewController::class, 'viewscholarrecordsview'])->name('viewscholarrecords');
     Route::get('/getscholargrades/{number}', [RsmsViewController::class, 'getscholargrades'])->name('getscholargrades');
     Route::post('/savecholargrades/{number}', [RsmsViewController::class, 'savecholargrades'])->name('savecholargrades');
+    Route::post('/completescholargrades/{number}', [RsmsViewController::class, 'completescholargrades'])->name('completescholargrades');
     Route::get('/getprospectusdata/{number}', [RsmsViewController::class, 'getprospectusdata'])->name('getprospectusdata');
     Route::get('/viewscholarprospectus/{number}', [RsmsViewController::class, 'viewscholarprospectus'])->name('viewscholarprospectus');
     Route::get('/officialrsms/{number}', [RsmsViewController::class, 'officialrsms'])->name('officialrsms');
@@ -145,6 +146,10 @@ Route::get('/downloadpdfclearance/{filename}', [\App\Http\Controllers\StudentVie
     ->middleware(['auth:student', 'verified'])->name('downloadpdfclearance');
 Route::POST('/savepdfclearance', [\App\Http\Controllers\StudentViewController::class, 'savepdfclearance'])
     ->middleware(['auth:student', 'verified'])->name('savepdfclearance');
+Route::POST('/studenteditcog', [\App\Http\Controllers\StudentViewController::class, 'studenteditcog'])
+    ->middleware(['auth:student', 'verified'])->name('studenteditcog');
+Route::POST('/saveDraft', [\App\Http\Controllers\StudentActionsController::class, 'saveDraft'])
+    ->middleware(['auth:student', 'verified'])->name('saveDraft');
 
 
 

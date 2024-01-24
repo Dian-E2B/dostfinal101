@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cog;
 use App\Models\Cogdetails;
+use App\Models\Cogsdraft;
 use App\Models\Replyslips;
 use App\Models\Scholars;
 use App\Models\Sei;
@@ -74,44 +75,97 @@ class StudentActionsController extends Controller
     //GRADES SAVE
     public function cogsave(Request $request)
     {
-        $data = $request->validate([
-            'subjectnames.*.name' => 'required',
-            'grades.*.grade' => 'required',
-            'units.*.unit' => 'required',
-        ]);
 
-        /* dd($data);*/
-        $scholarid = $request->input('scholarid');
-        $semesterinput = $request->input('semester');
-        $startyearinput = $request->input('startyear');
-        $endyearinput = $request->input('endyear');
-        // $schoolyearinput = $request->input('schoolyear');
+        if ($request->is_draft == 1) {
+            // Save the record as a draft
+            // Update the existing record
 
-        $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
-        $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
-        //         dd($customstudentprospectusfilename);
+            // Publish the record
+            // Create a new record
+            $data = $request->validate([
+                'subjectnames.*.name' => 'required',
+                'grades.*.grade' => 'required',
+                'units.*.unit' => 'required',
+            ]);
 
-        $cog = Cog::create([
-            'scholar_id' => $scholarid,
-            'semester' => $semesterinput,
-            'failnum' => 0,
-            'cog_status' => 0,
-            'startyear' => $startyearinput,
-            'endyear' => $endyearinput,
-            'date_uploaded' => now(),
-            'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
-        ]);
+            /* dd($data);*/
+            $scholarid = $request->input('scholarid');
+            $semesterinput = $request->input('semester');
+            $startyearinput = $request->input('startyear');
+            $endyearinput = $request->input('endyear');
+            // $schoolyearinput = $request->input('schoolyear');
 
-        if ($semesterinput  == 3) {
+            $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
+            $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
+            //         dd($customstudentprospectusfilename);
+
+            $cog = Cog::create([
+                'scholar_id' => $scholarid,
+                'semester' => $semesterinput,
+                'failnum' => 0,
+                'cog_status' => 0,
+                'startyear' => $startyearinput,
+                'endyear' => $endyearinput,
+                'date_uploaded' => now(),
+                'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
+                'draft' => 1,
+            ]);
+
+            if ($semesterinput  == 3) {
+            } else {
+                foreach ($data['subjectnames'] as $index => $subject) {
+                    $cog->cogdetails()->create([
+                        'subjectname' => $subject['name'],
+                        'grade' => $data['grades'][$index]['grade'],
+                        'unit' => $data['units'][$index]['unit'],
+                    ]);
+                }
+            }
+        } elseif ($request->is_delete == 1) {
         } else {
-            foreach ($data['subjectnames'] as $index => $subject) {
-                $cog->cogdetails()->create([
-                    'subjectname' => $subject['name'],
-                    'grade' => $data['grades'][$index]['grade'],
-                    'unit' => $data['units'][$index]['unit'],
-                ]);
+            // Publish the record
+            // Create a new record
+            $data = $request->validate([
+                'subjectnames.*.name' => 'required',
+                'grades.*.grade' => 'required',
+                'units.*.unit' => 'required',
+            ]);
+
+            /* dd($data);*/
+            $scholarid = $request->input('scholarid');
+            $semesterinput = $request->input('semester');
+            $startyearinput = $request->input('startyear');
+            $endyearinput = $request->input('endyear');
+            // $schoolyearinput = $request->input('schoolyear');
+
+            $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('imagegrade')->getClientOriginalExtension();
+            $request->file('imagegrade')->storeAs('public/prospectus', $customstudentprospectusfilename);
+            //         dd($customstudentprospectusfilename);
+
+            $cog = Cog::create([
+                'scholar_id' => $scholarid,
+                'semester' => $semesterinput,
+                'failnum' => 0,
+                'cog_status' => 0,
+                'startyear' => $startyearinput,
+                'endyear' => $endyearinput,
+                'date_uploaded' => now(),
+                'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
+            ]);
+
+            if ($semesterinput  == 3) {
+            } else {
+                foreach ($data['subjectnames'] as $index => $subject) {
+                    $cog->cogdetails()->create([
+                        'subjectname' => $subject['name'],
+                        'grade' => $data['grades'][$index]['grade'],
+                        'unit' => $data['units'][$index]['unit'],
+                    ]);
+                }
             }
         }
+
+
 
 
 
@@ -122,5 +176,35 @@ class StudentActionsController extends Controller
             ->duration(2000) // 2 seconds
             ->addSuccess('Grades has been Saved');
         return back();
+    }
+
+    public function saveDraft(Request $request)
+    {
+
+        $cog_id = $request->input('cog_id');
+        if ($request->is_delete == 1) {
+            $cog = Cog::find($cog_id);
+
+            $cog->update([
+                'draft' => 2,
+            ]);
+
+            return redirect()->back()->with('success', 'Draft DELETED successfully');
+        } else {
+
+
+            $cog = Cog::find($cog_id);
+
+            if ($cog) {
+                // Update the draft column to 0
+                $cog->update([
+                    'draft' => 0,
+                ]);
+            }
+            return redirect()->back()->with('success', 'Draft submitted successfully');
+        }
+
+        // Redirect or return a response
+
     }
 }

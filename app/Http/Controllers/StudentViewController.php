@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cogdetails;
 use App\Models\Program;
 use App\Models\Replyslips;
 use App\Models\Requestdocs;
@@ -72,19 +73,47 @@ class StudentViewController extends Controller
         $userId = auth()->id();
         $studentuser = Student::where('id', $userId)->first();
         $scholarId = $studentuser->scholar_id;
+
         $cogs = DB::table('cogs')
             ->join('cogdetails', 'cogs.id', '=', 'cogdetails.cog_id')
             ->where('cogs.scholar_id', $scholarId)
+
             ->select(
                 'cogs.startyear',
                 'cogs.semester',
+                DB::raw('GROUP_CONCAT(cogdetails.id) AS id'),
                 DB::raw('GROUP_CONCAT(cogdetails.subjectname) AS Subjectname'),
                 DB::raw('GROUP_CONCAT(cogdetails.grade) AS Grade'),
-                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units')
+                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units'),
+                DB::raw('GROUP_CONCAT(cogdetails.completed) AS Completed') // Include the completed column
+            )
+            ->groupBy('cogs.startyear', 'cogs.semester')
+            ->where('cogs.draft', '=', 0)
+            ->get();
+
+        $cogsdraft = DB::table('cogs')
+            ->join('cogdetails', 'cogs.id', '=', 'cogdetails.cog_id')
+            ->where('cogs.scholar_id', $scholarId)
+            ->where('cogs.draft', '=', 1)
+            ->select(
+                'cogs.startyear',
+                'cogs.semester',
+                DB::raw('GROUP_CONCAT(cogs.id) AS id'),
+                DB::raw('GROUP_CONCAT(cogdetails.subjectname) AS Subjectname'),
+                DB::raw('GROUP_CONCAT(cogdetails.grade) AS Grade'),
+                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units'),
+                DB::raw('GROUP_CONCAT(cogdetails.completed) AS Completed') // Include the completed column
             )
             ->groupBy('cogs.startyear', 'cogs.semester')
             ->get();
-        return view('student.viewsubmittedgrade', compact('cogs'));
+
+
+
+        return view('student.viewsubmittedgrade', compact('cogs', 'cogsdraft'));
+    }
+
+    public function viewdraftgrade()
+    {
     }
 
     public function requestclearanceview()
@@ -107,6 +136,31 @@ class StudentViewController extends Controller
         $file_path = public_path('storage/documents/' . $filename);
         return response()->download($file_path);
     }
+
+    public function studenteditcog(Request $request)
+    {
+        $cogId = $request->input('cog_id');
+        $gradeinput = $request->input('grade');
+
+        // First, retrieve the record
+        $record = Cogdetails::where('id', $cogId)->first();
+        // Check if the record exists
+        if ($record) {
+            // Update the grade field
+            $record->grade = $gradeinput;
+            $result = $record->save();
+
+            if ($result) {
+                return back()->with('success', 'Grade Updated successfully');
+            } else {
+                return back()->with('error', 'Update failed');
+            }
+        } else {
+            // Handle the case where the record with the given ID is not found
+            return back()->with('error', 'Cog details not found', 404);
+        }
+    }
+
 
     public function savepdfclearance(Request $request)
     {

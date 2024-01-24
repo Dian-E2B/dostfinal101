@@ -53,23 +53,27 @@
                         <h1 class="h3 mb-1">Grades</h1>
                         <form id="input-form" method="POST" action="{{ route('submitgrades') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
-                                <div class="col-md-5 col-xl-4">
 
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title mb-0">Certificate of Grades</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <img class="py-md-3" id="image-preview" src="" alt="Image Preview" style="max-width: 500px; display: none; ">
-                                            <label class="form-label">COG image/file:</label>
-
-                                            <input required type="file" name="imagegrade" id="imagegradeid" class="form-control" accept="image/*, application/pdf">
+                            <div class="row d-flex align-items-center">
+                                <div class="">
+                                    <div class="col-10">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Certificate of Grades</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <img class="py-md-3" id="image-preview" src="" alt="Image Preview" style="max-width: 500px; display: none; ">
+                                                <label class="form-label">COG image/file:</label>
+                                                <input required type="file" name="imagegrade" id="imagegradeid" class="form-control" accept="image/*, application/pdf">
+                                                <div class="mt-2" id="previewLink" style="display: none;">
+                                                    <a href="#" target="_blank" id="filePreviewLink">Review File</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-7 col-xl-8">
+                                <div class="col-10">
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="account" role="tabpanel">
 
@@ -81,21 +85,21 @@
                                                 <div class="card-body">
 
                                                     <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="mb-3">
+                                                        <div class="col-12">
+                                                            <div class="mb-4">
                                                                 <label>
                                                                     <select id="semesterSelect" name="semester" class="form-control" required>
                                                                         <option value="">Choose Semester:
                                                                         </option>{{-- 0-Summer | 1-First Sem | 2-Second Sem | 3-Third Sem --}}
                                                                         <option value="1">1st Semester</option>
                                                                         <option value="2">2nd Semester</option>
-                                                                        <option value="0">Summer</option>
+                                                                        <option value="3">Summer</option>
                                                                     </select>
                                                                 </label>
                                                             </div>
 
                                                         </div>
-                                                        <div class="col-md-9">
+                                                        <div class="col-12 mb-3">
                                                             <div class="d-flex align-items-center">
                                                                 <label for="inputSchoolyear" class="me-2">School Year:</label>
                                                                 <input style="max-width: 80px;" required type="text" name="startyear" placeholder="yyyy" class="numeric-input form-control me-2">
@@ -163,6 +167,27 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        // Get the file input element
+        var fileInput = document.getElementById('imagegradeid');
+
+        // Add an event listener for when a file is selected
+        fileInput.addEventListener('change', function() {
+            // Get the selected file
+            var selectedFile = fileInput.files[0];
+
+            // Check if a file is selected
+            if (selectedFile) {
+                // Show the preview link
+                document.getElementById('previewLink').style.display = 'block';
+
+                // Create a URL for the selected file
+                var fileURL = URL.createObjectURL(selectedFile);
+
+                // Set the href attribute of the preview link
+                document.getElementById('filePreviewLink').href = fileURL;
+            }
+        });
+
         var i = 0;
         $('#add').click(function() {
             ++i;
@@ -189,8 +214,17 @@
         });
 
         $(document).on('click', '.remove-table-row', function() {
+            // Get the row ID
             var rowId = $(this).closest('.row1').attr('id');
-            $('#' + rowId).remove();
+
+            // Ask for confirmation before deleting the row
+            var confirmDelete = window.confirm('Are you sure you want to delete this row?');
+
+            if (confirmDelete) {
+                // If user confirms, remove the row
+                $('#' + rowId).remove();
+            }
+            // If user cancels, do nothing
         });
 
         // // Add an event listener to the file input

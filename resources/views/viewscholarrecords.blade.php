@@ -162,7 +162,7 @@
                                                                     <td class="customtd"> <input class="form-control form-control-sm" id="unitField" name="unitField"></td>
                                                                 </tr>
                                                         </table>
-
+                                                        <button type="button" class="btn btn-success mt-3" id="CompletegradeBtn">Complete</button><br>
                                                         <button type="button" class="btn btn-primary mt-3" id="saveChangesBtn">Save Changes</button>
                                                     </div>
 
@@ -185,9 +185,11 @@
                                                                     <th class="customth">Scholarship Status</th>
                                                                     <td class="customtd"> <input class="form-control form-control-sm" id="scholarshipField" name="scholarshipField" placeholder=""></td>
                                                                 </tr>
+
                                                             <tbody>
                                                             </tbody>
                                                         </table>
+
                                                         <button type="button" class="btn btn-primary mt-3" id="SaveChangesScholarshipStatusBtn">Save Changes</button>
                                                     </div>
                                                 </div>
@@ -327,6 +329,39 @@
                             });
                         });
 
+                        $('#CompletegradeBtn').off('click').click(function() {
+
+                            // Send the updated data to the server using AJAX
+                            $.ajax({
+                                url: '{{ url('/completescholargrades/') }}' + '/' + number, // Replace with your server endpoint
+                                method: 'POST', // You can use POST or PUT based on your server-side implementation
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(response) {
+                                    // Handle success, e.g., close the modal or sho w a success message
+                                    console.log('', response);
+                                    notyf.success({
+                                        message: 'Record has been tagged as complete.',
+                                        duration: 3000,
+                                        position: {
+                                            x: 'right',
+                                            y: 'top',
+                                        },
+                                    })
+
+                                    location.reload();
+
+                                    $('#editModal input').val('');
+                                    $('#editModal').offcanvas('hide'); // Assuming you want to hide the modal on success
+
+                                },
+                                error: function(error) {
+                                    console.error('Error saving changes:', error);
+                                }
+                            });
+                        });
+
                     },
                     error: function(error) {
                         console.error('Error fetching data for editing:', error);
@@ -334,6 +369,8 @@
                 });
 
             });
+
+
 
 
             $(document).on('click', '.edit-scholarshipstatusbtn', function() {

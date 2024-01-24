@@ -1,10 +1,6 @@
 /.phpunit.cache
 /node_modules
-<<<<<<< HEAD
-/vendor/
-=======
-/vendor/laravel/pint/builds/pint
->>>>>>> 59ac256c308c0fb65efcb42b07274cfac8eefe24
+/vendor
 .env.backup
 .env.production
 .phpunit.result.cache
@@ -16,9 +12,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-<<<<<<< HEAD
-vendor
-vendor\
-=======
 ngrok.exe
->>>>>>> 59ac256c308c0fb65efcb42b07274cfac8eefe24

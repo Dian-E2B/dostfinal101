@@ -20,7 +20,8 @@ class Cog extends Model
         'endyear',
         'date_uploaded',
         'scholarshipstatus',
-        'prospectus_details'
+        'prospectus_details',
+        'draft'
     ];
 
     public function cogdetails()

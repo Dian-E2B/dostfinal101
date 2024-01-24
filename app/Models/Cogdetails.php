@@ -9,7 +9,7 @@ class Cogdetails extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subjectname', 'grade', 'unit'];
+    protected $fillable = ['subjectname', 'grade', 'unit', 'completed'];
     public $timestamps = false;
 
     public function cog()
