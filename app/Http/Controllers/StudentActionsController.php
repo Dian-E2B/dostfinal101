@@ -151,6 +151,7 @@ class StudentActionsController extends Controller
                 'endyear' => $endyearinput,
                 'date_uploaded' => now(),
                 'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename,
+                'draft' => 0,
             ]);
 
             if ($semesterinput  == 3) {
