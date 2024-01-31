@@ -7,6 +7,7 @@ use App\Models\Program;
 use App\Models\Scholars;
 use App\Models\Sei;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -26,6 +27,7 @@ class SeiImport implements ToModel, WithBatchInserts
     {
 
         $existingRecord = Sei::where('spasno', $row[0])->first();
+
 
 
         // Check if the data in the first column (index 0) starts with "U"

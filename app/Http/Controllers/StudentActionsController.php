@@ -188,12 +188,17 @@ class StudentActionsController extends Controller
 
             return redirect()->back()->with('success', 'Draft DELETED successfully');
         } else {
+            $scholarid = $request->input('scholar_id');
+            /*   $customstudentprospectusfilename = $scholarid . 'prospectus' . time() . '.' . $request->file('prospectus1')->getClientOriginalExtension();
+            $request->file('prospectus1')->storeAs('public/prospectus', $customstudentprospectusfilename);
+ */
             $cog_id = $request->input('cog_id');
             $cog = Cog::find($cog_id);
             if ($cog) {
                 // Update the draft column to 0
                 $cog->update([
                     'draft' => 0,
+                    /*  'prospectus_details' => 'storage/prospectus/' . $customstudentprospectusfilename, */
                 ]);
             }
             return redirect()->back()->with('success', 'Draft submitted successfully');

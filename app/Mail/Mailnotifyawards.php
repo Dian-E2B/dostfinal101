@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Mail;
+
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +23,7 @@ class Mailnotifyawards extends Mailable
     public function __construct($mailData)
     {
         //
-        $this->mailData=$mailData;
+        $this->mailData = $mailData;
     }
 
 

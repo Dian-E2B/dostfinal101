@@ -91,25 +91,10 @@ class StudentViewController extends Controller
             ->where('cogs.draft', '=', 0)
             ->get();
 
-        $cogsdraft = DB::table('cogs')
-            ->join('cogdetails', 'cogs.id', '=', 'cogdetails.cog_id')
-            ->where('cogs.scholar_id', $scholarId)
-            ->where('cogs.draft', '=', 1)
-            ->select(
-                'cogs.startyear',
-                'cogs.semester',
-                DB::raw('GROUP_CONCAT(cogs.id) AS id'),
-                DB::raw('GROUP_CONCAT(cogdetails.subjectname) AS Subjectname'),
-                DB::raw('GROUP_CONCAT(cogdetails.grade) AS Grade'),
-                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units'),
-                DB::raw('GROUP_CONCAT(cogdetails.completed) AS Completed') // Include the completed column
-            )
-            ->groupBy('cogs.startyear', 'cogs.semester')
-            ->get();
 
 
 
-        return view('student.viewsubmittedgrade', compact('cogs', 'cogsdraft'));
+        return view('student.viewsubmittedgrade', compact('cogs'));
     }
 
     public function viewdraftgrade()
@@ -127,7 +112,27 @@ class StudentViewController extends Controller
         $userId = auth()->id();
         $studentuser = Student::where('id', $userId)->first();
         $scholarId = $studentuser->scholar_id;
-        return view('student.gradeinput', compact('scholarId'));
+
+        $cogsdraft = DB::table('cogs')
+            ->join('cogdetails', 'cogs.id', '=', 'cogdetails.cog_id')
+            ->where('cogs.scholar_id', $scholarId)
+            ->where('cogs.draft', '=', 1)
+            ->select(
+                'cogs.scholar_id',
+                'cogs.startyear',
+                'cogs.semester',
+                'cogs.prospectus_details',
+                DB::raw('GROUP_CONCAT(cogs.id) AS id1'),
+                DB::raw('GROUP_CONCAT(cogdetails.id) AS id'),
+                DB::raw('GROUP_CONCAT(cogdetails.subjectname) AS Subjectname'),
+                DB::raw('GROUP_CONCAT(cogdetails.grade) AS Grade'),
+                DB::raw('GROUP_CONCAT(cogdetails.unit) AS Units'),
+                DB::raw('GROUP_CONCAT(cogdetails.completed) AS Completed'), // Include the completed column
+            )
+            ->groupBy('cogs.startyear', 'cogs.semester', 'cogs.prospectus_details', 'cogs.scholar_id',)
+            ->get();
+
+        return view('student.gradeinput', compact('scholarId', 'cogsdraft'));
     }
 
     public function downloadpdfclearance($filename)

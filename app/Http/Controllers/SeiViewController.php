@@ -86,7 +86,7 @@ class SeiViewController extends Controller
         $firstRow = Excel::toArray(new SeiImport(), $request->file('excel_file')->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX)[0][0];
         if ($firstRow !== ['SPAS NO.', 'AppID', 'STRAND', 'program', 'last name', 'first name', 'middle name', 'suffix', 'sex', 'birthday', 'email address', 'contact number', 'house number', 'street', 'village', 'barangay', 'municipality', 'province', 'zipcode', 'district', 'region', 'hsname', 'lacking', 'remarks']) {
             // Redirect back with an error message
-            session()->flash('error', 'A column has been deleted or added. Please check the file');
+            session()->flash('error', "The file is not correct; a column has been deleted. Please check the file.");
             return redirect()->back();
         } else {
             try {

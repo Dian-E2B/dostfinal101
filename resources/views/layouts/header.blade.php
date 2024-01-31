@@ -19,7 +19,7 @@
             <ul style="width: 300px; " class="dropdown-menu" aria-labelledby="dropdownMenu2">
                 <li style="padding: 0px 10px 0px 10px ;min-width: 50% !important;">
                     @csrf
-                    <input class="form-control" type="file" name="excel_file" accept=".xls, .xlsx">
+                    <input class="form-control" type="file" name="excel_file" accept=".xlsx">
                 </li>
                 <div style="padding: 1%"></div>
                 <li style="padding-left: 10px;"><button class="btn btn-primary" type="submit">Import</button></li>

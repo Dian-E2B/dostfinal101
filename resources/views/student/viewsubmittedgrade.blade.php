@@ -19,12 +19,12 @@
             }
 
             input {
-                border: none;
+                /*  border: none; */
             }
 
             input:focus {
                 outline: none;
-                border: none;
+                /*   border: none; */
             }
 
             /* Add a border back when the input is hovered (optional) */
@@ -78,14 +78,15 @@
                                                     @if ($completed[$i] == 1)
                                                         <td>{{ $grades[$i] }}</td>
                                                     @else
-                                                        <td style="max-width: 200px">
+                                                        <td> {{ $grades[$i] }}</td>
+                                                        {{--  <td style="max-width: 200px">
                                                             <form action="{{ route('studenteditcog') }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="cog_id" value="{{ explode(',', $cog->id)[$i] }}">
                                                                 <input type="text" name="grade" placeholder="Enter Grade" value="{{ $grades[$i] }}">
                                                                 <button class="btn btn-pill btn-success" type="submit">Update</button>
                                                             </form>
-                                                        </td>
+                                                        </td> --}}
                                                     @endif
 
                                                     <td>{{ $units[$i] }}</td>
@@ -99,67 +100,7 @@
                             </div>
                         </div>
 
-                        @if (count($cogsdraft) > 0)
-                            <div class="card">
-                                <div class="card-body">
-                                    {{-- @dd($cogsdraft); --}}
 
-                                    <form id="draftForm" action="{{ route('saveDraft') }}" method="POST">
-                                        @csrf
-
-                                        <table id="thisdatatable" class="hover table table-bordered compact nowrap" style="width:100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Academic Year</th>
-                                                    <th scope="col">Semester</th>
-                                                    <th scope="col">Subject</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Unit</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($cogsdraft as $cogsdraft1)
-                                                    <input type="hidden" name="is_delete" id="is_delete" value="0">
-
-                                                    @php
-                                                        $ids1 = explode(',', $cogsdraft1->id);
-                                                        $subjects1 = explode(',', $cogsdraft1->Subjectname);
-                                                        $grades = explode(',', $cogsdraft1->Grade);
-                                                        $units = explode(',', $cogsdraft1->Units);
-                                                        $completed = explode(',', $cogsdraft1->Completed);
-                                                    @endphp
-                                                    <input type="hidden" name="cog_id" value="{{ $cogsdraft1->id }}">
-                                                    @for ($i = 0; $i < count($subjects1); $i++)
-                                                        <tr>
-                                                            {{--    <td>{{ $ids[$i] }}</td> --}}
-                                                            @if ($i == 0)
-                                                                <td rowspan="{{ count($subjects1) }}">{{ $cogsdraft1->id }}</td>
-                                                                <td rowspan="{{ count($subjects1) }}">{{ $cogsdraft1->startyear }}</td>
-                                                                <td rowspan="{{ count($subjects1) }}">{{ $cogsdraft1->semester }}</td>
-                                                            @endif
-                                                            <td>{{ $subjects1[$i] }}</td>
-
-                                                            @if ($completed[$i] == 0)
-                                                                <td> {{ $grades[$i] }}</td>
-                                                            @else
-                                                                <td style="background-color: rgb(238, 238, 238)"> </td>
-                                                            @endif
-
-                                                            <td>{{ $units[$i] }}</td>
-
-
-                                                        </tr>
-                                                    @endfor
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <button class="btn btn-pill btn-primary" type="submit">Submit this draft</button>
-                                        <button type="button" class="btn btn-pill btn-danger" onclick="document.getElementById('is_delete').value = '1'; document.getElementById('draftForm').submit();">Delete Draft</button>
-                                    </form>
-                                </div>
-                            </div>
-                        @endif
 
 
                 </main>

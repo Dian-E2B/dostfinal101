@@ -46,14 +46,98 @@
                 {{-- HEADER END --}}
                 <main class="content" style="padding: 1rem 1rem 1rem !important;">
                     <div class="container-fluid p-0">
+                        <h1 class="h3 mb-1">Grades</h1>
 
+                        @if (count($cogsdraft) > 0)
+                            <div class="row justify-content-center">
+                                <div class="card col-10">
+                                    <div class="card-body">
+                                        {{-- @dd($cogsdraft); --}}
+
+
+
+                                        <table id="thisdatatable" class="hover table table-bordered compact nowrap" style="width:100%;">
+                                            <thead>
+                                                <tr>
+
+                                                    <th scope="col">Academic Year</th>
+                                                    <th scope="col">Semester</th>
+                                                    <th scope="col">Subject</th>
+                                                    <th scope="col">Grade</th>
+                                                    <th scope="col">Unit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($cogsdraft as $cogsdraft1)
+                                                    @php
+                                                        $ids1 = explode(',', $cogsdraft1->id);
+                                                        $subjects1 = explode(',', $cogsdraft1->Subjectname);
+                                                        $grades1 = explode(',', $cogsdraft1->Grade);
+                                                        $units1 = explode(',', $cogsdraft1->Units);
+                                                        $completed = explode(',', $cogsdraft1->Completed);
+
+                                                    @endphp
+                                                    <form id="draftForm" action="{{ route('saveDraft') }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="scholar_id" value="{{ $cogsdraft1->scholar_id }}">
+                                                        <input type="hidden" name="is_delete" id="is_delete" value="0">
+                                                        <input type="hidden" name="cog_id" value="{{ $cogsdraft1->id1 }}">
+
+                                                        <button style="margin-right: 5px;" class="btn btn-pill btn-primary mb-2" type="submit">Submit as Final</button>
+                                                        <button type="button" class="btn btn-pill btn-danger mb-2" onclick="document.getElementById('is_delete').value = '1'; document.getElementById('draftForm').submit();">Delete Draft</button>
+                                                        {{--  <a href="javascript:void(0);" onclick="openInNewTab('{{ asset($cogsdraft1->prospectus_details) }}')">View</a>
+
+                                <script>
+                                    function openInNewTab(url) {
+                                        window.open(url, '_blank');
+                                    }
+                                </script>
+                                <input type="file" class="form-control" name="prospectus1" id="prospectus" accept="image/*, application/pdf"> --}}
+                                                    </form>
+                                                    @for ($i = 0; $i < count($subjects1); $i++)
+                                                        <tr>
+                                                            {{--    <td>{{ $ids[$i] }}</td> --}}
+                                                            @if ($i == 0)
+                                                                <td rowspan="{{ count($subjects1) }}">{{ $cogsdraft1->startyear }}</td>
+                                                                <td rowspan="{{ count($subjects1) }}">{{ $cogsdraft1->semester }}</td>
+                                                            @endif
+                                                            <td>{{ $subjects1[$i] }}</td>
+
+                                                            @if ($completed[$i] == 0)
+                                                                <td style="max-width: 200px">
+
+                                                                    <form action="{{ route('studenteditcog') }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="cog_id" value="{{ explode(',', $cogsdraft1->id)[$i] }}">
+                                                                        <input class=" form-control-sm" type="text" name="grade" placeholder="Enter Grade" value="{{ $grades1[$i] }}">
+
+
+                                                                        <button class="btn btn-pill btn-success" type="submit">Update</button>
+                                                                    </form>
+                                                                </td>
+                                                            @else
+                                                            @endif
+
+                                                            <td>{{ $units1[$i] }}</td>
+
+
+                                                        </tr>
+                                                    @endfor
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         <form id="input-form" method="POST" action="{{ route('submitgrades') }}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="is_draft" id="is_draft" value="0">
                             <div class="">
                                 <div class="row d-flex justify-content-center">
-                                    <h1 class="h3 mb-1">Grades</h1>
+
                                     <div class="col-10">
                                         <div class="card">
                                             <div class="card-header">
@@ -141,6 +225,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>

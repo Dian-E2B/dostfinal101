@@ -109,8 +109,11 @@
                             <div class="card-body">
 
                                 {{-- DROPDOWN FILTER --}}
+                                <div class="h4">
+                                    Science Education Institutes' list of Qualified Scholars
+                                </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-6">
                                         <div class="">
                                             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fas fa-filter"></i>
@@ -132,13 +135,16 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-6">
+                                        <div class="row" style="font-size: 14px; ">
+                                            <h6 style="margin-left: 300px">Legend:</h6>
+                                            <strong style="text-align: right;"><i class="fas fa-circle" style="color: #194903;"></i><span style="color:#000000">: Qualifier Has been Notified</span></strong>
+                                        </div>
+                                    </div>
 
                                 </div>
 
-                                <div class="row mt-3" style="font-size: 17px;">
-                                    <strong><i class="fas fa-circle" style="color: #194903;"></i><span style="color:#194903">: Notified</span></strong>
-                                </div>
+
                                 {{-- TABLE --}}
                                 <div class="mt-3">
                                     <table id="thisdatatable" cellspacing="0" class="table-striped display nowrap" style="width:100%;">
